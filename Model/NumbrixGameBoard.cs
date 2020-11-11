@@ -17,8 +17,6 @@ namespace NumbrixGame.Model
             this.NumbrixGameBoardCells = new List<NumbrixGameBoardCell>();
         }
 
-
-        public GetCellNeigbors
         #endregion
     }
 }
