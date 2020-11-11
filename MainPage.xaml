@@ -8,5 +8,17 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid x:Name="parentGrid" Width="auto" Height="auto"/>
+    <Grid x:Name="parentGrid" Width="auto" Height="auto" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+
+        <GridView x:Name="gridView" ItemsSource="{x:Bind cells}" BorderBrush="Cyan" BorderThickness="1" >
+            <GridView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <ItemsWrapGrid MaximumRowsOrColumns="9" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </ItemsPanelTemplate>
+
+            </GridView.ItemsPanel>
+
+        </GridView>
+    </Grid>
 </Page>
