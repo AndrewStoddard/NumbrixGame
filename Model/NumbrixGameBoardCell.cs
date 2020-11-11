@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace NumbrixGame.Model
+﻿namespace NumbrixGame.Model
 {
-    public class NumbrixCell
+    public class NumbrixGameBoardCell
     {
         #region Data members
 
@@ -24,12 +22,12 @@ namespace NumbrixGame.Model
 
         #region Constructors
 
-        public NumbrixCell(int linearCoordinate)
+        public NumbrixGameBoardCell(int linearCoordinate)
         {
             this.LinearCoordinate = linearCoordinate;
         }
 
-        public NumbrixCell(int x, int y)
+        public NumbrixGameBoardCell(int x, int y)
         {
             this.X = x;
             this.Y = y;
@@ -41,29 +39,13 @@ namespace NumbrixGame.Model
 
         private int ConvertXYToLinear(int x, int y)
         {
-            var linearCoordinate = 0;
-            throw new NotImplementedException();
+            return x + TempWidth * (y - 1);
         }
 
         private (int x, int y) ConvertLinearToXY(int linearCoordinate)
         {
-            var x = -1;
-            var y = -1;
-            for (var i = 1; i <= TempWidth; i++)
-            {
-                if (linearCoordinate % TempWidth + 1 == i)
-                {
-                    x = TempWidth - i;
-                }
-            }
-
-            for (var i = 0; i < TempHeight; i++)
-            {
-                if (linearCoordinate / TempHeight + 1 == i)
-                {
-                    y = TempHeight - i;
-                }
-            }
+            var x = linearCoordinate % TempWidth == 0 ? TempWidth : linearCoordinate % TempWidth;
+            var y = linearCoordinate / TempHeight + 1;
 
             return (x, y);
         }
