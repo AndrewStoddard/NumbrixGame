@@ -25,17 +25,25 @@
         public NumbrixGameBoardCell(int linearCoordinate)
         {
             this.LinearCoordinate = linearCoordinate;
+            var xAndY = this.ConvertLinearToXY(this.LinearCoordinate);
+            this.setXandY(xAndY.x, xAndY.y);
         }
 
         public NumbrixGameBoardCell(int x, int y)
         {
-            this.X = x;
-            this.Y = y;
+            this.setXandY(x, y);
+            this.LinearCoordinate = this.ConvertXYToLinear(x, y);
         }
 
         #endregion
 
         #region Methods
+
+        private void setXandY(int x, int y)
+        {
+            this.X = x;
+            this.Y = y;
+        }
 
         private int ConvertXYToLinear(int x, int y)
         {

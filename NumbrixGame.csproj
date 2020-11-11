@@ -124,6 +124,7 @@
     </Compile>
     <Compile Include="Model\NumbrixGameBoardCell.cs" />
     <Compile Include="Model\NumbrixGameBoard.cs" />
+    <Compile Include="Model\NumbrixGameBoardCellNeighbors.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
