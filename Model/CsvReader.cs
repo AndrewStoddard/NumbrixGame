@@ -29,7 +29,7 @@ namespace NumbrixGame.Model
                 var puzzleRowNumber = 0;
                 foreach (var line in data)
                 {
-                    if (row < data.Length - 1)
+                    if (true)
                     {
                         if (row == 0)
                         {
@@ -43,9 +43,15 @@ namespace NumbrixGame.Model
                         }
                         else
                         {
-                            var puzzleRow = line.Split(DefaultDelimiter);
-                            var boardCells = this.createBoardCells(puzzleRowNumber, puzzleRow);
-                            gameBoard.AddCells(boardCells);
+                            var cellRow = line.Split(DefaultDelimiter);
+
+                            gameBoard.AddCell(
+                                new NumbrixGameBoardCell(int.Parse(cellRow[0]), int.Parse(cellRow[1]))
+                                {
+                                    NumbrixValue = int.Parse(cellRow[2]), 
+                                    DefaultValue = bool.Parse(cellRow[3])
+                                });
+
                             puzzleRowNumber++;
                         }
 

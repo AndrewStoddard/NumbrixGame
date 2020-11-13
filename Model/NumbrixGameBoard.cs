@@ -32,5 +32,10 @@ namespace NumbrixGame.Model
                 this.NumbrixGameBoardCells.Add(currentCell);
             }
         }
+
+        public void AddCell(NumbrixGameBoardCell cellToAdd)
+        {
+            this.NumbrixGameBoardCells.Add(cellToAdd);
+        }
     }
 }
