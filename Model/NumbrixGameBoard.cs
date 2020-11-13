@@ -8,6 +8,12 @@ namespace NumbrixGame.Model
 
         public IList<NumbrixGameBoardCell> NumbrixGameBoardCells { get; set; }
 
+        public int BoardWidth { get; set; }
+
+        public int BoardHeight { get; set; }
+
+        public IList<int> numbers { get; set; }
+
         #endregion
 
         #region Constructors
@@ -18,5 +24,13 @@ namespace NumbrixGame.Model
         }
 
         #endregion
+
+        public void AddCells(IList<NumbrixGameBoardCell> cellsToAdd)
+        {
+            foreach (var currentCell in cellsToAdd)
+            {
+                this.NumbrixGameBoardCells.Add(currentCell);
+            }
+        }
     }
 }

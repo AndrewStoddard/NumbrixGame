@@ -9,16 +9,22 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid x:Name="parentGrid" Width="auto" Height="auto" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel>
 
+            <StackPanel Orientation="Horizontal" Margin="0,0,0,25">
+                <Button Content="Load Puzzle" Click="Button_Click"/>
+            </StackPanel>
 
-        <GridView x:Name="gridView" ItemsSource="{x:Bind cells}" BorderBrush="Cyan" BorderThickness="1" >
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid MaximumRowsOrColumns="9" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                </ItemsPanelTemplate>
+            <GridView x:Name="gridView" ItemsSource="{x:Bind Path=cells}" BorderBrush="Cyan" BorderThickness="1" >
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid MaximumRowsOrColumns="9" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </ItemsPanelTemplate>
 
-            </GridView.ItemsPanel>
+                </GridView.ItemsPanel>
 
-        </GridView>
+            </GridView>
+
+        </StackPanel>
     </Grid>
 </Page>

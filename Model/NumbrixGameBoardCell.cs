@@ -18,6 +18,8 @@
 
         public int NumbrixValue { get; set; }
 
+        public bool DefaultValue { get; set; }
+
         #endregion
 
         #region Constructors

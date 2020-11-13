@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using Windows.Storage.Pickers;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using NumbrixGame.Model;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -123,5 +126,21 @@ namespace NumbrixGame
         private readonly int TempHeight = 9;
 
         #endregion
+
+        private async void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var filePicker = new FileOpenPicker
+            {
+                ViewMode = PickerViewMode.Thumbnail,
+                SuggestedStartLocation = PickerLocationId.Desktop
+            };
+
+            filePicker.FileTypeFilter.Add(".csv");
+
+            var puzzleFile = await filePicker.PickSingleFileAsync();
+
+            CsvReader reader = new CsvReader();
+            reader.LoadPuzzle(puzzleFile);
+        }
     }
 }
