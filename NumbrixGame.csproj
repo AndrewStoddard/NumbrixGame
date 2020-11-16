@@ -119,8 +119,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModel\NumbrixGameBoardViewModel.cs" />
+    <Compile Include="View\NumbrixGameBoardPage.xaml.cs">
+      <DependentUpon>NumbrixGameBoardPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\CsvReader.cs" />
     <Compile Include="Model\NumbrixGameBoardCell.cs" />
@@ -148,7 +150,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainPage.xaml">
+    <Page Include="View\NumbrixGameBoardPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

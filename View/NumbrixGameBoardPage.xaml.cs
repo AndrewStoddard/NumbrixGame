@@ -7,27 +7,30 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using NumbrixGame.Model;
+using NumbrixGame.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace NumbrixGame
+namespace NumbrixGame.View
 {
     /// <summary>
     ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class NumbrixGameBoardPage
     {
         #region Data members
 
         private readonly IList<TextBox> cells;
+        private readonly NumbrixGameBoardViewModel numbrixGameBoardViewModel;
 
         #endregion
 
         #region Constructors
 
-        public MainPage()
+        public NumbrixGameBoardPage()
         {
             this.InitializeComponent();
+            this.numbrixGameBoardViewModel = new NumbrixGameBoardViewModel();
             this.cells = this.createGridGameBoard(this.TempWidth, this.TempHeight);
         }
 
@@ -45,6 +48,7 @@ namespace NumbrixGame
                     var cell = this.createCell();
 
                     cell.Text = (j + width * (i - 1)).ToString();
+                    cell.Tag = this.numbrixGameBoardViewModel.CreateCell(j, i, j + width * (i - 1));
 
                     cells.Add(cell);
                 }
@@ -95,15 +99,21 @@ namespace NumbrixGame
             newTextBox.TextAlignment = TextAlignment.Center;
             newTextBox.BeforeTextChanging += this.NewCell_BeforeTextChanging;
             newTextBox.GotFocus += this.NewTextBoxOnGotFocus;
-            newTextBox.SelectionHighlightColor = new SolidColorBrush(Colors.DarkGray);
-            newTextBox.FocusVisualPrimaryBrush = new SolidColorBrush(Colors.DarkGray);
-            newTextBox.FocusVisualSecondaryBrush = new SolidColorBrush(Colors.Black);
+            newTextBox.TextChanged += this.NewTextBox_TextChanged;
             return newTextBox;
+        }
+
+        private void NewTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textbox = sender as TextBox ?? throw new NullReferenceException();
+
+            var cell = textbox.Tag as NumbrixGameBoardCell ?? throw new NullReferenceException();
+            cell.NumbrixValue = int.Parse(textbox.Text);
         }
 
         private void NewTextBoxOnGotFocus(object sender, RoutedEventArgs e)
         {
-            var textBox = sender as TextBox;
+            var textBox = sender as TextBox ?? throw new NullReferenceException();
 
             textBox.SelectAll();
         }
@@ -118,19 +128,9 @@ namespace NumbrixGame
             }
         }
 
-        #endregion
-
-        #region Constants
-
-        private readonly int TempWidth = 9;
-        private readonly int TempHeight = 9;
-
-        #endregion
-
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            var filePicker = new FileOpenPicker
-            {
+            var filePicker = new FileOpenPicker {
                 ViewMode = PickerViewMode.Thumbnail,
                 SuggestedStartLocation = PickerLocationId.Desktop
             };
@@ -139,8 +139,17 @@ namespace NumbrixGame
 
             var puzzleFile = await filePicker.PickSingleFileAsync();
 
-            CsvReader reader = new CsvReader();
+            var reader = new CsvReader();
             reader.LoadPuzzle(puzzleFile);
         }
+
+        #endregion
+
+        #region Constants
+
+        private readonly int TempWidth = 9;
+        private readonly int TempHeight = 9;
+
+        #endregion
     }
 }
