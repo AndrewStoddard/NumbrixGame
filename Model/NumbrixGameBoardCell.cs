@@ -16,7 +16,7 @@
 
         public int LinearCoordinate { get; set; }
 
-        public int NumbrixValue { get; set; }
+        public int? NumbrixValue { get; set; }
 
         public bool DefaultValue { get; set; }
 
@@ -58,6 +58,16 @@
             var y = linearCoordinate / TempHeight + 1;
 
             return (x, y);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is NumbrixGameBoardCell cell)
+            {
+                return cell.X == this.X && cell.Y == this.Y;
+            }
+
+            return false;
         }
 
         #endregion

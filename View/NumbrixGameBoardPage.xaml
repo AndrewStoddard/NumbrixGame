@@ -12,7 +12,7 @@
         <StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,25">
-                <Button Content="Load Puzzle" Click="Button_Click"/>
+                <Button Content="Load Puzzle" Click="LoadGameBoard"/>
             </StackPanel>
 
             <GridView x:Name="gridView" ItemsSource="{x:Bind Path=cells}" BorderBrush="Cyan" BorderThickness="1" >

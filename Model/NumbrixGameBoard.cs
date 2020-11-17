@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace NumbrixGame.Model
 {
@@ -16,14 +17,19 @@ namespace NumbrixGame.Model
 
         #endregion
 
-        #region Constructors
+        #region Methods
 
-        public NumbrixGameBoard()
+        public void CreateBlankGameBoard()
         {
             this.NumbrixGameBoardCells = new List<NumbrixGameBoardCell>();
+            for (var x = 1; x <= this.BoardWidth; x++)
+            {
+                for (var y = 1; y <= this.BoardHeight; y++)
+                {
+                    this.NumbrixGameBoardCells.Add(this.CreateCell(x, y));
+                }
+            }
         }
-
-        #endregion
 
         public void AddCells(IList<NumbrixGameBoardCell> cellsToAdd)
         {
@@ -37,5 +43,23 @@ namespace NumbrixGame.Model
         {
             this.NumbrixGameBoardCells.Add(cellToAdd);
         }
+
+        public NumbrixGameBoardCell FindCell(NumbrixGameBoardCell gameBoardCell)
+        {
+            return this.NumbrixGameBoardCells.Single(cell => cell.Equals(gameBoardCell));
+        }
+
+        public NumbrixGameBoardCell FindCell(int x, int y)
+        {
+            return this.NumbrixGameBoardCells.Single(cell => cell.X == x && cell.Y == y);
+        }
+
+        public NumbrixGameBoardCell CreateCell(int x, int y, int? numbrixValue = null, bool isDefault = false)
+        {
+            var newCell = new NumbrixGameBoardCell(x, y) {NumbrixValue = numbrixValue, DefaultValue = isDefault};
+            return newCell;
+        }
+
+        #endregion
     }
 }

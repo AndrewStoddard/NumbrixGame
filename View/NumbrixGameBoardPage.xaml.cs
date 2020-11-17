@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -114,7 +117,7 @@ namespace NumbrixGame.View
         private void NewTextBoxOnGotFocus(object sender, RoutedEventArgs e)
         {
             var textBox = sender as TextBox ?? throw new NullReferenceException();
-
+            Debug.WriteLine(this.cells.IndexOf(textBox) + 1);
             textBox.SelectAll();
         }
 
@@ -128,7 +131,12 @@ namespace NumbrixGame.View
             }
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private async void LoadGameBoard(object sender, RoutedEventArgs e)
+        {
+            this.numbrixGameBoardViewModel.LoadGameBoard(this.pickFile().Result);
+        }
+
+        private async Task<StorageFile> pickFile()
         {
             var filePicker = new FileOpenPicker {
                 ViewMode = PickerViewMode.Thumbnail,
@@ -137,10 +145,7 @@ namespace NumbrixGame.View
 
             filePicker.FileTypeFilter.Add(".csv");
 
-            var puzzleFile = await filePicker.PickSingleFileAsync();
-
-            var reader = new CsvReader();
-            reader.LoadPuzzle(puzzleFile);
+            return await filePicker.PickSingleFileAsync();
         }
 
         #endregion
