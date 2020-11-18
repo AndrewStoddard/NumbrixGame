@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Windows.Storage;
 using NumbrixGame.Annotations;
 using NumbrixGame.Model;
+using NumbrixGame.View;
 
 namespace NumbrixGame.ViewModel
 {
@@ -11,13 +13,23 @@ namespace NumbrixGame.ViewModel
     {
         #region Data members
 
+        private IList<GameBoardCellTextBox> gameBoardTextCells;
+
         #endregion
 
         #region Properties
 
         public NumbrixGameBoard NumbrixGameBoard { get; set; }
 
-        public List<NumbrixGameBoardCell> gameBoardCells { get; set; }
+        public IList<GameBoardCellTextBox> GameBoardTextCells
+        {
+            get => this.gameBoardTextCells;
+            set
+            {
+                this.gameBoardTextCells = value;
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.gameBoardTextCells)));
+            }
+        }
 
         #endregion
 
@@ -25,7 +37,6 @@ namespace NumbrixGame.ViewModel
 
         public NumbrixGameBoardViewModel()
         {
-            this.gameBoardCells = new List<NumbrixGameBoardCell>();
             this.NumbrixGameBoard = new NumbrixGameBoard();
         }
 
@@ -35,20 +46,13 @@ namespace NumbrixGame.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public NumbrixGameBoardCell CreateCell(int x, int y, int numbrixValue = -1, bool isDefault = false)
-        {
-            var newCell = new NumbrixGameBoardCell(x, y) {NumbrixValue = numbrixValue, DefaultValue = isDefault};
-            this.gameBoardCells.Add(newCell);
-            return newCell;
-        }
-
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public async void LoadGameBoard(StorageFile gameBoardFile)
+        public async Task LoadGameBoard(StorageFile gameBoardFile)
         {
             this.NumbrixGameBoard = await CsvReader.LoadPuzzle(gameBoardFile);
         }

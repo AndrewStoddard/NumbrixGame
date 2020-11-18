@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -9,7 +7,6 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using NumbrixGame.Model;
 using NumbrixGame.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -23,7 +20,7 @@ namespace NumbrixGame.View
     {
         #region Data members
 
-        private readonly IList<TextBox> cells;
+        private IList<GameBoardCellTextBox> cells;
         private readonly NumbrixGameBoardViewModel numbrixGameBoardViewModel;
 
         #endregion
@@ -34,41 +31,30 @@ namespace NumbrixGame.View
         {
             this.InitializeComponent();
             this.numbrixGameBoardViewModel = new NumbrixGameBoardViewModel();
-            this.cells = this.createGridGameBoard(this.TempWidth, this.TempHeight);
         }
 
         #endregion
 
         #region Methods
 
-        private IList<TextBox> createGridGameBoard(int width, int height)
+        private IList<GameBoardCellTextBox> createGridGameBoard()
         {
-            var cells = new List<TextBox>();
-            for (var i = 1; i <= height; i++)
-            {
-                for (var j = 1; j <= width; j++)
-                {
-                    var cell = this.createCell();
-
-                    cell.Text = (j + width * (i - 1)).ToString();
-                    cell.Tag = this.numbrixGameBoardViewModel.CreateCell(j, i, j + width * (i - 1));
-
-                    cells.Add(cell);
-                }
-            }
+            var cells = new List<GameBoardCellTextBox>();
 
             return cells;
         }
 
-        private void createGameBoard(int width, int height)
+        private void createGameBoard()
         {
             var parentStackPanel = new StackPanel();
             parentStackPanel.BorderBrush = new SolidColorBrush(Colors.Blue);
             parentStackPanel.BorderThickness = new Thickness(2);
+            parentStackPanel.HorizontalAlignment = HorizontalAlignment.Center;
+            parentStackPanel.VerticalAlignment = VerticalAlignment.Center;
 
             this.parentGrid.Children.Add(parentStackPanel);
 
-            for (var i = 1; i <= height; i++)
+            for (var i = 1; i <= this.numbrixGameBoardViewModel.NumbrixGameBoard.BoardHeight; i++)
             {
                 var stackPanel = new StackPanel();
 
@@ -80,72 +66,56 @@ namespace NumbrixGame.View
                 stackPanel.Padding = new Thickness(0);
                 parentStackPanel.Children.Add(stackPanel);
 
-                for (var j = 1; j <= width; j++)
+                foreach (var gameBoardCell in this.numbrixGameBoardViewModel.NumbrixGameBoard.NumbrixGameBoardCells)
                 {
-                    var cell = this.createCell();
-
-                    cell.Text = (j + width * (i - 1)).ToString();
-
-                    stackPanel.Children.Add(cell);
+                    if (gameBoardCell.Y == i)
+                    {
+                        var cell = this.createCell(gameBoardCell.X, gameBoardCell.Y, gameBoardCell.NumbrixValue,
+                            gameBoardCell.DefaultValue);
+                        stackPanel.Children.Add(cell);
+                    }
                 }
             }
         }
 
-        private TextBox createCell()
+        private GameBoardCellTextBox createCell(int x, int y, int? value = null, bool isDefault = false)
         {
-            var newTextBox = new TextBox();
-            newTextBox.Width = 50;
-            newTextBox.BorderBrush = new SolidColorBrush(Colors.Transparent);
-            newTextBox.BorderThickness = new Thickness(0);
-            newTextBox.Height = 50;
-            newTextBox.FontSize = 24;
-            newTextBox.TextAlignment = TextAlignment.Center;
-            newTextBox.BeforeTextChanging += this.NewCell_BeforeTextChanging;
-            newTextBox.GotFocus += this.NewTextBoxOnGotFocus;
-            newTextBox.TextChanged += this.NewTextBox_TextChanged;
+            var newTextBox = new GameBoardCellTextBox();
+            newTextBox.MaxValue = this.numbrixGameBoardViewModel.NumbrixGameBoard.BoardHeight *
+                                  this.numbrixGameBoardViewModel.NumbrixGameBoard.BoardWidth;
+            newTextBox.X = x;
+            newTextBox.Y = y;
+            if (value != null)
+            {
+                newTextBox.Text = value.ToString();
+            }
+
+            newTextBox.IsEnabled = !isDefault;
+
             return newTextBox;
         }
 
-        private void NewTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        private async void loadGameBoard(object sender, RoutedEventArgs e)
         {
-            var textbox = sender as TextBox ?? throw new NullReferenceException();
-
-            var cell = textbox.Tag as NumbrixGameBoardCell ?? throw new NullReferenceException();
-            cell.NumbrixValue = int.Parse(textbox.Text);
-        }
-
-        private void NewTextBoxOnGotFocus(object sender, RoutedEventArgs e)
-        {
-            var textBox = sender as TextBox ?? throw new NullReferenceException();
-            Debug.WriteLine(this.cells.IndexOf(textBox) + 1);
-            textBox.SelectAll();
-        }
-
-        private void NewCell_BeforeTextChanging(TextBox sender, TextBoxBeforeTextChangingEventArgs args)
-        {
-            if (!string.IsNullOrEmpty(args.NewText))
+            var file = await pickFile();
+            if (file != null)
             {
-                args.Cancel = args.NewText.Any(c => !char.IsDigit(c)) ||
-                              int.Parse(args.NewText) > this.TempHeight * this.TempWidth ||
-                              args.NewText.StartsWith("0");
+                await this.numbrixGameBoardViewModel.LoadGameBoard(file);
+                this.createGameBoard();
             }
         }
 
-        private async void LoadGameBoard(object sender, RoutedEventArgs e)
-        {
-            this.numbrixGameBoardViewModel.LoadGameBoard(this.pickFile().Result);
-        }
-
-        private async Task<StorageFile> pickFile()
+        private static async Task<StorageFile> pickFile()
         {
             var filePicker = new FileOpenPicker {
                 ViewMode = PickerViewMode.Thumbnail,
-                SuggestedStartLocation = PickerLocationId.Desktop
+                SuggestedStartLocation = PickerLocationId.DocumentsLibrary
             };
 
             filePicker.FileTypeFilter.Add(".csv");
 
-            return await filePicker.PickSingleFileAsync();
+            var file = await filePicker.PickSingleFileAsync();
+            return file;
         }
 
         #endregion

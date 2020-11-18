@@ -121,6 +121,9 @@
     </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\NumbrixGameBoardViewModel.cs" />
+    <Compile Include="View\Controls\GameBoardCellTextBox.xaml.cs">
+      <DependentUpon>GameBoardCellTextBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\NumbrixGameBoardPage.xaml.cs">
       <DependentUpon>NumbrixGameBoardPage.xaml</DependentUpon>
     </Compile>
@@ -150,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\Controls\GameBoardCellTextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\NumbrixGameBoardPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -161,6 +168,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <None Include="PrebuiltGames\Puzzle1.csv" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

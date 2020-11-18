@@ -56,8 +56,24 @@ namespace NumbrixGame.Model
 
         public NumbrixGameBoardCell CreateCell(int x, int y, int? numbrixValue = null, bool isDefault = false)
         {
-            var newCell = new NumbrixGameBoardCell(x, y) {NumbrixValue = numbrixValue, DefaultValue = isDefault};
+            var newCell = new NumbrixGameBoardCell(x, y) {
+                NumbrixValue = numbrixValue, DefaultValue = isDefault, LinearCoordinate = this.ConvertXYToLinear(x, y)
+            };
             return newCell;
+        }
+
+        public int ConvertXYToLinear(int x, int y)
+        {
+            var value = x + this.BoardWidth * (y - 1);
+            return value;
+        }
+
+        public (int x, int y) ConvertLinearToXY(int linearCoordinate)
+        {
+            var x = linearCoordinate % this.BoardWidth == 0 ? this.BoardWidth : linearCoordinate % this.BoardWidth;
+            var y = linearCoordinate / this.BoardHeight + 1;
+
+            return (x, y);
         }
 
         #endregion
