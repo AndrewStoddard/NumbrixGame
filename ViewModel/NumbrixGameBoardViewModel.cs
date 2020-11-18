@@ -46,6 +46,11 @@ namespace NumbrixGame.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public void UpdateCell(int x, int y, int? value)
+        {
+            this.NumbrixGameBoard.FindCell(x, y).NumbrixValue = value;
+        }
+
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

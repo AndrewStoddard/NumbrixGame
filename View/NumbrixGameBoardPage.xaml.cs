@@ -91,8 +91,15 @@ namespace NumbrixGame.View
             }
 
             newTextBox.IsEnabled = !isDefault;
+            newTextBox.OnValueChanged += this.OnValueInTextBoxChange;
 
             return newTextBox;
+        }
+
+        private void OnValueInTextBoxChange(GameBoardCellTextBox gameBoardCellTextBox)
+        {
+            this.numbrixGameBoardViewModel.UpdateCell(gameBoardCellTextBox.X, gameBoardCellTextBox.Y,
+                gameBoardCellTextBox.Value);
         }
 
         private async void loadGameBoard(object sender, RoutedEventArgs e)
