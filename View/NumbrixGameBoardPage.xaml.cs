@@ -33,6 +33,7 @@ namespace NumbrixGame.View
             this.InitializeComponent();
             this.numbrixGameBoardViewModel = new NumbrixGameBoardViewModel();
             this.createGameBoard();
+            this.solutionCheckMessage.Visibility = Visibility.Collapsed;
         }
 
         #endregion
@@ -130,7 +131,20 @@ namespace NumbrixGame.View
         private void checkSolution(object sender, RoutedEventArgs e)
         {
             var result = this.numbrixGameBoardViewModel.CheckSolution();
+            this.displaySolutionResult(result);
             Debug.WriteLine(result);
+        }
+
+        private void displaySolutionResult(bool solved)
+        {
+            string message = "Your solution is incorrect!";
+            if (solved)
+            {
+                message = "Congratulations! You successfully solved the puzzle!";
+            }
+
+            this.solutionCheckMessage.Visibility = Visibility.Visible;
+            this.solutionCheckMessage.Text = message;
         }
 
         #endregion

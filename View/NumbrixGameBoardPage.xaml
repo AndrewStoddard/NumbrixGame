@@ -14,7 +14,7 @@
             <AppBarButton Icon="Add" Label="Load" Click="loadGameBoard"/>
             <AppBarButton Icon="Accept" Label="Check" Click="checkSolution"/>
         </CommandBar>
-
+        <TextBlock HorizontalAlignment="Center" Margin="0,90,0,0" Text="Check Solution Message" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14" x:Name="solutionCheckMessage"/>
 
 
     </Grid>
