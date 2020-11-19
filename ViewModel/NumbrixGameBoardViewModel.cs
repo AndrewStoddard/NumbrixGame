@@ -15,6 +15,7 @@ namespace NumbrixGame.ViewModel
         #region Data members
 
         private IList<GameBoardCellTextBox> gameBoardTextCells;
+        private PuzzleManager puzzleManager;
 
         #endregion
 
@@ -39,6 +40,7 @@ namespace NumbrixGame.ViewModel
         public NumbrixGameBoardViewModel()
         {
             this.NumbrixGameBoard = new NumbrixGameBoard();
+            this.puzzleManager = new PuzzleManager();
             this.loadStartingPuzzle();
         }
 
@@ -71,30 +73,12 @@ namespace NumbrixGame.ViewModel
 
         private void loadStartingPuzzle()
         {
-            var gameBoard = new NumbrixGameBoard();
-            var dataFileLines = StartingPuzzles.puzzleOne.Replace("\r", "").Split("\n");
+            this.NumbrixGameBoard = this.puzzleManager.CurrentPuzzle;
+        }
 
-            for (var i = 0; i < dataFileLines.Length - 1; i++)
-            {
-                var line = dataFileLines[i];
-                if (i == 0)
-                {
-                    var settings = line.Split(',');
-
-                    gameBoard.BoardWidth = string.IsNullOrEmpty(settings[0]) ? -1 : int.Parse(settings[0]);
-                    gameBoard.BoardHeight = string.IsNullOrEmpty(settings[1]) ? -1 : int.Parse(settings[1]);
-                    gameBoard.CreateBlankGameBoard();
-                }
-                else
-                {
-                    var cellInfo = line.Split(',');
-                    var currentGameBoardCell = gameBoard.FindCell(int.Parse(cellInfo[0]), int.Parse(cellInfo[1]));
-                    currentGameBoardCell.DefaultValue = bool.Parse(cellInfo[3]);
-                    currentGameBoardCell.NumbrixValue = int.Parse(cellInfo[2]);
-                }
-            }
-
-            this.NumbrixGameBoard = gameBoard;
+        public void NextPuzzle()
+        {
+            this.NumbrixGameBoard = this.puzzleManager.NextPuzzle;
         }
 
         #endregion

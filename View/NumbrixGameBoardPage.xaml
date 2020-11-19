@@ -6,7 +6,7 @@
     x:Class="NumbrixGame.View.NumbrixGameBoardPage"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Grid x:Name="parentGrid">
+    <Grid>
         <CommandBar>
             <CommandBar.Content>
                 <Grid/>
@@ -14,7 +14,9 @@
             <AppBarButton Icon="Add" Label="Load" Click="loadGameBoard"/>
             <AppBarButton Icon="Accept" Label="Check" Click="checkSolution"/>
         </CommandBar>
+        <Grid x:Name="parentGrid"></Grid>
         <TextBlock HorizontalAlignment="Center" Margin="0,90,0,0" Text="Check Solution Message" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14" x:Name="solutionCheckMessage"/>
+        <Button Content="Next Puzzle" Margin="1091,468,0,0" VerticalAlignment="Top" Click="NextPuzzle_OnClick"/>
 
 
     </Grid>
