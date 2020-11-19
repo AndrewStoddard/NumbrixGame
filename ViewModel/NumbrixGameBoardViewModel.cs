@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using NumbrixGame.Model;
-using NumbrixGame.PrebuiltGames;
 using NumbrixGame.View;
 
 namespace NumbrixGame.ViewModel
@@ -13,6 +12,7 @@ namespace NumbrixGame.ViewModel
         #region Data members
 
         private IList<GameBoardCellTextBox> gameBoardTextCells;
+        private readonly PuzzleManager puzzleManager;
 
         #endregion
 
@@ -40,8 +40,20 @@ namespace NumbrixGame.ViewModel
 
         public NumbrixGameBoardViewModel()
         {
+            this.puzzleManager = new PuzzleManager();
+
             this.Model = this.loadStartingPuzzle();
             this.NumbrixGameBoardCells = this.createNumbrixGameBoardCells();
+        }
+
+        #endregion
+
+        #region Methods
+
+        public void NextPuzzle()
+        {
+            this.Model = this.puzzleManager.NextPuzzle;
+            this.createNumbrixGameBoardCells();
         }
 
         #endregion
@@ -97,32 +109,9 @@ namespace NumbrixGame.ViewModel
 
         private NumbrixGameBoard loadStartingPuzzle()
         {
-            var gameBoard = new NumbrixGameBoard();
-            var dataFileLines = StartingPuzzles.puzzleOne.Replace("\r", "").Split("\n");
+            return this.puzzleManager.CurrentPuzzle;
 
-            for (var i = 0; i < dataFileLines.Length - 1; i++)
-            {
-                var line = dataFileLines[i];
-                if (i == 0)
-                {
-                    var settings = line.Split(',');
-
-                    gameBoard.BoardWidth = string.IsNullOrEmpty(settings[0]) ? -1 : int.Parse(settings[0]);
-                    gameBoard.BoardHeight = string.IsNullOrEmpty(settings[1]) ? -1 : int.Parse(settings[1]);
-                    gameBoard.CreateBlankGameBoard();
-                }
-                else
-                {
-                    var cellInfo = line.Split(',');
-                    var currentGameBoardCell = gameBoard.FindCell(int.Parse(cellInfo[0]), int.Parse(cellInfo[1]));
-                    currentGameBoardCell.DefaultValue = bool.Parse(cellInfo[3]);
-                    currentGameBoardCell.NumbrixValue = int.Parse(cellInfo[2]);
-                }
-            }
-
-            return gameBoard;
+            #endregion
         }
-
-        #endregion
     }
 }
