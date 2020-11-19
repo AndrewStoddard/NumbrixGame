@@ -6,7 +6,6 @@ using Windows.Storage.Pickers;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using NumbrixGame.ViewModel;
 
@@ -82,27 +81,14 @@ namespace NumbrixGame.View
 
         private GameBoardCellTextBox createCell(int x, int y, int? value = null, bool isDefault = false)
         {
-            var newTextBox = new GameBoardCellTextBox();
-            newTextBox.MaxValue = this.numbrixGameBoardViewModel.BoardHeight *
-                                  this.numbrixGameBoardViewModel.BoardWidth;
-            newTextBox.X = x;
-            newTextBox.Y = y;
-            if (value != null)
-            {
-                newTextBox.Text = value.ToString();
-            }
+            var cellTextBoxControl = new GameBoardCellTextBox();
+            cellTextBoxControl.MaxValue =
+                this.numbrixGameBoardViewModel.BoardHeight * this.numbrixGameBoardViewModel.BoardWidth;
 
-            newTextBox.IsEnabled = !isDefault;
+            cellTextBoxControl.IsEnabled = !isDefault;
+            cellTextBoxControl.DataContext = this.numbrixGameBoardViewModel.FindCell(x, y);
 
-            newTextBox.SetBinding(GameBoardCellTextBox.NumbrixValueProperty,
-                new Binding {
-                    Source = this.numbrixGameBoardViewModel.FindCell(x, y),
-                    Path = new PropertyPath("NumbrixValue"),
-                    Mode = BindingMode.TwoWay,
-                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-                });
-
-            return newTextBox;
+            return cellTextBoxControl;
         }
 
         private async void loadGameBoard(object sender, RoutedEventArgs e)

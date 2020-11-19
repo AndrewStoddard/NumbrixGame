@@ -9,12 +9,12 @@ namespace NumbrixGame.Converters
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return (int?) value;
+            return value == null ? string.Empty : value.ToString();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            return (int?) value;
+            return string.IsNullOrEmpty(value.ToString()) ? (int?) null : int.Parse(value.ToString());
         }
 
         #endregion

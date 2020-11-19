@@ -49,6 +49,8 @@ namespace NumbrixGame.ViewModel
             }
         }
 
+        public bool IsEnabled => !this.Model.DefaultValue;
+
         public NumbrixGameBoardCell Model { get; set; }
 
         #endregion
