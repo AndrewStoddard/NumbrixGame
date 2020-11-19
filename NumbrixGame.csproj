@@ -123,6 +123,7 @@
     <Compile Include="Model\NumbrixSolverAgent.cs" />
     <Compile Include="PrebuiltGames\StartingPuzzles.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModel\NumbrixGameBoardCellViewModel.cs" />
     <Compile Include="ViewModel\NumbrixGameBoardViewModel.cs" />
     <Compile Include="View\Controls\GameBoardCellTextBox.xaml.cs">
       <DependentUpon>GameBoardCellTextBox.xaml</DependentUpon>

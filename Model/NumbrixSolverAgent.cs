@@ -26,13 +26,13 @@ namespace NumbrixGame.Model
 
         public void Move()
         {
-            var nextMove = this.findPossibleMove();
+            var nextMove = this.findNextMove();
             this.agentLocation = nextMove;
         }
 
         public bool CanMove()
         {
-            var nextMove = this.findPossibleMove();
+            var nextMove = this.findNextMove();
             return nextMove != null && !this.IsFinished();
         }
 
@@ -46,10 +46,21 @@ namespace NumbrixGame.Model
             return new NumbrixGameBoardCellNeighbors(this.agentGameBoard, this.agentLocation).GetListOfNeighbors();
         }
 
-        private NumbrixGameBoardCell findPossibleMove()
+        private NumbrixGameBoardCell findNextMove()
         {
             return this.findAgentNeighbors().SingleOrDefault(
                 cell => cell != null && cell.NumbrixValue == this.agentLocation.NumbrixValue + 1);
+        }
+
+        private NumbrixGameBoardCell findPreviousMove()
+        {
+            return this.findAgentNeighbors().SingleOrDefault(
+                cell => cell != null && cell.NumbrixValue == this.agentLocation.NumbrixValue - 1);
+        }
+
+        private List<NumbrixGameBoardCell> findPossibleNewMovements()
+        {
+            return this.findAgentNeighbors().Where(cell => cell != null && cell.NumbrixValue == (int?) null).ToList();
         }
 
         #endregion

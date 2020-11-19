@@ -15,6 +15,22 @@ namespace NumbrixGame.Model
 
         #endregion
 
+        #region Constructors
+
+        public NumbrixGameBoard(int boardWidth, int boardHeight)
+        {
+            this.BoardWidth = boardWidth;
+            this.BoardHeight = boardHeight;
+            this.CreateBlankGameBoard();
+        }
+
+        public NumbrixGameBoard()
+        {
+            this.NumbrixGameBoardCells = new List<NumbrixGameBoardCell>();
+        }
+
+        #endregion
+
         #region Methods
 
         public void CreateBlankGameBoard()

@@ -18,6 +18,10 @@ namespace NumbrixGame.View
 
         #region Data members
 
+        public static readonly DependencyProperty NumbrixValueProperty =
+            DependencyProperty.Register("NumbrixValue", typeof(int?),
+                typeof(GameBoardCellTextBox), null);
+
         private bool isEnabled;
         private string text;
 
@@ -27,7 +31,17 @@ namespace NumbrixGame.View
 
         public int X { get; set; }
         public int Y { get; set; }
-        public int? Value { get; set; }
+
+        public int? Value
+        {
+            get => (int?) GetValue(NumbrixValueProperty);
+            set
+            {
+                SetValue(NumbrixValueProperty, value);
+
+                this.text = value == null ? string.Empty : value.ToString();
+            }
+        }
 
         public string Text
         {

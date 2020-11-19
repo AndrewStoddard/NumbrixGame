@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
-using NumbrixGame.Annotations;
 using NumbrixGame.Model;
 using NumbrixGame.PrebuiltGames;
 using NumbrixGame.View;
 
 namespace NumbrixGame.ViewModel
 {
-    public class NumbrixGameBoardViewModel : INotifyPropertyChanged
+    public class NumbrixGameBoardViewModel
     {
         #region Data members
 
@@ -20,16 +18,20 @@ namespace NumbrixGame.ViewModel
 
         #region Properties
 
-        public NumbrixGameBoard NumbrixGameBoard { get; set; }
+        public NumbrixGameBoard Model { get; set; }
 
-        public IList<GameBoardCellTextBox> GameBoardTextCells
+        public IList<NumbrixGameBoardCellViewModel> NumbrixGameBoardCells { get; set; }
+
+        public int BoardWidth
         {
-            get => this.gameBoardTextCells;
-            set
-            {
-                this.gameBoardTextCells = value;
-                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.gameBoardTextCells)));
-            }
+            get => this.Model.BoardWidth;
+            set => this.Model.BoardWidth = value;
+        }
+
+        public int BoardHeight
+        {
+            get => this.Model.BoardHeight;
+            set => this.Model.BoardHeight = value;
         }
 
         #endregion
@@ -38,38 +40,62 @@ namespace NumbrixGame.ViewModel
 
         public NumbrixGameBoardViewModel()
         {
-            this.NumbrixGameBoard = new NumbrixGameBoard();
-            this.loadStartingPuzzle();
+            this.Model = this.loadStartingPuzzle();
+            this.NumbrixGameBoardCells = this.createNumbrixGameBoardCells();
         }
 
         #endregion
 
         #region Methods
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        private IList<NumbrixGameBoardCellViewModel> createNumbrixGameBoardCells()
+        {
+            var result = new List<NumbrixGameBoardCellViewModel>();
+            foreach (var gameBoardCell in this.Model.NumbrixGameBoardCells)
+            {
+                result.Add(new NumbrixGameBoardCellViewModel(gameBoardCell));
+            }
+
+            return result;
+        }
+
+        public NumbrixGameBoardCellViewModel FindCell(int x, int y)
+        {
+            return this.NumbrixGameBoardCells.SingleOrDefault(cell => cell.X == x && cell.Y == y);
+        }
+
+        public NumbrixGameBoardCellViewModel FindCell(int? value)
+        {
+            return this.NumbrixGameBoardCells.SingleOrDefault(cell => cell.NumbrixValue == value);
+        }
 
         public bool CheckSolution()
         {
-            return NumbrixSolver.CheckForSolved(this.NumbrixGameBoard);
+            return NumbrixSolver.CheckForSolved(this.Model);
         }
 
         public void UpdateCell(int x, int y, int? value)
         {
-            this.NumbrixGameBoard.FindCell(x, y).NumbrixValue = value;
+            this.Model.FindCell(x, y).NumbrixValue = value;
         }
 
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public void ClearGameBoard()
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            foreach (var gameBoardCell in this.Model.NumbrixGameBoardCells)
+            {
+                if (!gameBoardCell.DefaultValue)
+                {
+                    gameBoardCell.NumbrixValue = null;
+                }
+            }
         }
 
         public async Task LoadGameBoard(StorageFile gameBoardFile)
         {
-            this.NumbrixGameBoard = await CsvReader.LoadPuzzle(gameBoardFile);
+            this.Model = await CsvReader.LoadPuzzle(gameBoardFile);
         }
 
-        private void loadStartingPuzzle()
+        private NumbrixGameBoard loadStartingPuzzle()
         {
             var gameBoard = new NumbrixGameBoard();
             var dataFileLines = StartingPuzzles.puzzleOne.Replace("\r", "").Split("\n");
@@ -94,7 +120,7 @@ namespace NumbrixGame.ViewModel
                 }
             }
 
-            this.NumbrixGameBoard = gameBoard;
+            return gameBoard;
         }
 
         #endregion

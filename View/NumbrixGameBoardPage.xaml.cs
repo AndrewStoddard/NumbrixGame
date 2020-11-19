@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -7,6 +6,7 @@ using Windows.Storage.Pickers;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
 using NumbrixGame.ViewModel;
 
@@ -21,7 +21,6 @@ namespace NumbrixGame.View
     {
         #region Data members
 
-        private IList<GameBoardCellTextBox> cells;
         private readonly NumbrixGameBoardViewModel numbrixGameBoardViewModel;
 
         #endregion
@@ -32,6 +31,7 @@ namespace NumbrixGame.View
         {
             this.InitializeComponent();
             this.numbrixGameBoardViewModel = new NumbrixGameBoardViewModel();
+
             this.createGameBoard();
             this.solutionCheckMessage.Visibility = Visibility.Collapsed;
         }
@@ -39,13 +39,6 @@ namespace NumbrixGame.View
         #endregion
 
         #region Methods
-
-        private IList<GameBoardCellTextBox> createGridGameBoard()
-        {
-            var cells = new List<GameBoardCellTextBox>();
-
-            return cells;
-        }
 
         private void createGameBoard()
         {
@@ -57,7 +50,7 @@ namespace NumbrixGame.View
 
             this.parentGrid.Children.Add(parentStackPanel);
 
-            for (var i = 1; i <= this.numbrixGameBoardViewModel.NumbrixGameBoard.BoardHeight; i++)
+            for (var i = 1; i <= this.numbrixGameBoardViewModel.BoardHeight; i++)
             {
                 var stackPanel = new StackPanel();
 
@@ -69,7 +62,7 @@ namespace NumbrixGame.View
                 stackPanel.Padding = new Thickness(0);
                 parentStackPanel.Children.Add(stackPanel);
 
-                foreach (var gameBoardCell in this.numbrixGameBoardViewModel.NumbrixGameBoard.NumbrixGameBoardCells)
+                foreach (var gameBoardCell in this.numbrixGameBoardViewModel.NumbrixGameBoardCells)
                 {
                     if (gameBoardCell.Y == i)
                     {
@@ -84,8 +77,8 @@ namespace NumbrixGame.View
         private GameBoardCellTextBox createCell(int x, int y, int? value = null, bool isDefault = false)
         {
             var newTextBox = new GameBoardCellTextBox();
-            newTextBox.MaxValue = this.numbrixGameBoardViewModel.NumbrixGameBoard.BoardHeight *
-                                  this.numbrixGameBoardViewModel.NumbrixGameBoard.BoardWidth;
+            newTextBox.MaxValue = this.numbrixGameBoardViewModel.BoardHeight *
+                                  this.numbrixGameBoardViewModel.BoardWidth;
             newTextBox.X = x;
             newTextBox.Y = y;
             if (value != null)
@@ -94,6 +87,11 @@ namespace NumbrixGame.View
             }
 
             newTextBox.IsEnabled = !isDefault;
+            newTextBox.SetBinding(GameBoardCellTextBox.NumbrixValueProperty,
+                new Binding {
+                    Source = this.numbrixGameBoardViewModel.FindCell(x, y).NumbrixValue,
+                    Mode = BindingMode.TwoWay
+                });
             newTextBox.OnValueChanged += this.OnValueInTextBoxChange;
 
             return newTextBox;
@@ -137,7 +135,7 @@ namespace NumbrixGame.View
 
         private void displaySolutionResult(bool solved)
         {
-            string message = "Your solution is incorrect!";
+            var message = "Your solution is incorrect!";
             if (solved)
             {
                 message = "Congratulations! You successfully solved the puzzle!";
@@ -147,12 +145,14 @@ namespace NumbrixGame.View
             this.solutionCheckMessage.Text = message;
         }
 
+        private void clearBoard(object sender, RoutedEventArgs e)
+        {
+            this.numbrixGameBoardViewModel.ClearGameBoard();
+        }
+
         #endregion
 
         #region Constants
-
-        private readonly int TempWidth = 9;
-        private readonly int TempHeight = 9;
 
         #endregion
     }
