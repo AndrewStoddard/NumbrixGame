@@ -24,7 +24,7 @@ namespace NumbrixGame.Model
 
         #region Methods
 
-        public bool Move()
+        public void Move()
         {
             var nextMove = this.findPossibleMove();
             this.agentLocation = nextMove;
