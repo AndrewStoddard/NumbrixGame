@@ -120,6 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\NumbrixValueToTextBoxText.cs" />
+    <Compile Include="Datatier\DatatierConstants.cs" />
     <Compile Include="Model\NumbrixSolver.cs" />
     <Compile Include="Model\NumbrixSolverAgent.cs" />
     <Compile Include="Model\PuzzleManager.cs" />
@@ -133,7 +134,7 @@
     <Compile Include="View\NumbrixGameBoardPage.xaml.cs">
       <DependentUpon>NumbrixGameBoardPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\CsvReader.cs" />
+    <Compile Include="Datatier\NumbrixGameBoardReader.cs" />
     <Compile Include="Model\NumbrixGameBoardCell.cs" />
     <Compile Include="Model\NumbrixGameBoard.cs" />
     <Compile Include="Model\NumbrixGameBoardCellNeighbors.cs" />

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
+using NumbrixGame.Datatier;
 using NumbrixGame.Model;
 using NumbrixGame.View;
 
@@ -21,6 +22,12 @@ namespace NumbrixGame.ViewModel
         public NumbrixGameBoard Model { get; set; }
 
         public IList<NumbrixGameBoardCellViewModel> NumbrixGameBoardCells { get; set; }
+
+        public int GameBoardNumber
+        {
+            get => this.Model.GameBoardNumber;
+            set => this.Model.GameBoardNumber = value;
+        }
 
         public int BoardWidth
         {
@@ -95,7 +102,7 @@ namespace NumbrixGame.ViewModel
         {
             foreach (var gameBoardCell in this.NumbrixGameBoardCells)
             {
-                if (!gameBoardCell.DefaultValue)
+                if (!gameBoardCell.IsDefaultValue)
                 {
                     gameBoardCell.NumbrixValue = null;
                 }
@@ -104,7 +111,7 @@ namespace NumbrixGame.ViewModel
 
         public async Task LoadGameBoard(StorageFile gameBoardFile)
         {
-            this.Model = await CsvReader.LoadPuzzle(gameBoardFile);
+            this.Model = await NumbrixGameBoardReader.LoadPuzzle(gameBoardFile);
         }
 
         private NumbrixGameBoard loadStartingPuzzle()

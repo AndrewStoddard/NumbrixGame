@@ -39,17 +39,17 @@ namespace NumbrixGame.ViewModel
             }
         }
 
-        public bool DefaultValue
+        public bool IsDefaultValue
         {
-            get => this.Model.DefaultValue;
+            get => this.Model.IsDefaultValue;
             set
             {
-                this.Model.DefaultValue = value;
+                this.Model.IsDefaultValue = value;
                 this.OnPropertyChanged();
             }
         }
 
-        public bool IsEnabled => !this.Model.DefaultValue;
+        public bool IsEnabled => !this.Model.IsDefaultValue;
 
         public NumbrixGameBoardCell Model { get; set; }
 

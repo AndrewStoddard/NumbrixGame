@@ -12,6 +12,7 @@ namespace NumbrixGame.Model
         public int BoardWidth { get; set; }
 
         public int BoardHeight { get; set; }
+        public int GameBoardNumber { get; set; }
 
         #endregion
 
@@ -81,7 +82,7 @@ namespace NumbrixGame.Model
         public NumbrixGameBoardCell CreateCell(int x, int y, int? numbrixValue = null, bool isDefault = false)
         {
             var newCell = new NumbrixGameBoardCell(x, y) {
-                NumbrixValue = numbrixValue, DefaultValue = isDefault, LinearCoordinate = this.ConvertXYToLinear(x, y)
+                NumbrixValue = numbrixValue, IsDefaultValue = isDefault, LinearCoordinate = this.ConvertXYToLinear(x, y)
             };
             return newCell;
         }

@@ -72,7 +72,7 @@ namespace NumbrixGame.View
                     if (gameBoardCell.Y == i)
                     {
                         var cell = this.createCell(gameBoardCell.X, gameBoardCell.Y, gameBoardCell.NumbrixValue,
-                            gameBoardCell.DefaultValue);
+                            gameBoardCell.IsDefaultValue);
                         stackPanel.Children.Add(cell);
                     }
                 }

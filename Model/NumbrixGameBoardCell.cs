@@ -11,7 +11,7 @@
 
         public int? NumbrixValue { get; set; }
 
-        public bool DefaultValue { get; set; }
+        public bool IsDefaultValue { get; set; }
 
         #endregion
 
