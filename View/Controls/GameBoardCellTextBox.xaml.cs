@@ -15,6 +15,8 @@ namespace NumbrixGame.View
         #region Properties
 
         public int MaxValue { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
 
         #endregion
 

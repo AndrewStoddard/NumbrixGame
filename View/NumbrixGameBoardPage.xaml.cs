@@ -1,11 +1,14 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
+using Windows.System;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using NumbrixGame.ViewModel;
 
@@ -21,6 +24,7 @@ namespace NumbrixGame.View
         #region Data members
 
         private readonly NumbrixGameBoardViewModel numbrixGameBoardViewModel;
+        private List<GameBoardCellTextBox> gameBoardCellTextBoxes;
 
         #endregion
 
@@ -30,6 +34,7 @@ namespace NumbrixGame.View
         {
             this.InitializeComponent();
             this.numbrixGameBoardViewModel = new NumbrixGameBoardViewModel();
+            this.gameBoardCellTextBoxes = new List<GameBoardCellTextBox>();
 
             this.createGameBoard();
             this.solutionCheckMessage.Visibility = Visibility.Collapsed;
@@ -39,14 +44,19 @@ namespace NumbrixGame.View
 
         #region Methods
 
-        private void createGameBoard()
+        private void clearPuzzle()
         {
-            var children = this.parentGrid.Children;
-            foreach (var currentChild in children)
+            this.gameBoardCellTextBoxes = new List<GameBoardCellTextBox>();
+
+            foreach (var currentChild in this.parentGrid.Children)
             {
                 this.parentGrid.Children.Remove(currentChild);
             }
+        }
 
+        private void createGameBoard()
+        {
+            this.clearPuzzle();
             var parentStackPanel = new StackPanel();
             parentStackPanel.BorderBrush = new SolidColorBrush(Colors.Blue);
             parentStackPanel.BorderThickness = new Thickness(2);
@@ -71,34 +81,68 @@ namespace NumbrixGame.View
                 {
                     if (gameBoardCell.Y == i)
                     {
-                        var cell = this.createCell(gameBoardCell.X, gameBoardCell.Y, gameBoardCell.NumbrixValue,
-                            gameBoardCell.IsDefaultValue);
+                        var cell = this.createCell(gameBoardCell.X, gameBoardCell.Y);
+                        this.gameBoardCellTextBoxes.Add(cell);
                         stackPanel.Children.Add(cell);
                     }
                 }
             }
         }
 
-        private GameBoardCellTextBox createCell(int x, int y, int? value = null, bool isDefault = false)
+        private GameBoardCellTextBox createCell(int x, int y)
         {
             var cellTextBoxControl = new GameBoardCellTextBox();
-            cellTextBoxControl.MaxValue =
-                this.numbrixGameBoardViewModel.BoardHeight * this.numbrixGameBoardViewModel.BoardWidth;
-
-            cellTextBoxControl.IsEnabled = !isDefault;
+            cellTextBoxControl.MaxValue = this.numbrixGameBoardViewModel.MaxBoardValue;
             cellTextBoxControl.DataContext = this.numbrixGameBoardViewModel.FindCell(x, y);
-
+            cellTextBoxControl.X = x;
+            cellTextBoxControl.Y = y;
+            cellTextBoxControl.KeyDown += this.OnArrowKeyDown;
             return cellTextBoxControl;
+        }
+
+        private void OnArrowKeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            var cellTextBox = sender as GameBoardCellTextBox;
+            if (cellTextBox == null)
+            {
+                return;
+            }
+
+            switch (e.Key)
+            {
+                case VirtualKey.Right:
+                    this.gameBoardCellTextBoxes.SingleOrDefault(
+                            cell => cellTextBox.X + 1 == cell.X && cellTextBox.Y == cell.Y)
+                        ?.Focus(FocusState.Keyboard);
+                    break;
+                case VirtualKey.Left:
+                    this.gameBoardCellTextBoxes.SingleOrDefault(
+                            cell => cellTextBox.X - 1 == cell.X && cellTextBox.Y == cell.Y)
+                        ?.Focus(FocusState.Keyboard);
+                    break;
+                case VirtualKey.Up:
+                    this.gameBoardCellTextBoxes.SingleOrDefault(
+                            cell => cellTextBox.X == cell.X && cellTextBox.Y - 1 == cell.Y)
+                        ?.Focus(FocusState.Keyboard);
+                    break;
+                case VirtualKey.Down:
+                    this.gameBoardCellTextBoxes.SingleOrDefault(
+                            cell => cellTextBox.X == cell.X && cellTextBox.Y + 1 == cell.Y)
+                        ?.Focus(FocusState.Keyboard);
+                    break;
+            }
         }
 
         private async void loadGameBoard(object sender, RoutedEventArgs e)
         {
+            /*this.clearPuzzle();
             var file = await pickFile();
             if (file != null)
             {
                 await this.numbrixGameBoardViewModel.LoadGameBoard(file);
                 this.createGameBoard();
-            }
+            }*/
+            //TODO - Implement
         }
 
         private static async Task<StorageFile> pickFile()
@@ -116,9 +160,7 @@ namespace NumbrixGame.View
 
         private void checkSolution(object sender, RoutedEventArgs e)
         {
-            var result = this.numbrixGameBoardViewModel.CheckSolution();
-            this.displaySolutionResult(result);
-            Debug.WriteLine(result);
+            this.displaySolutionResult(this.numbrixGameBoardViewModel.CheckSolution());
         }
 
         private void displaySolutionResult(bool solved)
@@ -143,12 +185,9 @@ namespace NumbrixGame.View
             this.solutionCheckMessage.Visibility = Visibility.Collapsed;
 
             this.numbrixGameBoardViewModel.NextPuzzle();
+
             this.createGameBoard();
         }
-
-        #endregion
-
-        #region Constants
 
         #endregion
     }

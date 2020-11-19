@@ -19,7 +19,7 @@
                  FontSize="24"
                  FontFamily="Consolas"
                  TextAlignment="Center"
-                 IsEnabled="{Binding IsDefault, Mode=TwoWay}"
+                 IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                  BorderThickness="0"
                  HorizontalAlignment="Left"
                  Text="{Binding NumbrixValue, Mode=TwoWay, Converter={StaticResource conv}}"

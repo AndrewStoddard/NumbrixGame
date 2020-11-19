@@ -41,6 +41,8 @@ namespace NumbrixGame.ViewModel
             set => this.Model.BoardHeight = value;
         }
 
+        public int MaxBoardValue => this.BoardHeight * this.BoardWidth;
+
         #endregion
 
         #region Constructors
