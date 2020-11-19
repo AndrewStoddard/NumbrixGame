@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="Model\NumbrixSolver.cs" />
     <Compile Include="Model\NumbrixSolverAgent.cs" />
+    <Compile Include="Model\PuzzleManager.cs" />
     <Compile Include="PrebuiltGames\StartingPuzzles.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\NumbrixGameBoardCellViewModel.cs" />

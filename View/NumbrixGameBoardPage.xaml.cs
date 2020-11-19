@@ -8,6 +8,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
+using NumbrixGame.Model;
 using NumbrixGame.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -42,6 +43,11 @@ namespace NumbrixGame.View
 
         private void createGameBoard()
         {
+            var children = this.parentGrid.Children;
+            foreach (var currentChild in children)
+            {
+                this.parentGrid.Children.Remove(currentChild);
+            }
             var parentStackPanel = new StackPanel();
             parentStackPanel.BorderBrush = new SolidColorBrush(Colors.Blue);
             parentStackPanel.BorderThickness = new Thickness(2);
@@ -155,5 +161,13 @@ namespace NumbrixGame.View
         #region Constants
 
         #endregion
+
+        private void NextPuzzle_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.solutionCheckMessage.Visibility = Visibility.Collapsed;
+
+            this.numbrixGameBoardViewModel.NextPuzzle();
+            this.createGameBoard();
+        }
     }
 }

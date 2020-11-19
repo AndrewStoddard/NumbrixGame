@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using NumbrixGame.Model;
 
 namespace NumbrixGame.PrebuiltGames
 {
@@ -25,6 +27,8 @@ namespace NumbrixGame.PrebuiltGames
                                          "8,1,22,true\n" +
                                          "8,8,29,true";
 
+
+
         public static string puzzleTwo = "8,8,\n" +
                                          "1,2,15,true\n" +
                                          "1,6,19,true\n" +
@@ -32,7 +36,7 @@ namespace NumbrixGame.PrebuiltGames
                                          "2,8,22,true\n" +
                                          "3,5,62,true\n" +
                                          "4,1,11,true\n" +
-                                         "4,4,49,true\n" +
+                                         "4,4,40,true\n" +
                                          "4,6,64,true\n" +
                                          "6,1,9,true\n" +
                                          "6,3,7,true\n" +
