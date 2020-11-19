@@ -24,5 +24,21 @@ namespace NumbrixGame.PrebuiltGames
                                          "7,4,46,true\n" +
                                          "8,1,22,true\n" +
                                          "8,8,29,true";
+
+        public static string puzzleTwo = "8,8,\n" +
+                                         "1,2,15,true\n" +
+                                         "1,6,19,true\n" +
+                                         "2,2,32,true\n" +
+                                         "2,8,22,true\n" +
+                                         "3,5,62,true\n" +
+                                         "4,1,11,true\n" +
+                                         "4,4,49,true\n" +
+                                         "4,6,64,true\n" +
+                                         "6,1,9,true\n" +
+                                         "6,3,7,true\n" +
+                                         "6,8,56,true\n" +
+                                         "8,1,1,true\n" +
+                                         "8,5,45,true\n" +
+                                         "8,8,48,true";
     }
 }
