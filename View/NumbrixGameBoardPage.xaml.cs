@@ -34,6 +34,7 @@ namespace NumbrixGame.View
         {
             this.InitializeComponent();
             this.numbrixGameBoardViewModel = new NumbrixGameBoardViewModel();
+            this.numbrixGameBoardViewModel.OnValueChanged += this.checkSolution;
             this.gameBoardCellTextBoxes = new List<GameBoardCellTextBox>();
 
             this.createGameBoard();
@@ -111,23 +112,23 @@ namespace NumbrixGame.View
             switch (e.Key)
             {
                 case VirtualKey.Right:
-                    this.gameBoardCellTextBoxes.SingleOrDefault(
-                            cell => cellTextBox.X + 1 == cell.X && cellTextBox.Y == cell.Y)
+                    this.gameBoardCellTextBoxes
+                        .SingleOrDefault(cell => cellTextBox.X + 1 == cell.X && cellTextBox.Y == cell.Y)
                         ?.Focus(FocusState.Keyboard);
                     break;
                 case VirtualKey.Left:
-                    this.gameBoardCellTextBoxes.SingleOrDefault(
-                            cell => cellTextBox.X - 1 == cell.X && cellTextBox.Y == cell.Y)
+                    this.gameBoardCellTextBoxes
+                        .SingleOrDefault(cell => cellTextBox.X - 1 == cell.X && cellTextBox.Y == cell.Y)
                         ?.Focus(FocusState.Keyboard);
                     break;
                 case VirtualKey.Up:
-                    this.gameBoardCellTextBoxes.SingleOrDefault(
-                            cell => cellTextBox.X == cell.X && cellTextBox.Y - 1 == cell.Y)
+                    this.gameBoardCellTextBoxes
+                        .SingleOrDefault(cell => cellTextBox.X == cell.X && cellTextBox.Y - 1 == cell.Y)
                         ?.Focus(FocusState.Keyboard);
                     break;
                 case VirtualKey.Down:
-                    this.gameBoardCellTextBoxes.SingleOrDefault(
-                            cell => cellTextBox.X == cell.X && cellTextBox.Y + 1 == cell.Y)
+                    this.gameBoardCellTextBoxes
+                        .SingleOrDefault(cell => cellTextBox.X == cell.X && cellTextBox.Y + 1 == cell.Y)
                         ?.Focus(FocusState.Keyboard);
                     break;
             }
@@ -160,13 +161,13 @@ namespace NumbrixGame.View
 
         private void checkSolution(object sender, RoutedEventArgs e)
         {
-            this.displaySolutionResult(this.numbrixGameBoardViewModel.CheckSolution());
+            this.checkSolution();
         }
 
-        private void displaySolutionResult(bool solved)
+        private void checkSolution()
         {
             var message = "Your solution is incorrect!";
-            if (solved)
+            if (this.numbrixGameBoardViewModel.CheckSolution())
             {
                 message = "Congratulations! You successfully solved the puzzle!";
             }

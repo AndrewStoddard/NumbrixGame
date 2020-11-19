@@ -10,6 +10,12 @@ namespace NumbrixGame.ViewModel
 {
     public class NumbrixGameBoardViewModel
     {
+        #region Types and Delegates
+
+        public delegate void ValueChanged();
+
+        #endregion
+
         #region Data members
 
         private IList<GameBoardCellTextBox> gameBoardTextCells;
@@ -59,6 +65,8 @@ namespace NumbrixGame.ViewModel
 
         #region Methods
 
+        public event ValueChanged OnValueChanged;
+
         public void NextPuzzle()
         {
             this.Model = this.puzzleManager.NextPuzzle;
@@ -74,10 +82,20 @@ namespace NumbrixGame.ViewModel
             var result = new List<NumbrixGameBoardCellViewModel>();
             foreach (var gameBoardCell in this.Model.NumbrixGameBoardCells)
             {
-                result.Add(new NumbrixGameBoardCellViewModel(gameBoardCell));
+                var cell = new NumbrixGameBoardCellViewModel(gameBoardCell);
+                cell.OnNumbrixValueChanged += this.OnValueChange;
+                result.Add(cell);
             }
 
             return result;
+        }
+
+        private void OnValueChange()
+        {
+            if (this.NumbrixGameBoardCells.All(cell => cell.NumbrixValue != null))
+            {
+                this.OnValueChanged?.Invoke();
+            }
         }
 
         public NumbrixGameBoardCellViewModel FindCell(int x, int y)

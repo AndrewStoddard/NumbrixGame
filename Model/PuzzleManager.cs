@@ -34,9 +34,9 @@ namespace NumbrixGame.Model
 
         private void initializeStartingPuzzles()
         {
-            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleOne));
             this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleTwo));
             this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleThree));
+            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleOne));
 
             this.CurrentPuzzle = this.Puzzles[0];
         }

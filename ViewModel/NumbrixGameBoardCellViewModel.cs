@@ -7,6 +7,12 @@ namespace NumbrixGame.ViewModel
 {
     public class NumbrixGameBoardCellViewModel : INotifyPropertyChanged
     {
+        #region Types and Delegates
+
+        public delegate void NumbrixValueChanged();
+
+        #endregion
+
         #region Properties
 
         public int X
@@ -36,6 +42,7 @@ namespace NumbrixGame.ViewModel
             {
                 this.Model.NumbrixValue = value;
                 this.OnPropertyChanged();
+                this.OnNumbrixValueChanged?.Invoke();
             }
         }
 
@@ -72,6 +79,7 @@ namespace NumbrixGame.ViewModel
         #region Methods
 
         public event PropertyChangedEventHandler PropertyChanged;
+        public event NumbrixValueChanged OnNumbrixValueChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
