@@ -8,7 +8,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Media;
-using NumbrixGame.Model;
 using NumbrixGame.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -48,6 +47,7 @@ namespace NumbrixGame.View
             {
                 this.parentGrid.Children.Remove(currentChild);
             }
+
             var parentStackPanel = new StackPanel();
             parentStackPanel.BorderBrush = new SolidColorBrush(Colors.Blue);
             parentStackPanel.BorderThickness = new Thickness(2);
@@ -93,20 +93,16 @@ namespace NumbrixGame.View
             }
 
             newTextBox.IsEnabled = !isDefault;
+
             newTextBox.SetBinding(GameBoardCellTextBox.NumbrixValueProperty,
                 new Binding {
-                    Source = this.numbrixGameBoardViewModel.FindCell(x, y).NumbrixValue,
-                    Mode = BindingMode.TwoWay
+                    Source = this.numbrixGameBoardViewModel.FindCell(x, y),
+                    Path = new PropertyPath("NumbrixValue"),
+                    Mode = BindingMode.TwoWay,
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
                 });
-            newTextBox.OnValueChanged += this.OnValueInTextBoxChange;
 
             return newTextBox;
-        }
-
-        private void OnValueInTextBoxChange(GameBoardCellTextBox gameBoardCellTextBox)
-        {
-            this.numbrixGameBoardViewModel.UpdateCell(gameBoardCellTextBox.X, gameBoardCellTextBox.Y,
-                gameBoardCellTextBox.Value);
         }
 
         private async void loadGameBoard(object sender, RoutedEventArgs e)
@@ -156,12 +152,6 @@ namespace NumbrixGame.View
             this.numbrixGameBoardViewModel.ClearGameBoard();
         }
 
-        #endregion
-
-        #region Constants
-
-        #endregion
-
         private void NextPuzzle_OnClick(object sender, RoutedEventArgs e)
         {
             this.solutionCheckMessage.Visibility = Visibility.Collapsed;
@@ -169,5 +159,11 @@ namespace NumbrixGame.View
             this.numbrixGameBoardViewModel.NextPuzzle();
             this.createGameBoard();
         }
+
+        #endregion
+
+        #region Constants
+
+        #endregion
     }
 }

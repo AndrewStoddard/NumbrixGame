@@ -1,40 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading.Tasks;
 using NumbrixGame.PrebuiltGames;
 
 namespace NumbrixGame.Model
 {
     public class PuzzleManager
     {
-        private IList<NumbrixGameBoard> puzzles;
+        #region Data members
 
-        public IList<NumbrixGameBoard> Puzzles
-        {
-            get { return this.puzzles; }
-            set { this.puzzles = value;  }
-        }
+        #endregion
+
+        #region Properties
+
+        public IList<NumbrixGameBoard> Puzzles { get; set; }
 
         public NumbrixGameBoard CurrentPuzzle { get; set; }
 
-        public NumbrixGameBoard NextPuzzle => this.CurrentPuzzle = this.puzzles.SkipWhile(x => x != this.CurrentPuzzle).Skip(1).DefaultIfEmpty(this.puzzles[0])
-                    .FirstOrDefault();
+        public NumbrixGameBoard NextPuzzle => this.CurrentPuzzle = this
+                                                                   .Puzzles.SkipWhile(x => x != this.CurrentPuzzle)
+                                                                   .Skip(1).DefaultIfEmpty(this.Puzzles[0])
+                                                                   .FirstOrDefault();
+
+        #endregion
+
+        #region Constructors
 
         public PuzzleManager()
         {
-            this.puzzles = new List<NumbrixGameBoard>();
+            this.Puzzles = new List<NumbrixGameBoard>();
             this.initializeStartingPuzzles();
         }
 
+        #endregion
+
+        #region Methods
+
         private void initializeStartingPuzzles()
         {
-            Puzzles.Add(this.createBoard(StartingPuzzles.puzzleOne));
-            Puzzles.Add(this.createBoard(StartingPuzzles.puzzleTwo));
+            this.Puzzles.Add(this.createBoard(StartingPuzzles.puzzleThree));
+            this.Puzzles.Add(this.createBoard(StartingPuzzles.puzzleOne));
+            this.Puzzles.Add(this.createBoard(StartingPuzzles.puzzleTwo));
 
-            this.CurrentPuzzle = Puzzles[0];
+            this.CurrentPuzzle = this.Puzzles[0];
         }
 
         private NumbrixGameBoard createBoard(string data)
@@ -64,5 +71,7 @@ namespace NumbrixGame.Model
 
             return gameBoard;
         }
+
+        #endregion
     }
 }

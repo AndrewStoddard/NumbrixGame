@@ -1,14 +1,16 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using NumbrixGame.Annotations;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
 namespace NumbrixGame.View
 {
-    public sealed partial class GameBoardCellTextBox
+    public sealed partial class GameBoardCellTextBox : INotifyPropertyChanged
     {
         #region Types and Delegates
 
@@ -19,10 +21,9 @@ namespace NumbrixGame.View
         #region Data members
 
         public static readonly DependencyProperty NumbrixValueProperty =
-            DependencyProperty.Register("NumbrixValue", typeof(int?),
+            DependencyProperty.Register("NumbrixValue", typeof(object),
                 typeof(GameBoardCellTextBox), null);
 
-        private bool isEnabled;
         private string text;
 
         #endregion
@@ -37,9 +38,11 @@ namespace NumbrixGame.View
             get => (int?) GetValue(NumbrixValueProperty);
             set
             {
-                SetValue(NumbrixValueProperty, value);
-
-                this.text = value == null ? string.Empty : value.ToString();
+                if (this.Value != value)
+                {
+                    SetValue(NumbrixValueProperty, value);
+                    this.Text = this.Value == null ? string.Empty : this.Value.ToString();
+                }
             }
         }
 
@@ -49,19 +52,12 @@ namespace NumbrixGame.View
             set
             {
                 this.text = value;
-                this.textBox.Text = value;
+                this.Value = string.IsNullOrEmpty(this.text) ? (int?) null : int.Parse(this.text);
+                this.OnPropertyChanged();
             }
         }
 
-        public bool IsEnabled
-        {
-            get => this.isEnabled;
-            set
-            {
-                this.isEnabled = value;
-                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.isEnabled)));
-            }
-        }
+        public bool IsEnabled { get; set; }
 
         public int MaxValue { get; set; }
 
@@ -78,9 +74,9 @@ namespace NumbrixGame.View
 
         #region Methods
 
-        public event OnValueChange OnValueChanged;
-
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public event OnValueChange OnValueChanged;
 
         private void OnFocused(object sender, RoutedEventArgs e)
         {
@@ -100,9 +96,15 @@ namespace NumbrixGame.View
             if (!args.Cancel)
             {
                 this.Text = args.NewText;
-                this.Value = string.IsNullOrEmpty(args.NewText) ? (int?) null : int.Parse(args.NewText);
+
                 this.OnValueChanged?.Invoke(this);
             }
+        }
+
+        [NotifyPropertyChangedInvocator]
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion

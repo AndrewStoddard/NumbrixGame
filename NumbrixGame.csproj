@@ -119,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\NumbrixValueToTextBoxText.cs" />
     <Compile Include="Model\NumbrixSolver.cs" />
     <Compile Include="Model\NumbrixSolverAgent.cs" />
     <Compile Include="Model\PuzzleManager.cs" />

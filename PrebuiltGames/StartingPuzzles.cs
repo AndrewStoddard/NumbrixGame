@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using NumbrixGame.Model;
-
-namespace NumbrixGame.PrebuiltGames
+﻿namespace NumbrixGame.PrebuiltGames
 {
-    class StartingPuzzles
+    internal class StartingPuzzles
     {
+        #region Data members
+
         public static string puzzleOne = "8,8,\n" +
                                          "1,1,1,true\n" +
                                          "1,3,3,true\n" +
@@ -27,8 +21,6 @@ namespace NumbrixGame.PrebuiltGames
                                          "8,1,22,true\n" +
                                          "8,8,29,true";
 
-
-
         public static string puzzleTwo = "8,8,\n" +
                                          "1,2,15,true\n" +
                                          "1,6,19,true\n" +
@@ -44,5 +36,11 @@ namespace NumbrixGame.PrebuiltGames
                                          "8,1,1,true\n" +
                                          "8,5,45,true\n" +
                                          "8,8,48,true";
+
+        public static string puzzleThree = "2,2,\n" +
+                                           "1,2,3,true\n" +
+                                           "2,2,4,true\n";
+
+        #endregion
     }
 }

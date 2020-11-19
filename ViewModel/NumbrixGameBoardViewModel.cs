@@ -53,7 +53,7 @@ namespace NumbrixGame.ViewModel
         public void NextPuzzle()
         {
             this.Model = this.puzzleManager.NextPuzzle;
-            this.createNumbrixGameBoardCells();
+            this.NumbrixGameBoardCells = this.createNumbrixGameBoardCells();
         }
 
         #endregion
@@ -93,7 +93,7 @@ namespace NumbrixGame.ViewModel
 
         public void ClearGameBoard()
         {
-            foreach (var gameBoardCell in this.Model.NumbrixGameBoardCells)
+            foreach (var gameBoardCell in this.NumbrixGameBoardCells)
             {
                 if (!gameBoardCell.DefaultValue)
                 {
