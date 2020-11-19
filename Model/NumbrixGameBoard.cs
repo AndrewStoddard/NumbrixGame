@@ -13,8 +13,6 @@ namespace NumbrixGame.Model
 
         public int BoardHeight { get; set; }
 
-        public IList<int> numbers { get; set; }
-
         #endregion
 
         #region Methods
@@ -29,6 +27,11 @@ namespace NumbrixGame.Model
                     this.NumbrixGameBoardCells.Add(this.CreateCell(x, y));
                 }
             }
+        }
+
+        public IList<NumbrixGameBoardCell> FindNeighbors(NumbrixGameBoardCell gameboardCell)
+        {
+            return new NumbrixGameBoardCellNeighbors(this, gameboardCell).GetListOfNeighbors();
         }
 
         public void AddCells(IList<NumbrixGameBoardCell> cellsToAdd)
@@ -47,6 +50,11 @@ namespace NumbrixGame.Model
         public NumbrixGameBoardCell FindCell(NumbrixGameBoardCell gameBoardCell)
         {
             return this.NumbrixGameBoardCells.Single(cell => cell.Equals(gameBoardCell));
+        }
+
+        public NumbrixGameBoardCell FindCell(int? numbrixValue)
+        {
+            return this.NumbrixGameBoardCells.Single(cell => cell.NumbrixValue == numbrixValue);
         }
 
         public NumbrixGameBoardCell FindCell(int x, int y)
