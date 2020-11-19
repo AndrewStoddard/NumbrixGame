@@ -32,6 +32,7 @@ namespace NumbrixGame.View
         {
             this.InitializeComponent();
             this.numbrixGameBoardViewModel = new NumbrixGameBoardViewModel();
+            this.createGameBoard();
         }
 
         #endregion
