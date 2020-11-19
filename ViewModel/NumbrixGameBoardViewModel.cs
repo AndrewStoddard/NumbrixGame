@@ -46,6 +46,11 @@ namespace NumbrixGame.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public bool CheckSolution()
+        {
+            return NumbrixSolver.CheckForSolved(this.NumbrixGameBoard);
+        }
+
         public void UpdateCell(int x, int y, int? value)
         {
             this.NumbrixGameBoard.FindCell(x, y).NumbrixValue = value;

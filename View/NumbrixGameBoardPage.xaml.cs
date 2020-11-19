@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -123,6 +124,12 @@ namespace NumbrixGame.View
 
             var file = await filePicker.PickSingleFileAsync();
             return file;
+        }
+
+        private void checkSolution(object sender, RoutedEventArgs e)
+        {
+            var result = this.numbrixGameBoardViewModel.CheckSolution();
+            Debug.WriteLine(result);
         }
 
         #endregion

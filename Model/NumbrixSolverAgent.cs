@@ -48,8 +48,8 @@ namespace NumbrixGame.Model
 
         private NumbrixGameBoardCell findPossibleMove()
         {
-            return this.findAgentNeighbors()
-                       .SingleOrDefault(cell => cell.NumbrixValue == this.agentLocation.NumbrixValue + 1);
+            return this.findAgentNeighbors().SingleOrDefault(
+                cell => cell != null && cell.NumbrixValue == this.agentLocation.NumbrixValue + 1);
         }
 
         #endregion

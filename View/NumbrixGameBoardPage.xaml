@@ -11,7 +11,8 @@
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
-            <AppBarButton Icon="Add" Label="Load0" Click="loadGameBoard"/>
+            <AppBarButton Icon="Add" Label="Load" Click="loadGameBoard"/>
+            <AppBarButton Icon="Accept" Label="Check" Click="checkSolution"/>
         </CommandBar>
 
 

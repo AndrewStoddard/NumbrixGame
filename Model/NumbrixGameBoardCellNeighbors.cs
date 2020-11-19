@@ -47,26 +47,46 @@ namespace NumbrixGame.Model
             {
                 this.WesternGameBoardCellNeighbor = null;
                 this.EasternnGameBoardCellNeighbor =
-                    gameBoardCells.First(gameBoardCell => gameBoardCell.X == this.GameBoardCell.X + 1);
+                    gameBoardCells.First(gameBoardCell =>
+                        gameBoardCell.X == this.GameBoardCell.X + 1 && gameBoardCell.Y == this.GameBoardCell.Y);
             }
             else if (this.GameBoardCell.X == this.GameBoard.BoardWidth)
             {
                 this.WesternGameBoardCellNeighbor =
-                    gameBoardCells.First(gameBoardCell => gameBoardCell.X == this.GameBoardCell.X - 1);
+                    gameBoardCells.First(gameBoardCell =>
+                        gameBoardCell.X == this.GameBoardCell.X - 1 && gameBoardCell.Y == this.GameBoardCell.Y);
                 this.EasternnGameBoardCellNeighbor = null;
+            }
+            else
+            {
+                this.WesternGameBoardCellNeighbor =
+                    gameBoardCells.First(gameBoardCell =>
+                        gameBoardCell.X == this.GameBoardCell.X - 1 && gameBoardCell.Y == this.GameBoardCell.Y);
+                this.EasternnGameBoardCellNeighbor = gameBoardCells.First(gameBoardCell =>
+                    gameBoardCell.X == this.GameBoardCell.X + 1 && gameBoardCell.Y == this.GameBoardCell.Y);
             }
 
             if (this.GameBoardCell.Y == 1)
             {
                 this.NorthernGameBoardCellNeighbor = null;
                 this.SouthernGameBoardCellNeighbor =
-                    gameBoardCells.First(gameBoardCell => gameBoardCell.Y == this.GameBoardCell.Y + 1);
+                    gameBoardCells.First(gameBoardCell =>
+                        gameBoardCell.Y == this.GameBoardCell.Y + 1 && gameBoardCell.X == this.GameBoardCell.X);
             }
             else if (this.GameBoardCell.Y == this.GameBoard.BoardHeight)
             {
                 this.NorthernGameBoardCellNeighbor =
-                    gameBoardCells.First(gameBoardCell => gameBoardCell.Y == this.GameBoardCell.Y - 1);
+                    gameBoardCells.First(gameBoardCell =>
+                        gameBoardCell.Y == this.GameBoardCell.Y - 1 && gameBoardCell.X == this.GameBoardCell.X);
                 this.SouthernGameBoardCellNeighbor = null;
+            }
+            else
+            {
+                this.NorthernGameBoardCellNeighbor =
+                    gameBoardCells.First(gameBoardCell =>
+                        gameBoardCell.Y == this.GameBoardCell.Y - 1 && gameBoardCell.X == this.GameBoardCell.X);
+                this.SouthernGameBoardCellNeighbor = gameBoardCells.First(gameBoardCell =>
+                    gameBoardCell.Y == this.GameBoardCell.Y + 1 && gameBoardCell.X == this.GameBoardCell.X);
             }
         }
 
