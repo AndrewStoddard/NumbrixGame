@@ -221,6 +221,19 @@ namespace NumbrixGame.View
             this.numbrixGameBoardViewModel.NextPuzzle();
 
             this.createGameBoard();
+            this.resetTimer();
+        }
+
+        private void resetTimer()
+        {
+            this.timer.Stop();
+            this.InitializeDispatcherTimerSetup();
+            this.seconds = 0;
+            this.minutes = 0;
+            this.hours = 0;
+
+            this.resetTimerButtonStates();
+            this.TextBlockPuzzleTimer.Text = $"{this.hours:00} : {this.minutes:00} : {this.seconds:00}";
         }
 
         #endregion
@@ -238,7 +251,7 @@ namespace NumbrixGame.View
         private void timerStop_OnClick(object sender, RoutedEventArgs e)
         {
             this.timer.Stop();
-
+            this.InitializeDispatcherTimerSetup();
             this.buttonStartTimer.IsEnabled = true;
             this.buttonResetTimer.IsEnabled = true;
             this.buttonStopTimer.IsEnabled = false;
@@ -264,12 +277,14 @@ namespace NumbrixGame.View
 
         private void timerReset_OnClick(object sender, RoutedEventArgs e)
         {
-            this.timer.Stop();
-            this.seconds = 0;
-            this.minutes = 0;
-            this.hours = 0;
+            this.resetTimer();
+        }
 
-            this.TextBlockPuzzleTimer.Text = $"{this.hours:00} : {this.minutes:00} : {this.seconds:00}";
+        private void resetTimerButtonStates()
+        {
+            this.buttonStartTimer.IsEnabled = true;
+            this.buttonStopTimer.IsEnabled = false;
+            this.buttonResetTimer.IsEnabled = true;
         }
     }
 }
