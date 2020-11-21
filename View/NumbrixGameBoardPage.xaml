@@ -3,9 +3,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="using:NumbrixGame.ViewModel"
     x:Class="NumbrixGame.View.NumbrixGameBoardPage"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.DataContext>
+        <viewModel:NumbrixGameBoardViewModel />
+    </Page.DataContext>
+
     <Grid>
         <CommandBar>
             <CommandBar.Content>
@@ -15,10 +21,12 @@
             <AppBarButton Icon="Accept" Label="Check" Click="checkSolution"/>
             <AppBarButton Icon="Delete" Label="Clear Board" Click="clearBoard"/>
         </CommandBar>
-        <Grid x:Name="parentGrid"></Grid>
-        <TextBlock HorizontalAlignment="Center" Margin="0,90,0,0" Text="Check Solution Message" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="14" x:Name="solutionCheckMessage"/>
-        <Button Content="Next Puzzle" Margin="1091,468,0,0" VerticalAlignment="Top" Click="NextPuzzle_OnClick"/>
-
+        <Grid x:Name="parentGrid">
+            <!-- Puzzles will dynamically be created here -->
+        </Grid>
+        <TextBlock HorizontalAlignment="Center" Margin="0,90,0,0" Text="Check Solution Message" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" x:Name="solutionCheckMessage"/>
+        <Button Content="Next Puzzle" Margin="1037,468,0,0" VerticalAlignment="Top" Click="NextPuzzle_OnClick"/>
+        <TextBlock Text="Puzzle Number" HorizontalAlignment="Center" Margin="0,704,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" x:Name="textBlockPuzzleNumber"/>
 
     </Grid>
 

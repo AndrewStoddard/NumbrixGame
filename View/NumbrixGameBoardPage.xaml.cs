@@ -88,6 +88,8 @@ namespace NumbrixGame.View
                     }
                 }
             }
+
+            this.updatePuzzleNumber();
         }
 
         private GameBoardCellTextBox createCell(int x, int y)
@@ -144,6 +146,11 @@ namespace NumbrixGame.View
                 this.createGameBoard();
             }*/
             //TODO - Implement
+        }
+
+        private void updatePuzzleNumber()
+        {
+            this.textBlockPuzzleNumber.Text = "Puzzle Number: " + this.numbrixGameBoardViewModel.GameBoardNumber;
         }
 
         private static async Task<StorageFile> pickFile()
