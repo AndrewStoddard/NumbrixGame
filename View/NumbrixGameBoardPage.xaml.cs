@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -26,6 +27,12 @@ namespace NumbrixGame.View
         private readonly NumbrixGameBoardViewModel numbrixGameBoardViewModel;
         private List<GameBoardCellTextBox> gameBoardCellTextBoxes;
 
+        private DispatcherTimer timer;
+        private bool timerStarted;
+        private int seconds = 0;
+        private int minutes = 0;
+        private int hours = 0;
+
         #endregion
 
         #region Constructors
@@ -39,11 +46,30 @@ namespace NumbrixGame.View
 
             this.createGameBoard();
             this.solutionCheckMessage.Visibility = Visibility.Collapsed;
+
+            this.InitializeDispatcherTimerSetup();
+            this.buttonStopTimer.IsEnabled = false;
         }
 
         #endregion
 
         #region Methods
+
+        public void InitializeDispatcherTimerSetup()
+        {
+            this.timer = new DispatcherTimer();
+            this.timer.Interval = new TimeSpan(0, 0, 1);
+            this.timerStarted = false;
+        }
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            // Updating the Label which displays the current second
+            this.TextBlockPuzzleTimer.Text = DateTime.Now.Second.ToString();
+
+            // Forcing the CommandManager to raise the RequerySuggested event
+            // CommandManager.InvalidateRequerySuggested();
+        }
 
         private void clearPuzzle()
         {
@@ -198,5 +224,52 @@ namespace NumbrixGame.View
         }
 
         #endregion
+
+        private void timerStart_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.timer.Start();
+            this.timer.Tick += Timer_Tick;
+
+            this.buttonResetTimer.IsEnabled = false;
+            this.buttonStartTimer.IsEnabled = false;
+            this.buttonStopTimer.IsEnabled = true;
+        }
+
+        private void timerStop_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.timer.Stop();
+
+            this.buttonStartTimer.IsEnabled = true;
+            this.buttonResetTimer.IsEnabled = true;
+            this.buttonStopTimer.IsEnabled = false;
+        }
+
+        private void Timer_Tick(object sender, object e)
+        {
+            this.seconds++;
+            if (seconds >= 60)
+            {
+                this.seconds = 0;
+                this.minutes++;
+            }
+
+            if (minutes >= 60)
+            {
+                this.minutes = 0;
+                this.hours++;
+            }
+
+            this.TextBlockPuzzleTimer.Text = $"{this.hours:00} : {this.minutes:00} : {this.seconds:00}";
+        }
+
+        private void timerReset_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.timer.Stop();
+            this.seconds = 0;
+            this.minutes = 0;
+            this.hours = 0;
+
+            this.TextBlockPuzzleTimer.Text = $"{this.hours:00} : {this.minutes:00} : {this.seconds:00}";
+        }
     }
 }

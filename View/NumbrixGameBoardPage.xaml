@@ -24,9 +24,15 @@
         <Grid x:Name="parentGrid">
             <!-- Puzzles will dynamically be created here -->
         </Grid>
+        <StackPanel Orientation="Horizontal" Margin="0,785,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="330">
+            <TextBlock x:Name="TextBlockPuzzleTimer" Text="00 : 00 : 00" Margin="0,0,16,0" HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="24"  VerticalAlignment="Top"/>
+            <Button x:Name="buttonStartTimer" Content="Start" VerticalAlignment="Top" Margin="0,0,16,0" Click="timerStart_OnClick"/>
+            <Button x:Name="buttonStopTimer" Content="Stop" VerticalAlignment="Top" Margin="0,0,16,0" Click="timerStop_OnClick"/>
+            <Button x:Name="buttonResetTimer" Content="Reset" VerticalAlignment="Top" Click="timerReset_OnClick"/>
+        </StackPanel>
         <TextBlock HorizontalAlignment="Center" Margin="0,90,0,0" Text="Check Solution Message" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" x:Name="solutionCheckMessage"/>
-        <Button Content="Next Puzzle" Margin="1037,468,0,0" VerticalAlignment="Top" Click="NextPuzzle_OnClick"/>
-        <TextBlock Text="Puzzle Number" HorizontalAlignment="Center" Margin="0,704,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" x:Name="textBlockPuzzleNumber"/>
+        <Button Content="Next Puzzle" Margin="946,468,0,0" VerticalAlignment="Top" Click="NextPuzzle_OnClick"/>
+        <TextBlock x:Name="textBlockPuzzleNumber" Text="Puzzle Number" HorizontalAlignment="Center" Margin="0,704,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" />
 
     </Grid>
 
