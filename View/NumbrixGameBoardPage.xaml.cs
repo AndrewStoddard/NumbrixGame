@@ -49,6 +49,7 @@ namespace NumbrixGame.View
 
             this.InitializeDispatcherTimerSetup();
             this.buttonStopTimer.IsEnabled = false;
+            this.textBlockGamePaused.Visibility = Visibility.Collapsed;
         }
 
         #endregion
@@ -85,6 +86,7 @@ namespace NumbrixGame.View
         {
             this.clearPuzzle();
             var parentStackPanel = new StackPanel();
+            parentStackPanel.Name = "StackPanelPuzzleBoard";
             parentStackPanel.BorderBrush = new SolidColorBrush(Colors.Blue);
             parentStackPanel.BorderThickness = new Thickness(2);
             parentStackPanel.HorizontalAlignment = HorizontalAlignment.Center;
@@ -246,6 +248,9 @@ namespace NumbrixGame.View
             this.buttonResetTimer.IsEnabled = false;
             this.buttonStartTimer.IsEnabled = false;
             this.buttonStopTimer.IsEnabled = true;
+
+            this.parentGrid.Visibility = Visibility.Visible;
+            this.textBlockGamePaused.Visibility = Visibility.Collapsed;
         }
 
         private void timerStop_OnClick(object sender, RoutedEventArgs e)
@@ -255,6 +260,9 @@ namespace NumbrixGame.View
             this.buttonStartTimer.IsEnabled = true;
             this.buttonResetTimer.IsEnabled = true;
             this.buttonStopTimer.IsEnabled = false;
+
+            this.parentGrid.Visibility = Visibility.Collapsed;
+            this.textBlockGamePaused.Visibility = Visibility.Visible;
         }
 
         private void Timer_Tick(object sender, object e)
