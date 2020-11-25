@@ -17,7 +17,32 @@
             VerticalAlignment="Top"
             Height="auto"
             Width="auto"
-            ItemsSource="{x:Bind numbrixScoreBoardViewModel.PlayerScores, Mode=TwoWay}">
+            ItemsSource="{x:Bind numbrixScoreBoardViewModel.PlayerScores, Mode=TwoWay}"
+            CanUserReorderColumns="False"
+            CanUserResizeColumns="True"
+            CanUserSortColumns="True"
+            HeadersVisibility="Column"
+            SelectionMode="Single"
+            GridLinesVisibility="All"
+            AutoGenerateColumns="False"
+            AreRowDetailsFrozen="True"
+            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Custom:DataGrid.Columns>
+                <Custom:DataGridTextColumn Header="Username"
+                                             Binding="{Binding Username}"
+                                             IsReadOnly="True"
+                                             Tag="Username"/>
+                <Custom:DataGridTextColumn Header="PuzzleNumber"
+                                             Binding="{Binding PuzzleNumber}"
+                                             IsReadOnly="True"
+                                             Tag="PuzzleNumber"/>
+                <Custom:DataGridTextColumn Header="Time Taken"
+                                             Binding="{Binding TimeTaken}"
+                                             IsReadOnly="True"
+                                             Tag="Time Taken"/>
+
+
+            </Custom:DataGrid.Columns>
         </Custom:DataGrid>
 
     </Grid>
