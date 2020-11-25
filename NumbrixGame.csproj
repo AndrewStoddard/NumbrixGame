@@ -130,6 +130,8 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\NumbrixGameBoardCellViewModel.cs" />
     <Compile Include="ViewModel\NumbrixGameBoardViewModel.cs" />
+    <Compile Include="ViewModel\NumbrixPlayerScoreViewModel.cs" />
+    <Compile Include="ViewModel\NumbrixScoreBoardViewModel.cs" />
     <Compile Include="View\Controls\GameBoardCellTextBox.xaml.cs">
       <DependentUpon>GameBoardCellTextBox.xaml</DependentUpon>
     </Compile>
