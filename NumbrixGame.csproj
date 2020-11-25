@@ -146,6 +146,9 @@
     <Compile Include="View\NumbrixScoreboardPage.xaml.cs">
       <DependentUpon>NumbrixScoreboardPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SaveScoreDialog.xaml.cs">
+      <DependentUpon>SaveScoreDialog.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -176,6 +179,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\NumbrixScoreboardPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SaveScoreDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

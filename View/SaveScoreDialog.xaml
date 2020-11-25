@@ -1,0 +1,20 @@
+﻿<ContentDialog
+    x:Class="NumbrixGame.View.SaveScoreDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NumbrixGame.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Congratulations!"
+    PrimaryButtonText="Go To Score Board"
+    SecondaryButtonText="Go To Next Puzzle"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid>
+        <TextBox PlaceholderText="Enter a username" Text="{x:Bind username}" Margin="7,60,117,10" />
+        <TextBlock Text="Time" Height="40" Width=" 100" Margin="228,62,12,10" />
+        <TextBlock HorizontalAlignment="Left" Margin="20,10,0,0" Text="You solved the puzzle! Save your time!" TextWrapping="Wrap" VerticalAlignment="Top"/>
+    </Grid>
+</ContentDialog>

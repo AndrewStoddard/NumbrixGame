@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -29,9 +28,9 @@ namespace NumbrixGame.View
 
         private DispatcherTimer timer;
         private bool timerStarted;
-        private int seconds = 0;
-        private int minutes = 0;
-        private int hours = 0;
+        private int seconds;
+        private int minutes;
+        private int hours;
 
         #endregion
 
@@ -238,12 +237,10 @@ namespace NumbrixGame.View
             this.TextBlockPuzzleTimer.Text = $"{this.hours:00} : {this.minutes:00} : {this.seconds:00}";
         }
 
-        #endregion
-
         private void timerStart_OnClick(object sender, RoutedEventArgs e)
         {
             this.timer.Start();
-            this.timer.Tick += Timer_Tick;
+            this.timer.Tick += this.Timer_Tick;
 
             this.buttonResetTimer.IsEnabled = false;
             this.buttonStartTimer.IsEnabled = false;
@@ -268,13 +265,13 @@ namespace NumbrixGame.View
         private void Timer_Tick(object sender, object e)
         {
             this.seconds++;
-            if (seconds >= 60)
+            if (this.seconds >= 60)
             {
                 this.seconds = 0;
                 this.minutes++;
             }
 
-            if (minutes >= 60)
+            if (this.minutes >= 60)
             {
                 this.minutes = 0;
                 this.hours++;
@@ -294,5 +291,7 @@ namespace NumbrixGame.View
             this.buttonStopTimer.IsEnabled = false;
             this.buttonResetTimer.IsEnabled = true;
         }
+
+        #endregion
     }
 }
