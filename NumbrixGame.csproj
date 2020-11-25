@@ -121,8 +121,10 @@
     </Compile>
     <Compile Include="Converters\NumbrixValueToTextBoxText.cs" />
     <Compile Include="Datatier\DatatierConstants.cs" />
+    <Compile Include="Model\NumbrixScoreBoard.cs" />
     <Compile Include="Model\NumbrixSolver.cs" />
     <Compile Include="Model\NumbrixSolverAgent.cs" />
+    <Compile Include="Model\NumbrixPlayerScore.cs" />
     <Compile Include="Model\PuzzleManager.cs" />
     <Compile Include="PrebuiltGames\StartingPuzzles.cs" />
     <Compile Include="Properties\Annotations.cs" />
@@ -139,6 +141,9 @@
     <Compile Include="Model\NumbrixGameBoard.cs" />
     <Compile Include="Model\NumbrixGameBoardCellNeighbors.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\NumbrixScoreboardPage.xaml.cs">
+      <DependentUpon>NumbrixScoreboardPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -168,16 +173,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\NumbrixScoreboardPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.10</Version>
+      <Version>6.2.11</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp">
-      <Version>6.1.1</Version>
+      <Version>7.0.0-preview4</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI">
-      <Version>6.1.1</Version>
+      <Version>7.0.0-preview4</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid">
+      <Version>7.0.0-preview4</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup />
