@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -18,9 +19,27 @@ namespace NumbrixGame.ViewModel
         private List<StorageFile> savedGames;
         private List<StorageFile> prebuiltGames;
 
+        private StorageFile selectedGameFile;
+
         #endregion
 
         #region Properties
+
+        public StorageFile SelectedGameFile
+        {
+            get => this.selectedGameFile;
+            set
+            {
+                if (value != null)
+                {
+                    Debug.WriteLine(value.Name);
+                }
+
+                this.selectedGameFile = value;
+
+                this.OnPropertyChanged(nameof(this.selectedGameFile));
+            }
+        }
 
         public List<StorageFile> SavedGames
         {

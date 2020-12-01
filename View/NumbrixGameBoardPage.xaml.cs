@@ -11,6 +11,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Navigation;
 using NumbrixGame.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -230,6 +231,24 @@ namespace NumbrixGame.View
         private void OnScoreboard(object sender, RoutedEventArgs e)
         {
             Frame.Navigate(typeof(NumbrixScoreboardPage), this.numbrixScoreBoardViewModel);
+        }
+
+        private void loadPuzzle(StorageFile gameFile)
+        {
+            //TODO Load the file into the game board
+            this.createGameBoard();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e.Parameter == null)
+            {
+                return;
+            }
+
+            var gameFile = (StorageFile) e.Parameter;
+            this.loadPuzzle(gameFile);
         }
 
         #endregion

@@ -43,7 +43,7 @@ namespace NumbrixGame.Model
         public string AsCSV()
         {
             var stringBuilder = new StringBuilder();
-            stringBuilder.Append(
+            stringBuilder.AppendLine(
                 $"{this.GameBoardNumber},{this.BoardWidth},{this.BoardHeight},{this.TimeTaken.ToString()}");
             foreach (var gameBoardCell in this.NumbrixGameBoardCells)
             {

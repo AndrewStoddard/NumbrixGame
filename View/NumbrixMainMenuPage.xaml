@@ -17,7 +17,7 @@
         <ThemeResource ResourceKey="ApplicationPageBackgroundThemeBrush"/>
     </Page.Background>
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="618,52,0,0" Text="Welcome to the Numbrix Game!" FontSize="24" TextWrapping="Wrap" VerticalAlignment="Top" Height="123" Width="166"/>
+        <TextBlock HorizontalAlignment="Left" Margin="361,78,0,0" Text="Welcome to the Numbrix Game!" FontSize="24" TextWrapping="Wrap" VerticalAlignment="Top" Height="123" Width="166"/>
 
 
         <Custom:DataGrid
@@ -27,6 +27,7 @@
             VerticalAlignment="Top"
             Width="auto"
             ItemsSource="{x:Bind numbrixMainPageViewModel.PrebuiltGames, Mode=TwoWay}"
+            SelectedItem="{x:Bind numbrixMainPageViewModel.SelectedGameFile, Mode=TwoWay}"
             CanUserReorderColumns="False"
             CanUserResizeColumns="True"
             CanUserSortColumns="True"
@@ -55,10 +56,11 @@
         <Custom:DataGrid
             HorizontalAlignment="Left"
             Height="auto"
-            Margin="1074,271,0,0"
+            Margin="534,260,0,0"
             VerticalAlignment="Top"
             Width="auto"
             ItemsSource="{x:Bind numbrixMainPageViewModel.SavedGames, Mode=TwoWay}"
+            SelectedItem="{x:Bind numbrixMainPageViewModel.SelectedGameFile, Mode=TwoWay}"
             CanUserReorderColumns="False"
             CanUserResizeColumns="True"
             CanUserSortColumns="True"
@@ -83,6 +85,7 @@
             </Custom:DataGrid.Columns>
 
         </Custom:DataGrid>
+        <Button Content="Play Puzzle" Margin="396,260,0,0" VerticalAlignment="Top" Click="ButtonBase_OnClick"/>
 
 
 
