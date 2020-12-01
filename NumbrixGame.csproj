@@ -120,6 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\NumbrixValueToTextBoxText.cs" />
+    <Compile Include="Converters\TimeSpanToTextConverter.cs" />
     <Compile Include="Datatier\DatatierConstants.cs" />
     <Compile Include="Model\NumbrixScoreBoard.cs" />
     <Compile Include="Model\NumbrixSolver.cs" />
@@ -201,7 +202,9 @@
       <Version>7.0.0-preview4</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="View\Dialogs\" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="PrebuiltGames\Puzzle1.csv" />
   </ItemGroup>

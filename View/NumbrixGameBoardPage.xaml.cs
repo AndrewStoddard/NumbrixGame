@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -19,18 +20,13 @@ namespace NumbrixGame.View
     /// <summary>
     ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class NumbrixGameBoardPage
+    public sealed partial class NumbrixGameBoardPage : INotifyPropertyChanged
     {
         #region Data members
 
         private readonly NumbrixGameBoardViewModel numbrixGameBoardViewModel;
         private List<GameBoardCellTextBox> gameBoardCellTextBoxes;
-
-        private DispatcherTimer timer;
-        private bool timerStarted;
-        private int seconds;
-        private int minutes;
-        private int hours;
+        private readonly DispatcherTimer timer;
 
         #endregion
 
@@ -39,6 +35,11 @@ namespace NumbrixGame.View
         public NumbrixGameBoardPage()
         {
             this.InitializeComponent();
+            this.timer = new DispatcherTimer {
+                Interval = new TimeSpan(0, 0, 1)
+            };
+            this.timer.Tick += this.Timer_Tick;
+            ;
             this.numbrixGameBoardViewModel = new NumbrixGameBoardViewModel();
             this.numbrixGameBoardViewModel.OnValueChanged += this.checkSolution;
             this.gameBoardCellTextBoxes = new List<GameBoardCellTextBox>();
@@ -46,7 +47,6 @@ namespace NumbrixGame.View
             this.createGameBoard();
             this.solutionCheckMessage.Visibility = Visibility.Collapsed;
 
-            this.InitializeDispatcherTimerSetup();
             this.buttonStopTimer.IsEnabled = false;
             this.textBlockGamePaused.Visibility = Visibility.Collapsed;
         }
@@ -55,20 +55,12 @@ namespace NumbrixGame.View
 
         #region Methods
 
-        public void InitializeDispatcherTimerSetup()
-        {
-            this.timer = new DispatcherTimer();
-            this.timer.Interval = new TimeSpan(0, 0, 1);
-            this.timerStarted = false;
-        }
+        public event PropertyChangedEventHandler PropertyChanged;
 
-        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        private void Timer_Tick(object sender, object e)
         {
-            // Updating the Label which displays the current second
-            this.TextBlockPuzzleTimer.Text = DateTime.Now.Second.ToString();
-
-            // Forcing the CommandManager to raise the RequerySuggested event
-            // CommandManager.InvalidateRequerySuggested();
+            this.numbrixGameBoardViewModel.TimeTaken =
+                this.numbrixGameBoardViewModel.TimeTaken.Add(new TimeSpan(0, 0, 1));
         }
 
         private void clearPuzzle()
@@ -163,18 +155,6 @@ namespace NumbrixGame.View
             }
         }
 
-        private async void loadGameBoard(object sender, RoutedEventArgs e)
-        {
-            /*this.clearPuzzle();
-            var file = await pickFile();
-            if (file != null)
-            {
-                await this.numbrixGameBoardViewModel.LoadGameBoard(file);
-                this.createGameBoard();
-            }*/
-            //TODO - Implement
-        }
-
         private void updatePuzzleNumber()
         {
             this.textBlockPuzzleNumber.Text = "Puzzle Number: " + this.numbrixGameBoardViewModel.GameBoardNumber;
@@ -198,16 +178,20 @@ namespace NumbrixGame.View
             this.checkSolution();
         }
 
-        private void checkSolution()
+        private async void checkSolution()
         {
-            var message = "Your solution is incorrect!";
             if (this.numbrixGameBoardViewModel.CheckSolution())
             {
-                message = "Congratulations! You successfully solved the puzzle!";
+                await this.createSaveScoreDialog();
             }
+        }
 
-            this.solutionCheckMessage.Visibility = Visibility.Visible;
-            this.solutionCheckMessage.Text = message;
+        private async Task<string> createSaveScoreDialog()
+        {
+            var saveScoreDialog = new SaveScoreDialog {TimeTaken = this.numbrixGameBoardViewModel.TimeTaken};
+            var showDialog = await saveScoreDialog.ShowAsync();
+
+            return saveScoreDialog.Username;
         }
 
         private void clearBoard(object sender, RoutedEventArgs e)
@@ -222,74 +206,22 @@ namespace NumbrixGame.View
             this.numbrixGameBoardViewModel.NextPuzzle();
 
             this.createGameBoard();
-            this.resetTimer();
         }
 
-        private void resetTimer()
+        private void OnStopTimer(object sender, RoutedEventArgs e)
         {
             this.timer.Stop();
-            this.InitializeDispatcherTimerSetup();
-            this.seconds = 0;
-            this.minutes = 0;
-            this.hours = 0;
-
-            this.resetTimerButtonStates();
-            this.TextBlockPuzzleTimer.Text = $"{this.hours:00} : {this.minutes:00} : {this.seconds:00}";
         }
 
-        private void timerStart_OnClick(object sender, RoutedEventArgs e)
+        private void OnStartTimer(object sender, RoutedEventArgs e)
         {
             this.timer.Start();
-            this.timer.Tick += this.Timer_Tick;
-
-            this.buttonResetTimer.IsEnabled = false;
-            this.buttonStartTimer.IsEnabled = false;
-            this.buttonStopTimer.IsEnabled = true;
-
-            this.parentGrid.Visibility = Visibility.Visible;
-            this.textBlockGamePaused.Visibility = Visibility.Collapsed;
         }
 
-        private void timerStop_OnClick(object sender, RoutedEventArgs e)
+        private void OnResetTimer(object sender, RoutedEventArgs e)
         {
+            this.numbrixGameBoardViewModel.TimeTaken = new TimeSpan(0, 0, 0);
             this.timer.Stop();
-            this.InitializeDispatcherTimerSetup();
-            this.buttonStartTimer.IsEnabled = true;
-            this.buttonResetTimer.IsEnabled = true;
-            this.buttonStopTimer.IsEnabled = false;
-
-            this.parentGrid.Visibility = Visibility.Collapsed;
-            this.textBlockGamePaused.Visibility = Visibility.Visible;
-        }
-
-        private void Timer_Tick(object sender, object e)
-        {
-            this.seconds++;
-            if (this.seconds >= 60)
-            {
-                this.seconds = 0;
-                this.minutes++;
-            }
-
-            if (this.minutes >= 60)
-            {
-                this.minutes = 0;
-                this.hours++;
-            }
-
-            this.TextBlockPuzzleTimer.Text = $"{this.hours:00} : {this.minutes:00} : {this.seconds:00}";
-        }
-
-        private void timerReset_OnClick(object sender, RoutedEventArgs e)
-        {
-            this.resetTimer();
-        }
-
-        private void resetTimerButtonStates()
-        {
-            this.buttonStartTimer.IsEnabled = true;
-            this.buttonStopTimer.IsEnabled = false;
-            this.buttonResetTimer.IsEnabled = true;
         }
 
         #endregion

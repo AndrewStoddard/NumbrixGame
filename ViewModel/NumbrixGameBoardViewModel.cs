@@ -1,14 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Storage;
+using NumbrixGame.Annotations;
 using NumbrixGame.Datatier;
 using NumbrixGame.Model;
 using NumbrixGame.View;
 
 namespace NumbrixGame.ViewModel
 {
-    public class NumbrixGameBoardViewModel
+    public class NumbrixGameBoardViewModel : INotifyPropertyChanged
     {
         #region Types and Delegates
 
@@ -47,6 +51,16 @@ namespace NumbrixGame.ViewModel
             set => this.Model.BoardHeight = value;
         }
 
+        public TimeSpan TimeTaken
+        {
+            get => this.Model.TimeTaken;
+            set
+            {
+                this.Model.TimeTaken = value;
+                this.OnPropertyChanged(nameof(this.TimeTaken));
+            }
+        }
+
         public int MaxBoardValue => this.BoardHeight * this.BoardWidth;
 
         #endregion
@@ -65,12 +79,20 @@ namespace NumbrixGame.ViewModel
 
         #region Methods
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public event ValueChanged OnValueChanged;
 
         public void NextPuzzle()
         {
             this.Model = this.puzzleManager.NextPuzzle;
             this.NumbrixGameBoardCells = this.createNumbrixGameBoardCells();
+        }
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion

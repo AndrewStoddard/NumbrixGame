@@ -7,10 +7,10 @@ namespace NumbrixGame.View
 {
     public sealed partial class SaveScoreDialog : ContentDialog
     {
-        #region Data members
+        #region Properties
 
-        private string username;
-        private TimeSpan timeTaken;
+        public string Username { get; set; }
+        public TimeSpan TimeTaken { get; set; }
 
         #endregion
 
@@ -19,18 +19,6 @@ namespace NumbrixGame.View
         public SaveScoreDialog()
         {
             this.InitializeComponent();
-        }
-
-        #endregion
-
-        #region Methods
-
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-        }
-
-        private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
         }
 
         #endregion

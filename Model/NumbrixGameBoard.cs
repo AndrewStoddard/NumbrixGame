@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NumbrixGame.Model
@@ -13,6 +14,7 @@ namespace NumbrixGame.Model
 
         public int BoardHeight { get; set; }
         public int GameBoardNumber { get; set; }
+        public TimeSpan TimeTaken { get; set; }
 
         #endregion
 
@@ -22,6 +24,7 @@ namespace NumbrixGame.Model
         {
             this.BoardWidth = boardWidth;
             this.BoardHeight = boardHeight;
+            this.TimeTaken = new TimeSpan(0, 0, 0);
             this.CreateBlankGameBoard();
         }
 

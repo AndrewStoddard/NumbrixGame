@@ -4,20 +4,20 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModel="using:NumbrixGame.ViewModel"
+    xmlns:converters="using:NumbrixGame.Converters"
     x:Class="NumbrixGame.View.NumbrixGameBoardPage"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Page.DataContext>
-        <viewModel:NumbrixGameBoardViewModel />
-    </Page.DataContext>
-
+    <Page.Resources>
+        <converters:TimeSpanToTextConverter x:Key="conv"></converters:TimeSpanToTextConverter>
+    </Page.Resources>
     <Grid>
         <CommandBar>
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
-            <AppBarButton Icon="Add" Label="Load" Click="loadGameBoard"/>
+            <AppBarButton Icon="Add" Label="Load" />
             <AppBarButton Icon="Accept" Label="Check" Click="checkSolution"/>
             <AppBarButton Icon="Delete" Label="Clear Board" Click="clearBoard"/>
         </CommandBar>
@@ -25,11 +25,11 @@
         <Grid x:Name="parentGrid">
             <!-- Puzzles will dynamically be created here -->
         </Grid>
-        <StackPanel Orientation="Horizontal" Margin="0,785,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="330">
-            <TextBlock x:Name="TextBlockPuzzleTimer" Text="00 : 00 : 00" Margin="0,0,16,0" HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="24"  VerticalAlignment="Top"/>
-            <Button x:Name="buttonStartTimer" Content="Start" VerticalAlignment="Top" Margin="0,0,16,0" Click="timerStart_OnClick"/>
-            <Button x:Name="buttonStopTimer" Content="Stop" VerticalAlignment="Top" Margin="0,0,16,0" Click="timerStop_OnClick"/>
-            <Button x:Name="buttonResetTimer" Content="Reset" VerticalAlignment="Top" Click="timerReset_OnClick"/>
+        <StackPanel DataContext="{x:Bind numbrixGameBoardViewModel, Mode=OneWay}" Orientation="Horizontal" Margin="0,785,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="330">
+            <TextBlock x:Name="TextBlockPuzzleTimer" Text="{Binding TimeTaken, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource conv}}" Margin="0,0,16,0" HorizontalAlignment="Left" TextWrapping="Wrap" FontSize="24"  VerticalAlignment="Top"/>
+            <Button x:Name="buttonStartTimer" Content="Start" VerticalAlignment="Top" Margin="0,0,16,0" Click="OnStartTimer"/>
+            <Button x:Name="buttonStopTimer" Content="Stop" VerticalAlignment="Top" Margin="0,0,16,0" Click="OnStopTimer"/>
+            <Button x:Name="buttonResetTimer" Content="Reset" VerticalAlignment="Top" Click="OnResetTimer"/>
         </StackPanel>
         <TextBlock HorizontalAlignment="Center" Margin="0,90,0,0" Text="Check Solution Message" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" x:Name="solutionCheckMessage"/>
         <Button Content="Next Puzzle" Margin="946,468,0,0" VerticalAlignment="Top" Click="NextPuzzle_OnClick"/>
