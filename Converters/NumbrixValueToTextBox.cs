@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Data;
 
 namespace NumbrixGame.Converters
 {
-    public class NumbrixValueToTextBoxText : IValueConverter
+    public class NumbrixValueToTextBox : IValueConverter
     {
         #region Methods
 

@@ -7,6 +7,7 @@
         public const int GameBoardNumberSettingLocation = 0;
         public const int WidthSettingLoaction = 1;
         public const int HeightSettingLocation = 2;
+        public const int TimeSettingLocation = 3;
 
         public const int XLocation = 0;
         public const int YLocation = 1;

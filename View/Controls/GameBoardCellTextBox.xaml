@@ -12,7 +12,7 @@
     MaxWidth="50"
     MaxHeight="50">
     <UserControl.Resources>
-        <converters:NumbrixValueToTextBoxText x:Key="conv"></converters:NumbrixValueToTextBoxText>
+        <converters:NumbrixValueToTextBox x:Key="conv"></converters:NumbrixValueToTextBox>
     </UserControl.Resources>
     <Grid>
         <TextBox x:Name="textBox"

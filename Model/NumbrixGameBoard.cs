@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace NumbrixGame.Model
 {
@@ -38,6 +39,20 @@ namespace NumbrixGame.Model
         #endregion
 
         #region Methods
+
+        public string AsCSV()
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.Append(
+                $"{this.GameBoardNumber},{this.BoardWidth},{this.BoardHeight},{this.TimeTaken.ToString()}");
+            foreach (var gameBoardCell in this.NumbrixGameBoardCells)
+            {
+                stringBuilder.AppendLine(
+                    $"{gameBoardCell.X},{gameBoardCell.Y},{gameBoardCell.NumbrixValue},{gameBoardCell.IsDefaultValue}");
+            }
+
+            return stringBuilder.ToString();
+        }
 
         public void CreateBlankGameBoard()
         {

@@ -121,9 +121,10 @@
     </Compile>
     <Compile Include="Converters\BooleanToVisibility.cs" />
     <Compile Include="Converters\NegatedBooleanToVisibility.cs" />
-    <Compile Include="Converters\NumbrixValueToTextBoxText.cs" />
+    <Compile Include="Converters\NumbrixValueToTextBox.cs" />
     <Compile Include="Converters\TimeSpanToTextConverter.cs" />
     <Compile Include="Datatier\DatatierConstants.cs" />
+    <Compile Include="Datatier\NumbrixGameBoardWriter.cs" />
     <Compile Include="Model\NumbrixScoreBoard.cs" />
     <Compile Include="Model\NumbrixSolver.cs" />
     <Compile Include="Model\NumbrixSolverAgent.cs" />
