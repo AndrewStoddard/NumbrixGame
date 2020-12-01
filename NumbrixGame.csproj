@@ -119,6 +119,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanToVisibility.cs" />
+    <Compile Include="Converters\NegatedBooleanToVisibility.cs" />
     <Compile Include="Converters\NumbrixValueToTextBoxText.cs" />
     <Compile Include="Converters\TimeSpanToTextConverter.cs" />
     <Compile Include="Datatier\DatatierConstants.cs" />

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.UI.Xaml;
 using NumbrixGame.Annotations;
 using NumbrixGame.Datatier;
 using NumbrixGame.Model;
@@ -24,6 +25,7 @@ namespace NumbrixGame.ViewModel
 
         private IList<GameBoardCellTextBox> gameBoardTextCells;
         private readonly PuzzleManager puzzleManager;
+        private readonly DispatcherTimer timer;
 
         #endregion
 
@@ -51,6 +53,26 @@ namespace NumbrixGame.ViewModel
             set => this.Model.BoardHeight = value;
         }
 
+        public bool IsPaused
+        {
+            get => this.Model.IsPaused;
+            set
+            {
+                this.Model.IsPaused = value;
+                this.OnPropertyChanged(nameof(this.IsPaused));
+            }
+        }
+
+        public bool IsFinished
+        {
+            get => this.Model.IsFinished;
+            set
+            {
+                this.Model.IsFinished = value;
+                this.OnPropertyChanged(nameof(this.IsFinished));
+            }
+        }
+
         public TimeSpan TimeTaken
         {
             get => this.Model.TimeTaken;
@@ -69,10 +91,17 @@ namespace NumbrixGame.ViewModel
 
         public NumbrixGameBoardViewModel()
         {
+            this.timer = new DispatcherTimer {
+                Interval = new TimeSpan(0, 0, 1)
+            };
+            this.timer.Tick += this.Timer_Tick;
+
             this.puzzleManager = new PuzzleManager();
 
             this.Model = this.loadStartingPuzzle();
             this.NumbrixGameBoardCells = this.createNumbrixGameBoardCells();
+            this.IsPaused = false;
+            this.StartTime();
         }
 
         #endregion
@@ -80,6 +109,11 @@ namespace NumbrixGame.ViewModel
         #region Methods
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void Timer_Tick(object sender, object e)
+        {
+            this.TimeTaken = this.TimeTaken.Add(new TimeSpan(0, 0, 1));
+        }
 
         public event ValueChanged OnValueChanged;
 
@@ -93,6 +127,26 @@ namespace NumbrixGame.ViewModel
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void StartTime()
+        {
+            this.IsPaused = false;
+            this.timer.Start();
+        }
+
+        public void PauseTime()
+        {
+            this.IsPaused = true;
+            this.timer.Stop();
+        }
+
+        public void ResetTime()
+        {
+            this.TimeTaken = new TimeSpan(0, 0, 0);
+            this.ClearGameBoard();
+            this.IsPaused = true;
+            this.timer.Stop();
         }
 
         #endregion

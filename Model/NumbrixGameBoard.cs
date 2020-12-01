@@ -15,6 +15,8 @@ namespace NumbrixGame.Model
         public int BoardHeight { get; set; }
         public int GameBoardNumber { get; set; }
         public TimeSpan TimeTaken { get; set; }
+        public bool IsPaused { get; set; }
+        public bool IsFinished { get; set; }
 
         #endregion
 

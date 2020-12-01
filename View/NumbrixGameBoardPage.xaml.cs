@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -20,13 +20,12 @@ namespace NumbrixGame.View
     /// <summary>
     ///     An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class NumbrixGameBoardPage : INotifyPropertyChanged
+    public sealed partial class NumbrixGameBoardPage
     {
         #region Data members
 
         private readonly NumbrixGameBoardViewModel numbrixGameBoardViewModel;
         private List<GameBoardCellTextBox> gameBoardCellTextBoxes;
-        private readonly DispatcherTimer timer;
 
         #endregion
 
@@ -35,33 +34,19 @@ namespace NumbrixGame.View
         public NumbrixGameBoardPage()
         {
             this.InitializeComponent();
-            this.timer = new DispatcherTimer {
-                Interval = new TimeSpan(0, 0, 1)
-            };
-            this.timer.Tick += this.Timer_Tick;
-            ;
+
             this.numbrixGameBoardViewModel = new NumbrixGameBoardViewModel();
             this.numbrixGameBoardViewModel.OnValueChanged += this.checkSolution;
             this.gameBoardCellTextBoxes = new List<GameBoardCellTextBox>();
 
             this.createGameBoard();
-            this.solutionCheckMessage.Visibility = Visibility.Collapsed;
 
-            this.buttonStopTimer.IsEnabled = false;
             this.textBlockGamePaused.Visibility = Visibility.Collapsed;
         }
 
         #endregion
 
         #region Methods
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void Timer_Tick(object sender, object e)
-        {
-            this.numbrixGameBoardViewModel.TimeTaken =
-                this.numbrixGameBoardViewModel.TimeTaken.Add(new TimeSpan(0, 0, 1));
-        }
 
         private void clearPuzzle()
         {
@@ -182,16 +167,30 @@ namespace NumbrixGame.View
         {
             if (this.numbrixGameBoardViewModel.CheckSolution())
             {
+                this.numbrixGameBoardViewModel.PauseTime();
                 await this.createSaveScoreDialog();
             }
         }
 
-        private async Task<string> createSaveScoreDialog()
+        private async Task createSaveScoreDialog()
         {
             var saveScoreDialog = new SaveScoreDialog {TimeTaken = this.numbrixGameBoardViewModel.TimeTaken};
             var showDialog = await saveScoreDialog.ShowAsync();
+            switch (showDialog)
+            {
+                case ContentDialogResult.Primary:
+                    Frame.Navigate(typeof(NumbrixScoreboardPage));
+                    break;
+                case ContentDialogResult.Secondary:
+                    this.goToNextPuzzle();
+                    break;
+            }
 
-            return saveScoreDialog.Username;
+            if (!string.IsNullOrEmpty(saveScoreDialog.Username))
+            {
+                //TODO Add to scoreboard
+                Debug.WriteLine(saveScoreDialog.Username);
+            }
         }
 
         private void clearBoard(object sender, RoutedEventArgs e)
@@ -201,27 +200,28 @@ namespace NumbrixGame.View
 
         private void NextPuzzle_OnClick(object sender, RoutedEventArgs e)
         {
-            this.solutionCheckMessage.Visibility = Visibility.Collapsed;
+            this.goToNextPuzzle();
+        }
 
+        private void goToNextPuzzle()
+        {
             this.numbrixGameBoardViewModel.NextPuzzle();
-
             this.createGameBoard();
         }
 
         private void OnStopTimer(object sender, RoutedEventArgs e)
         {
-            this.timer.Stop();
+            this.numbrixGameBoardViewModel.PauseTime();
         }
 
         private void OnStartTimer(object sender, RoutedEventArgs e)
         {
-            this.timer.Start();
+            this.numbrixGameBoardViewModel.StartTime();
         }
 
         private void OnResetTimer(object sender, RoutedEventArgs e)
         {
-            this.numbrixGameBoardViewModel.TimeTaken = new TimeSpan(0, 0, 0);
-            this.timer.Stop();
+            this.numbrixGameBoardViewModel.ResetTime();
         }
 
         #endregion
