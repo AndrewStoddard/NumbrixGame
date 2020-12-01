@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.Storage;
+using Microsoft.Toolkit.Uwp.Helpers;
 using NumbrixGame.Model;
 
 namespace NumbrixGame.Datatier
@@ -10,9 +11,14 @@ namespace NumbrixGame.Datatier
 
         public static async void WriteGameboard(NumbrixGameBoard numbrixGameBoard, string fileName)
         {
-            var localFolder = ApplicationData.Current.LocalFolder;
-            var saveFile = await localFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
-            await FileIO.WriteTextAsync(saveFile, numbrixGameBoard.AsCSV());
+            await FileIO.WriteTextAsync(
+                await ApplicationData.Current.LocalFolder.CreateFileAsync(fileName,
+                    CreationCollisionOption.ReplaceExisting), numbrixGameBoard.AsCSV());
+        }
+
+        public static bool FileExists(string fileName)
+        {
+            return ApplicationData.Current.LocalFolder.FileExistsAsync(fileName).Result;
         }
 
         #endregion

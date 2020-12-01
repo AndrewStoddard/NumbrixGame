@@ -1,0 +1,21 @@
+﻿<Page
+    x:Class="NumbrixGame.View.NumbrixMainMenuPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:NumbrixGame.View"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:converters="using:NumbrixGame.Converters"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <converters:StorageFileToListViewConverter x:Key="fileToListViewConverter"></converters:StorageFileToListViewConverter>
+    </Page.Resources>
+    <Grid DataContext="{x:Bind numbrixMainPageViewModel, Mode=OneWay}">
+        <TextBlock HorizontalAlignment="Left" Margin="618,52,0,0" Text="Welcome to the Numbrix Game!" FontSize="24" TextWrapping="Wrap" VerticalAlignment="Top" Height="123" Width="166"/>
+        <ListView Height="auto" Width="auto" x:Name="SavedGames" ItemsSource="{Binding SavedGames, Converter={StaticResource fileToListViewConverter}}"/>
+        <ListView Height="auto" Width="auto"  x:Name="PrebuiltGames" ItemsSource="{Binding PrebuiltGames, Converter={StaticResource fileToListViewConverter}}"/>
+
+    </Grid>
+</Page>

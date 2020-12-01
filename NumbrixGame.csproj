@@ -122,6 +122,7 @@
     <Compile Include="Converters\BooleanToVisibility.cs" />
     <Compile Include="Converters\NegatedBooleanToVisibility.cs" />
     <Compile Include="Converters\NumbrixValueToTextBox.cs" />
+    <Compile Include="Converters\StorageFileToListViewConverter.cs" />
     <Compile Include="Converters\TimeSpanToTextConverter.cs" />
     <Compile Include="Datatier\DatatierConstants.cs" />
     <Compile Include="Datatier\NumbrixGameBoardWriter.cs" />
@@ -130,10 +131,12 @@
     <Compile Include="Model\NumbrixSolverAgent.cs" />
     <Compile Include="Model\NumbrixPlayerScore.cs" />
     <Compile Include="Model\PuzzleManager.cs" />
+    <Compile Include="PrebuiltGames\MainPuzzles.cs" />
     <Compile Include="PrebuiltGames\StartingPuzzles.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\NumbrixGameBoardCellViewModel.cs" />
     <Compile Include="ViewModel\NumbrixGameBoardViewModel.cs" />
+    <Compile Include="ViewModel\NumbrixMainPageViewModel.cs" />
     <Compile Include="ViewModel\NumbrixPlayerScoreViewModel.cs" />
     <Compile Include="ViewModel\NumbrixScoreBoardViewModel.cs" />
     <Compile Include="View\Controls\GameBoardCellTextBox.xaml.cs">
@@ -147,6 +150,9 @@
     <Compile Include="Model\NumbrixGameBoard.cs" />
     <Compile Include="Model\NumbrixGameBoardCellNeighbors.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\NumbrixMainMenuPage.xaml.cs">
+      <DependentUpon>NumbrixMainMenuPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\NumbrixScoreboardPage.xaml.cs">
       <DependentUpon>NumbrixScoreboardPage.xaml</DependentUpon>
     </Compile>
@@ -181,6 +187,10 @@
     <Page Include="View\NumbrixGameBoardPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\NumbrixMainMenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\NumbrixScoreboardPage.xaml">
       <SubType>Designer</SubType>
