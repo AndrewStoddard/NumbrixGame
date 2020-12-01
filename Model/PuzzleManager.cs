@@ -38,9 +38,13 @@ namespace NumbrixGame.Model
             this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleB));
             this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleC));
             this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.PuzzleD));
-
             this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleE));
             this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleF));
+
+            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleG));
+            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleH));
+            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleI));
+            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleJ));
 
             this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleX));
             this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleY));
