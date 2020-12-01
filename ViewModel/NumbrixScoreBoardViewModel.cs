@@ -38,6 +38,11 @@ namespace NumbrixGame.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public void AddPlayerScore(NumbrixPlayerScoreViewModel playerScore)
+        {
+            this.playerScores.Add(playerScore);
+        }
+
         #endregion
     }
 }

@@ -26,6 +26,7 @@ namespace NumbrixGame.View
 
         private readonly NumbrixGameBoardViewModel numbrixGameBoardViewModel;
         private List<GameBoardCellTextBox> gameBoardCellTextBoxes;
+        private readonly NumbrixScoreBoardViewModel numbrixScoreBoardViewModel;
 
         #endregion
 
@@ -34,7 +35,7 @@ namespace NumbrixGame.View
         public NumbrixGameBoardPage()
         {
             this.InitializeComponent();
-
+            this.numbrixScoreBoardViewModel = new NumbrixScoreBoardViewModel();
             this.numbrixGameBoardViewModel = new NumbrixGameBoardViewModel();
             this.numbrixGameBoardViewModel.OnValueChanged += this.checkSolution;
             this.gameBoardCellTextBoxes = new List<GameBoardCellTextBox>();
@@ -176,20 +177,22 @@ namespace NumbrixGame.View
         {
             var saveScoreDialog = new SaveScoreDialog {TimeTaken = this.numbrixGameBoardViewModel.TimeTaken};
             var showDialog = await saveScoreDialog.ShowAsync();
+
+            if (!string.IsNullOrEmpty(saveScoreDialog.Username))
+            {
+                this.numbrixScoreBoardViewModel.AddPlayerScore(new NumbrixPlayerScoreViewModel(saveScoreDialog.Username,
+                    this.numbrixGameBoardViewModel.TimeTaken, this.numbrixGameBoardViewModel.GameBoardNumber));
+                Debug.WriteLine(saveScoreDialog.Username);
+            }
+
             switch (showDialog)
             {
                 case ContentDialogResult.Primary:
-                    Frame.Navigate(typeof(NumbrixScoreboardPage));
+                    Frame.Navigate(typeof(NumbrixScoreboardPage), this.numbrixScoreBoardViewModel);
                     break;
                 case ContentDialogResult.Secondary:
                     this.goToNextPuzzle();
                     break;
-            }
-
-            if (!string.IsNullOrEmpty(saveScoreDialog.Username))
-            {
-                //TODO Add to scoreboard
-                Debug.WriteLine(saveScoreDialog.Username);
             }
         }
 
@@ -222,6 +225,11 @@ namespace NumbrixGame.View
         private void OnResetTimer(object sender, RoutedEventArgs e)
         {
             this.numbrixGameBoardViewModel.ResetTime();
+        }
+
+        private void OnScoreboard(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(NumbrixScoreboardPage), this.numbrixScoreBoardViewModel);
         }
 
         #endregion

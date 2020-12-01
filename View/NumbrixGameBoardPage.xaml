@@ -22,6 +22,7 @@
             <AppBarButton Icon="Add" Label="Load" />
             <AppBarButton Icon="Accept" Label="Check" Click="checkSolution"/>
             <AppBarButton Icon="Delete" Label="Clear Board" Click="clearBoard"/>
+            <AppBarButton Icon="Add" Label="Scoreboard" VerticalAlignment="Center" Click="OnScoreboard"/>
         </CommandBar>
 
         <Grid x:Name="parentGrid" Visibility="{Binding IsPaused, Converter={StaticResource negatedBooleanConverter}}">

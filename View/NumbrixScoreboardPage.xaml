@@ -44,6 +44,12 @@
 
             </Custom:DataGrid.Columns>
         </Custom:DataGrid>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton Icon="Back" Label="Go Back" Click="GoBack"/>
+        </CommandBar>
 
     </Grid>
 </Page>
