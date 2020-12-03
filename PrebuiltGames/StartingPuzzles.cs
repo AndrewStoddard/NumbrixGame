@@ -288,7 +288,7 @@
                                        "8,8,10,true\n";
 
 
-        public static string puzzleX = "24,8,8,\n" +
+        public static string puzzleK = "11,8,8,\n" +
                                        "1,1,1,true\n" +
                                        "1,3,3,true\n" +
                                        "1,4,4,true\n" +
@@ -305,7 +305,7 @@
                                        "8,1,22,true\n" +
                                        "8,8,29,true";
 
-        public static string puzzleY = "25,8,8,\n" +
+        public static string puzzleL = "12,8,8,\n" +
                                        "1,2,15,true\n" +
                                        "1,6,19,true\n" +
                                        "2,2,32,true\n" +
@@ -321,9 +321,49 @@
                                        "8,5,45,true\n" +
                                        "8,8,48,true";
 
-        public static string puzzleZ = "26,2,2,\n" +
+        public static string puzzleM = "13,2,2,\n" +
                                        "1,2,3,true\n" +
                                        "2,2,4,true\n";
+
+        public static string puzzleN = "14,6,6,\n" +
+                                       "1,2,17,true\n" +
+                                       "1,3,18,true\n" +
+                                       "1,4,19,true\n" +
+                                       "1,5,20,true\n" +
+                                       "2,1,15,true\n" +
+                                       "2,6,22,true\n" +
+                                       "3,1,10,true\n" +
+                                       "3,3,12,true\n" +
+                                       "3,4,25,true\n" +
+                                       "3,6,35,true\n" +
+                                       "4,1,9,true\n" +
+                                       "4,3,3,true\n" +
+                                       "4,4,26,true\n" +
+                                       "4,6,34,true\n" +
+                                       "5,1,8,true\n" +
+                                       "5,6,33,true\n" +
+                                       "6,2,6,true\n" +
+                                       "6,3,1,true\n" +
+                                       "6,4,30,true\n" +
+                                       "6,5,31,true\n";
+
+        public static string puzzleO = "15,6,6,\n" +
+                                       "2,2,28,true\n" +
+                                       "2,3,27,true\n" +
+                                       "2,4,34,true\n" +
+                                       "2,5,3,true\n" +
+                                       "3,2,25,true\n" +
+                                       "3,3,26,true\n" +
+                                       "3,4,35,true\n" +
+                                       "3,5,36,true\n" +
+                                       "4,2,22,true\n" +
+                                       "4,3,21,true\n" +
+                                       "4,4,12,true\n" +
+                                       "4,5,11,true\n" +
+                                       "5,2,19,true\n" +
+                                       "5,3,20,true\n" +
+                                       "5,4,13,true\n" +
+                                       "5,5,10,true\n";
 
         #endregion
     }
