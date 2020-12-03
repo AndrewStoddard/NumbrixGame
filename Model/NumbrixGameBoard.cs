@@ -151,6 +151,11 @@ namespace NumbrixGame.Model
             return value;
         }
 
+        public override bool Equals(object obj)
+        {
+            return obj is NumbrixGameBoard gameboard && gameboard.GameBoardNumber == this.GameBoardNumber;
+        }
+
         #endregion
     }
 }

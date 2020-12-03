@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 using NumbrixGame.Model;
+using NumbrixGame.PrebuiltGames;
 
 namespace NumbrixGame.Datatier
 {
@@ -66,6 +69,29 @@ namespace NumbrixGame.Datatier
             }
 
             return gameBoard;
+        }
+
+        public static async Task<List<StorageFile>> GetSavedGames()
+        {
+            var files = await ApplicationData.Current.LocalFolder.GetFilesAsync();
+            return files.Where(file => file.Name.StartsWith("save_")).ToList();
+        }
+
+        public static async Task<List<StorageFile>> GetPrebuiltGames()
+        {
+            var prebuiltSuffix = "puzzle_";
+            for (var i = 1; i <= 8; i++)
+            {
+                var filename = prebuiltSuffix + i + ".csv";
+                if (!NumbrixGameBoardWriter.FileExists(filename))
+                {
+                    NumbrixGameBoardWriter.WriteGameboard(
+                        LoadPuzzle(MainPuzzles.PuzzleList?[i - 1]), filename);
+                }
+            }
+
+            var files = await ApplicationData.Current.LocalFolder.GetFilesAsync();
+            return files.Where(file => file.Name.StartsWith("puzzle_")).ToList();
         }
 
         #endregion

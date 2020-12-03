@@ -198,7 +198,8 @@ namespace NumbrixGame.View
                     Frame.Navigate(typeof(NumbrixScoreboardPage), this.numbrixScoreBoardViewModel);
                     break;
                 case ContentDialogResult.Secondary:
-                    this.goToNextPuzzle();
+                    this.numbrixGameBoardViewModel.NextPuzzle();
+                    this.createGameBoard();
                     break;
             }
         }
@@ -208,13 +209,15 @@ namespace NumbrixGame.View
             this.numbrixGameBoardViewModel.ClearGameBoard();
         }
 
-        private void NextPuzzle_OnClick(object sender, RoutedEventArgs e)
+        private void OnNextPuzzle(object sender, RoutedEventArgs e)
         {
-            this.goToNextPuzzle();
+            this.numbrixGameBoardViewModel.NextPuzzle();
+            this.createGameBoard();
         }
 
-        private void goToNextPuzzle()
+        private void OnPreviousPuzzle(object sender, RoutedEventArgs e)
         {
+            this.numbrixGameBoardViewModel.PreviousPuzzle();
             this.createGameBoard();
         }
 

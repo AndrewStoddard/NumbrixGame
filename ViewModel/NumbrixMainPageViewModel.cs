@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Storage;
 using NumbrixGame.Annotations;
 using NumbrixGame.Datatier;
-using NumbrixGame.PrebuiltGames;
 
 namespace NumbrixGame.ViewModel
 {
@@ -69,32 +66,9 @@ namespace NumbrixGame.ViewModel
 
         public static async Task<NumbrixMainPageViewModel> BuildViewModelAsync()
         {
-            var savedGames = await GetSavedGames();
-            var prebuiltGames = await GetPrebuiltGames();
+            var savedGames = await NumbrixGameBoardReader.GetSavedGames();
+            var prebuiltGames = await NumbrixGameBoardReader.GetPrebuiltGames();
             return new NumbrixMainPageViewModel {PrebuiltGames = prebuiltGames, SavedGames = savedGames};
-        }
-
-        public static async Task<List<StorageFile>> GetSavedGames()
-        {
-            var files = await ApplicationData.Current.LocalFolder.GetFilesAsync();
-            return files.Where(file => file.Name.StartsWith("save_")).ToList();
-        }
-
-        public static async Task<List<StorageFile>> GetPrebuiltGames()
-        {
-            var prebuiltSuffix = "puzzle_";
-            for (var i = 1; i <= 8; i++)
-            {
-                var filename = prebuiltSuffix + i + ".csv";
-                if (!NumbrixGameBoardWriter.FileExists(filename))
-                {
-                    NumbrixGameBoardWriter.WriteGameboard(
-                        NumbrixGameBoardReader.LoadPuzzle(MainPuzzles.PuzzleList?[i - 1]), filename);
-                }
-            }
-
-            var files = await ApplicationData.Current.LocalFolder.GetFilesAsync();
-            return files.Where(file => file.Name.StartsWith("puzzle_")).ToList();
         }
 
         [NotifyPropertyChangedInvocator]

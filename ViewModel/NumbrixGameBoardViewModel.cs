@@ -25,6 +25,7 @@ namespace NumbrixGame.ViewModel
 
         private IList<GameBoardCellTextBox> gameBoardTextCells;
         private readonly DispatcherTimer timer;
+        private readonly PuzzleManager puzzleManager;
 
         #endregion
 
@@ -95,6 +96,7 @@ namespace NumbrixGame.ViewModel
             };
             this.timer.Tick += this.Timer_Tick;
             this.Model = new NumbrixGameBoard();
+            this.puzzleManager = new PuzzleManager();
         }
 
         #endregion
@@ -188,14 +190,24 @@ namespace NumbrixGame.ViewModel
             }
         }
 
+        public void NextPuzzle()
+        {
+            this.Model = this.puzzleManager.NextPuzzle;
+            this.NumbrixGameBoardCells = this.createNumbrixGameBoardCells();
+        }
+
+        public void PreviousPuzzle()
+        {
+            this.Model = this.puzzleManager.PreviousPuzzle;
+            this.NumbrixGameBoardCells = this.createNumbrixGameBoardCells();
+        }
+
         public async Task LoadGameBoard(StorageFile gameBoardFile)
         {
             this.Model = await NumbrixGameBoardReader.LoadPuzzle(gameBoardFile);
-            this.IsPaused = false;
-            this.IsFinished = false;
+            this.puzzleManager.CurrentPuzzle =
+                this.puzzleManager.Puzzles.SingleOrDefault(puzzle => puzzle.Equals(this.Model));
             this.NumbrixGameBoardCells = this.createNumbrixGameBoardCells();
-
-            this.ResetTime();
         }
 
         #endregion
