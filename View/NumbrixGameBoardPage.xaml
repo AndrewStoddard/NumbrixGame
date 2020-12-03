@@ -38,6 +38,7 @@
         <Button Content="Next Puzzle" Margin="946,468,0,0" VerticalAlignment="Top" Click="NextPuzzle_OnClick"/>
         <TextBlock x:Name="textBlockPuzzleNumber" Text="Puzzle Number" HorizontalAlignment="Center" Margin="0,704,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" />
         <TextBlock Visibility="{Binding IsPaused, Converter={StaticResource booleanConverter}}" x:Name="textBlockGamePaused" HorizontalAlignment="Left" Margin="621,452,0,0" Text="Game is Paused!" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Width="272" TextAlignment="Center" FontWeight="Bold"/>
+        <TextBlock x:Name="incorrectTextBox" Visibility="Collapsed" HorizontalAlignment="Center" Margin="0,188,0,0" Text="Puzzle is Incorrect!" TextWrapping="Wrap" VerticalAlignment="Top" FocusVisualPrimaryBrush="#FFEC0E0E" Foreground="#FFD61414"/>
 
     </Grid>
 

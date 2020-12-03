@@ -175,6 +175,10 @@ namespace NumbrixGame.View
                 this.numbrixGameBoardViewModel.PauseTime();
                 await this.createSaveScoreDialog();
             }
+            else
+            {
+                this.incorrectTextBox.Visibility = Visibility.Visible;
+            }
         }
 
         private async Task createSaveScoreDialog()
