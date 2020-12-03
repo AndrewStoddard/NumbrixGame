@@ -273,6 +273,20 @@ namespace NumbrixGame.View
             }
         }
 
+        private void createSaveReminderDialog()
+        {
+        }
+
+        private void OnMainMenu(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(NumbrixMainMenuPage));
+        }
+
+        private void OnSavedPuzzles(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         #endregion
     }
 }

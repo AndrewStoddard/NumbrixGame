@@ -15,16 +15,13 @@
         <converters:BooleanToVisibility  x:Key="booleanConverter"></converters:BooleanToVisibility>
     </Page.Resources>
     <Grid DataContext="{x:Bind numbrixGameBoardViewModel, Mode=OneWay}">
-        <CommandBar>
-            <CommandBar.Content>
-                <Grid/>
-            </CommandBar.Content>
-            <AppBarButton Icon="Add" Label="Load" />
-            <AppBarButton Icon="Accept" Label="Check" Click="checkSolution"/>
-            <AppBarButton Icon="Delete" Label="Clear Board" Click="clearBoard"/>
-            <AppBarButton Icon="Add" Label="Scoreboard" VerticalAlignment="Center" Click="OnScoreboard"/>
-        </CommandBar>
         <Button x:Name="ToggleMusicButton" Content="Music On" Margin="218,188,0,0" VerticalAlignment="Top" Click="OnToggleMusic" Width="100" Height="45"/>
+        <Button x:Name="MainMenu" Content="Main Menu" Margin="218,238,0,0" VerticalAlignment="Top" Click="OnMainMenu" Width="100" Height="45"/>
+        <Button Content="Scoreboard" Margin="218,288,0,0" VerticalAlignment="Top" Height="45" Width="100" Click="OnScoreboard"/>
+        <Button Content="Saved Puzzles" Margin="218,288,0,0" VerticalAlignment="Top" Height="45" Width="100" Click="OnSavedPuzzles"/>
+        <Button Content="Next Puzzle" Margin="946,468,0,0" VerticalAlignment="Top" Click="NextPuzzle_OnClick"/>
+        <Button Content="Previous Puzzle" Margin="374,479,0,0" VerticalAlignment="Top"/>
+
         <Grid x:Name="parentGrid" Visibility="{Binding IsPaused, Converter={StaticResource negatedBooleanConverter}}">
 
             <!-- Puzzles will dynamically be created here -->
@@ -35,10 +32,10 @@
             <Button x:Name="buttonStopTimer" Content="Pause" VerticalAlignment="Top" Margin="0,0,16,0" Click="OnStopTimer" Visibility="{Binding IsPaused, Converter={StaticResource negatedBooleanConverter}}"/>
             <Button x:Name="buttonResetTimer" Content="Reset" VerticalAlignment="Top" Click="OnResetTimer"/>
         </StackPanel>
-        <Button Content="Next Puzzle" Margin="946,468,0,0" VerticalAlignment="Top" Click="NextPuzzle_OnClick"/>
         <TextBlock x:Name="textBlockPuzzleNumber" Text="Puzzle Number" HorizontalAlignment="Center" Margin="0,704,0,0" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" />
         <TextBlock Visibility="{Binding IsPaused, Converter={StaticResource booleanConverter}}" x:Name="textBlockGamePaused" HorizontalAlignment="Left" Margin="621,452,0,0" Text="Game is Paused!" TextWrapping="Wrap" VerticalAlignment="Top" FontSize="24" Width="272" TextAlignment="Center" FontWeight="Bold"/>
         <TextBlock x:Name="incorrectTextBox" Visibility="Collapsed" HorizontalAlignment="Center" Margin="0,188,0,0" Text="Puzzle is Incorrect!" TextWrapping="Wrap" VerticalAlignment="Top" FocusVisualPrimaryBrush="#FFEC0E0E" Foreground="#FFD61414"/>
+
 
     </Grid>
 
