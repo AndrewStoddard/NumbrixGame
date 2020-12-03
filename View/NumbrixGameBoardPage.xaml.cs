@@ -7,6 +7,7 @@ using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.System;
 using Windows.UI;
+using Windows.UI.Core.Preview;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -46,6 +47,7 @@ namespace NumbrixGame.View
             this.gameBoardCellTextBoxes = new List<GameBoardCellTextBox>();
             this.InitializeComponent();
             this.textBlockGamePaused.Visibility = Visibility.Collapsed;
+            SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += this.OnCloseRequest;
         }
 
         #endregion
@@ -288,5 +290,25 @@ namespace NumbrixGame.View
         }
 
         #endregion
+
+
+        private async void OnCloseRequest(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
+        {
+            e.Handled = true;
+            var result = await this.showSaveDialog();
+            Application.Current.Exit();
+        }
+
+        private async Task<ContentDialogResult> showSaveDialog()
+        {
+            ContentDialog saveDialog = new ContentDialog()
+            {
+                Title = "Saving Progress",
+                Content = "Saving your current progress...",
+                PrimaryButtonText = "Ok"
+            };
+            var result = await saveDialog.ShowAsync();
+            return result;
+        }
     }
 }
