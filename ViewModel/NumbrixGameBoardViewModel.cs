@@ -94,6 +94,7 @@ namespace NumbrixGame.ViewModel
                 Interval = new TimeSpan(0, 0, 1)
             };
             this.timer.Tick += this.Timer_Tick;
+            this.Model = new NumbrixGameBoard();
         }
 
         #endregion

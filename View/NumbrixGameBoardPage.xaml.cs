@@ -38,14 +38,13 @@ namespace NumbrixGame.View
         /// <summary>Initializes a new instance of the <see cref="NumbrixGameBoardPage" /> class.</summary>
         public NumbrixGameBoardPage()
         {
-            this.InitializeComponent();
             this.soundManager = new SoundManager();
             this.soundManager.Pause();
             this.numbrixScoreBoardViewModel = new NumbrixScoreBoardViewModel();
             this.numbrixGameBoardViewModel = new NumbrixGameBoardViewModel();
             this.numbrixGameBoardViewModel.OnValueChanged += this.checkSolution;
             this.gameBoardCellTextBoxes = new List<GameBoardCellTextBox>();
-
+            this.InitializeComponent();
             this.textBlockGamePaused.Visibility = Visibility.Collapsed;
         }
 
