@@ -5,9 +5,8 @@ using System.Text;
 
 namespace NumbrixGame.Model
 {
-
     /// <summary>
-    ///   The Numbrix Game Board class
+    ///     The Numbrix Game Board class
     /// </summary>
     public class NumbrixGameBoard
     {
@@ -35,12 +34,14 @@ namespace NumbrixGame.Model
 
         /// <summary>Gets or sets a value indicating whether this instance is paused.</summary>
         /// <value>
-        /// <c>true</c> if this instance is paused; otherwise, <c>false</c>.</value>
+        ///     <c>true</c> if this instance is paused; otherwise, <c>false</c>.
+        /// </value>
         public bool IsPaused { get; set; }
 
         /// <summary>Gets or sets a value indicating whether this instance is finished.</summary>
         /// <value>
-        ///   <c>true</c> if this instance is finished; otherwise, <c>false</c>.</value>
+        ///     <c>true</c> if this instance is finished; otherwise, <c>false</c>.
+        /// </value>
         public bool IsFinished { get; set; }
 
         #endregion
@@ -53,11 +54,12 @@ namespace NumbrixGame.Model
         public NumbrixGameBoard(int boardWidth, int boardHeight)
         {
             this.BoardWidth = boardWidth;
+            this.IsFinished = false;
+            this.IsPaused = false;
             this.BoardHeight = boardHeight;
             this.TimeTaken = new TimeSpan(0, 0, 0);
             this.CreateBlankGameBoard();
         }
-
 
         /// <summary>Initializes a new instance of the <see cref="NumbrixGameBoard" /> class.</summary>
         public NumbrixGameBoard()
@@ -69,10 +71,9 @@ namespace NumbrixGame.Model
 
         #region Methods
 
-
         /// <summary>Builds puzzle in CSV format.</summary>
         /// <returns>
-        ///   puzzle in CSV format
+        ///     puzzle in CSV format
         /// </returns>
         public string AsCSV()
         {
@@ -104,25 +105,23 @@ namespace NumbrixGame.Model
         /// <summary>Finds the cell with the matching numbrix value.</summary>
         /// <param name="numbrixValue">The numbrix value.</param>
         /// <returns>
-        ///   NumbrixGameBoardCell matching that value
+        ///     NumbrixGameBoardCell matching that value
         /// </returns>
         public NumbrixGameBoardCell FindCell(int? numbrixValue)
         {
             return this.NumbrixGameBoardCells.Single(cell => cell.NumbrixValue == numbrixValue);
         }
 
-
         /// <summary>Finds the cell of the given coordinates.</summary>
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
         /// <returns>
-        ///   NumbrixGameBoardCell matching that location
+        ///     NumbrixGameBoardCell matching that location
         /// </returns>
         public NumbrixGameBoardCell FindCell(int x, int y)
         {
             return this.NumbrixGameBoardCells.Single(cell => cell.X == x && cell.Y == y);
         }
-
 
         /// <summary>Creates the cell.</summary>
         /// <param name="x">The x coordinate.</param>
@@ -130,7 +129,7 @@ namespace NumbrixGame.Model
         /// <param name="numbrixValue">The numbrix value.</param>
         /// <param name="isDefault">if set to <c>true</c> [is default].</param>
         /// <returns>
-        ///   Newly created Numbrix Game Board Cell
+        ///     Newly created Numbrix Game Board Cell
         /// </returns>
         public NumbrixGameBoardCell CreateCell(int x, int y, int? numbrixValue = null, bool isDefault = false)
         {
@@ -140,18 +139,18 @@ namespace NumbrixGame.Model
             return newCell;
         }
 
-
         /// <summary>Converts the xy to linear.</summary>
         /// <param name="x">The x coordinate.</param>
         /// <param name="y">The y coordinate.</param>
         /// <returns>
-        ///   linear location based off of the x and y location (ex: (1,1) = 1, (1,2) = 2)
+        ///     linear location based off of the x and y location (ex: (1,1) = 1, (1,2) = 2)
         /// </returns>
         public int ConvertXYToLinear(int x, int y)
         {
             var value = x + this.BoardWidth * (y - 1);
             return value;
         }
+
         #endregion
     }
 }

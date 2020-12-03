@@ -12,6 +12,7 @@
 
     <Page.Resources>
         <converters:StorageFileToListViewConverter x:Key="fileToListViewConverter"/>
+        <converters:DateTimeConverter x:Key="dateTimeConverter"/>
     </Page.Resources>
     <Page.Background>
         <ThemeResource ResourceKey="ApplicationPageBackgroundThemeBrush"/>
@@ -43,7 +44,7 @@
                                            IsReadOnly="True"
                                            Tag="Username"/>
                 <Custom:DataGridTextColumn Header="Date Created"
-                                           Binding="{Binding DateCreated}"
+                                           Binding="{Binding DateCreated, Converter={StaticResource dateTimeConverter}}"
                                            IsReadOnly="True"
                                            Tag="PuzzleNumber"/>
 
@@ -76,7 +77,7 @@
                                            IsReadOnly="True"
                                            Tag="Username"/>
                 <Custom:DataGridTextColumn Header="Date Created"
-                                           Binding="{Binding DateCreated}"
+                                           Binding="{Binding DateCreated, Converter={StaticResource dateTimeConverter}}"
                                            IsReadOnly="True"
                                            Tag="PuzzleNumber"/>
 

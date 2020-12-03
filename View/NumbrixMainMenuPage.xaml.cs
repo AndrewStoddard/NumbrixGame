@@ -1,8 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Microsoft.Toolkit.Uwp.UI.Controls;
 using NumbrixGame.Annotations;
 using NumbrixGame.ViewModel;
 
@@ -47,15 +45,12 @@ namespace NumbrixGame.View
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void Control_OnFocusDisengaged(Control sender, FocusDisengagedEventArgs args)
-        {
-            var datagrid = sender as DataGrid;
-            datagrid.SelectedItem = null;
-        }
-
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
-            Frame.Navigate(typeof(NumbrixGameBoardPage), this.numbrixMainPageViewModel.SelectedGameFile);
+            if (this.numbrixMainPageViewModel.SelectedGameFile != null)
+            {
+                Frame.Navigate(typeof(NumbrixGameBoardPage), this.numbrixMainPageViewModel.SelectedGameFile);
+            }
         }
 
         #endregion

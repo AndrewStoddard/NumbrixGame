@@ -120,6 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BooleanToVisibility.cs" />
+    <Compile Include="Converters\DateTimeConverter.cs" />
     <Compile Include="Converters\NegatedBooleanToVisibility.cs" />
     <Compile Include="Converters\NumbrixValueToTextBox.cs" />
     <Compile Include="Converters\StorageFileToListViewConverter.cs" />

@@ -190,9 +190,10 @@ namespace NumbrixGame.ViewModel
         public async Task LoadGameBoard(StorageFile gameBoardFile)
         {
             this.Model = await NumbrixGameBoardReader.LoadPuzzle(gameBoardFile);
-            this.NumbrixGameBoardCells = this.createNumbrixGameBoardCells();
             this.IsPaused = false;
             this.IsFinished = false;
+            this.NumbrixGameBoardCells = this.createNumbrixGameBoardCells();
+
             this.ResetTime();
         }
 
