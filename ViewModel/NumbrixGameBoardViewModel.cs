@@ -24,7 +24,6 @@ namespace NumbrixGame.ViewModel
         #region Data members
 
         private IList<GameBoardCellTextBox> gameBoardTextCells;
-        private readonly PuzzleManager puzzleManager;
         private readonly DispatcherTimer timer;
 
         #endregion
@@ -95,13 +94,6 @@ namespace NumbrixGame.ViewModel
                 Interval = new TimeSpan(0, 0, 1)
             };
             this.timer.Tick += this.Timer_Tick;
-
-            this.puzzleManager = new PuzzleManager();
-
-            this.Model = this.loadStartingPuzzle();
-            this.NumbrixGameBoardCells = this.createNumbrixGameBoardCells();
-            this.IsPaused = false;
-            this.StartTime();
         }
 
         #endregion
@@ -116,12 +108,6 @@ namespace NumbrixGame.ViewModel
         }
 
         public event ValueChanged OnValueChanged;
-
-        public void NextPuzzle()
-        {
-            this.Model = this.puzzleManager.NextPuzzle;
-            this.NumbrixGameBoardCells = this.createNumbrixGameBoardCells();
-        }
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -148,10 +134,6 @@ namespace NumbrixGame.ViewModel
             this.IsPaused = true;
             this.timer.Stop();
         }
-
-        #endregion
-
-        #region Methods
 
         private IList<NumbrixGameBoardCellViewModel> createNumbrixGameBoardCells()
         {
@@ -208,13 +190,12 @@ namespace NumbrixGame.ViewModel
         public async Task LoadGameBoard(StorageFile gameBoardFile)
         {
             this.Model = await NumbrixGameBoardReader.LoadPuzzle(gameBoardFile);
+            this.NumbrixGameBoardCells = this.createNumbrixGameBoardCells();
+            this.IsPaused = false;
+            this.IsFinished = false;
+            this.ResetTime();
         }
 
-        private NumbrixGameBoard loadStartingPuzzle()
-        {
-            return this.puzzleManager.CurrentPuzzle;
-
-            #endregion
-        }
+        #endregion
     }
 }

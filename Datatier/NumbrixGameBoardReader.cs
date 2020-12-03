@@ -39,13 +39,16 @@ namespace NumbrixGame.Datatier
                     gameBoard.GameBoardNumber =
                         string.IsNullOrEmpty(settings[DatatierConstants.GameBoardNumberSettingLocation])
                             ? -1
-                            : int.Parse(settings[0]);
-                    gameBoard.BoardWidth = string.IsNullOrEmpty(settings[1])
+                            : int.Parse(settings[DatatierConstants.GameBoardNumberSettingLocation]);
+                    gameBoard.BoardWidth = string.IsNullOrEmpty(settings[DatatierConstants.WidthSettingLoaction])
                         ? -1
                         : int.Parse(settings[DatatierConstants.WidthSettingLoaction]);
-                    gameBoard.BoardHeight = string.IsNullOrEmpty(settings[2])
+                    gameBoard.BoardHeight = string.IsNullOrEmpty(settings[DatatierConstants.HeightSettingLocation])
                         ? -1
                         : int.Parse(settings[DatatierConstants.HeightSettingLocation]);
+                    gameBoard.TimeTaken = string.IsNullOrEmpty(settings[DatatierConstants.TimeSettingLocation])
+                        ? TimeSpan.Zero
+                        : TimeSpan.Parse(settings[DatatierConstants.TimeSettingLocation]);
                     gameBoard.CreateBlankGameBoard();
                 }
                 else
@@ -55,7 +58,10 @@ namespace NumbrixGame.Datatier
                         int.Parse(cellInfo[DatatierConstants.YLocation]));
                     currentGameBoardCell.IsDefaultValue =
                         bool.Parse(cellInfo[DatatierConstants.IsDefaultValueLocation]);
-                    currentGameBoardCell.NumbrixValue = int.Parse(cellInfo[DatatierConstants.NumbrixValueLocation]);
+                    currentGameBoardCell.NumbrixValue =
+                        string.IsNullOrEmpty(cellInfo[DatatierConstants.NumbrixValueLocation])
+                            ? (int?) null
+                            : int.Parse(cellInfo[DatatierConstants.NumbrixValueLocation]);
                 }
             }
 

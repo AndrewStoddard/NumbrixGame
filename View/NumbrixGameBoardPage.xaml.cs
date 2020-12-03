@@ -29,24 +29,22 @@ namespace NumbrixGame.View
         private readonly NumbrixGameBoardViewModel numbrixGameBoardViewModel;
         private List<GameBoardCellTextBox> gameBoardCellTextBoxes;
         private readonly NumbrixScoreBoardViewModel numbrixScoreBoardViewModel;
-        private SoundManager soundManager;
+        private readonly SoundManager soundManager;
 
         #endregion
 
         #region Constructors
-
 
         /// <summary>Initializes a new instance of the <see cref="NumbrixGameBoardPage" /> class.</summary>
         public NumbrixGameBoardPage()
         {
             this.InitializeComponent();
             this.soundManager = new SoundManager();
+            this.soundManager.Pause();
             this.numbrixScoreBoardViewModel = new NumbrixScoreBoardViewModel();
             this.numbrixGameBoardViewModel = new NumbrixGameBoardViewModel();
             this.numbrixGameBoardViewModel.OnValueChanged += this.checkSolution;
             this.gameBoardCellTextBoxes = new List<GameBoardCellTextBox>();
-
-            this.createGameBoard();
 
             this.textBlockGamePaused.Visibility = Visibility.Collapsed;
         }
@@ -214,7 +212,6 @@ namespace NumbrixGame.View
 
         private void goToNextPuzzle()
         {
-            this.numbrixGameBoardViewModel.NextPuzzle();
             this.createGameBoard();
         }
 
@@ -240,9 +237,9 @@ namespace NumbrixGame.View
             Frame.Navigate(typeof(NumbrixScoreboardPage), this.numbrixScoreBoardViewModel);
         }
 
-        private void loadPuzzle(StorageFile gameFile)
+        private async void loadPuzzle(StorageFile gameFile)
         {
-            //TODO Load the file into the game board
+            await this.numbrixGameBoardViewModel.LoadGameBoard(gameFile);
             this.createGameBoard();
         }
 
@@ -258,8 +255,6 @@ namespace NumbrixGame.View
             this.loadPuzzle(gameFile);
         }
 
-        #endregion
-
         private void OnToggleMusic(object sender, RoutedEventArgs e)
         {
             this.soundManager.MusicOn = !this.soundManager.MusicOn;
@@ -274,5 +269,7 @@ namespace NumbrixGame.View
                 this.soundManager.Play();
             }
         }
+
+        #endregion
     }
 }
