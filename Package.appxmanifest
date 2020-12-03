@@ -32,7 +32,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="NumbrixGame.App">
       <uap:VisualElements
-        DisplayName="NumbrixGame"
+        DisplayName="Numbrix by Stoddard and Young"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
         Description="NumbrixGame"
