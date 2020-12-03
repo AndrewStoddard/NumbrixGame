@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using NumbrixGame.Model;
 using NumbrixGame.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -28,6 +29,7 @@ namespace NumbrixGame.View
         private readonly NumbrixGameBoardViewModel numbrixGameBoardViewModel;
         private List<GameBoardCellTextBox> gameBoardCellTextBoxes;
         private readonly NumbrixScoreBoardViewModel numbrixScoreBoardViewModel;
+        private SoundManager soundManager;
 
         #endregion
 
@@ -36,6 +38,7 @@ namespace NumbrixGame.View
         public NumbrixGameBoardPage()
         {
             this.InitializeComponent();
+            this.soundManager = new SoundManager();
             this.numbrixScoreBoardViewModel = new NumbrixScoreBoardViewModel();
             this.numbrixGameBoardViewModel = new NumbrixGameBoardViewModel();
             this.numbrixGameBoardViewModel.OnValueChanged += this.checkSolution;
@@ -216,11 +219,13 @@ namespace NumbrixGame.View
         private void OnStopTimer(object sender, RoutedEventArgs e)
         {
             this.numbrixGameBoardViewModel.PauseTime();
+            this.soundManager.Pause();
         }
 
         private void OnStartTimer(object sender, RoutedEventArgs e)
         {
             this.numbrixGameBoardViewModel.StartTime();
+            this.soundManager.Play();
         }
 
         private void OnResetTimer(object sender, RoutedEventArgs e)
@@ -252,5 +257,20 @@ namespace NumbrixGame.View
         }
 
         #endregion
+
+        private void OnToggleMusic(object sender, RoutedEventArgs e)
+        {
+            this.soundManager.MusicOn = !this.soundManager.MusicOn;
+            if (this.soundManager.MusicOn)
+            {
+                this.ToggleMusicButton.Content = "Music Off";
+                this.soundManager.Pause();
+            }
+            else
+            {
+                this.ToggleMusicButton.Content = "Music On";
+                this.soundManager.Play();
+            }
+        }
     }
 }

@@ -131,6 +131,7 @@
     <Compile Include="Model\NumbrixSolverAgent.cs" />
     <Compile Include="Model\NumbrixPlayerScore.cs" />
     <Compile Include="Model\PuzzleManager.cs" />
+    <Compile Include="Model\SoundManager.cs" />
     <Compile Include="PrebuiltGames\MainPuzzles.cs" />
     <Compile Include="PrebuiltGames\StartingPuzzles.cs" />
     <Compile Include="Properties\Annotations.cs" />
@@ -166,6 +167,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Tetris.mp3" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -216,6 +218,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Assets\Music\" />
     <Folder Include="View\Dialogs\" />
   </ItemGroup>
   <ItemGroup>
