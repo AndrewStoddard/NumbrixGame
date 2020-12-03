@@ -2,6 +2,7 @@
 {
     internal class StartingPuzzles
     {
+
         #region Data members
         public static string puzzleA = "1,8,8,\n" +
                                        "1,1,57,true\n" +

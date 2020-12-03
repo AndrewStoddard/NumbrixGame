@@ -1,5 +1,6 @@
 ﻿namespace NumbrixGame.Model
 {
+
     public class NumbrixGameBoardCell
     {
         #region Properties

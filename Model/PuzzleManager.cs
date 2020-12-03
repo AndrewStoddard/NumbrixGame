@@ -5,14 +5,24 @@ using NumbrixGame.PrebuiltGames;
 
 namespace NumbrixGame.Model
 {
+
+    /// <summary>
+    ///   PuzzleManager class that manages puzzles
+    /// </summary>
     public class PuzzleManager
     {
         #region Properties
 
+        /// <summary>Gets or sets all of the puzzles.</summary>
+        /// <value>The puzzles.</value>
         public IList<NumbrixGameBoard> Puzzles { get; set; }
 
+        /// <summary>Gets or sets the current puzzle.</summary>
+        /// <value>The current puzzle.</value>
         public NumbrixGameBoard CurrentPuzzle { get; set; }
 
+        /// <summary>Gets the next puzzle.</summary>
+        /// <value>The next puzzle.</value>
         public NumbrixGameBoard NextPuzzle => this.CurrentPuzzle = this
                                                                    .Puzzles.SkipWhile(x => x != this.CurrentPuzzle)
                                                                    .Skip(1).DefaultIfEmpty(this.Puzzles[0])
@@ -22,6 +32,7 @@ namespace NumbrixGame.Model
 
         #region Constructors
 
+        /// <summary>Initializes a new instance of the <see cref="PuzzleManager" /> class.</summary>
         public PuzzleManager()
         {
             this.Puzzles = new List<NumbrixGameBoard>();

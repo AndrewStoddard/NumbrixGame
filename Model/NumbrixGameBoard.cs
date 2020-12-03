@@ -5,24 +5,51 @@ using System.Text;
 
 namespace NumbrixGame.Model
 {
+
+    /// <summary>
+    ///   The Numbrix Game Board class
+    /// </summary>
     public class NumbrixGameBoard
     {
         #region Properties
 
+        /// <summary>Gets or sets the numbrix game board cells.</summary>
+        /// <value>The numbrix game board cells.</value>
         public IList<NumbrixGameBoardCell> NumbrixGameBoardCells { get; set; }
 
+        /// <summary>Gets or sets the width of the board.</summary>
+        /// <value>The width of the board.</value>
         public int BoardWidth { get; set; }
 
+        /// <summary>Gets or sets the height of the board.</summary>
+        /// <value>The height of the board.</value>
         public int BoardHeight { get; set; }
+
+        /// <summary>Gets or sets the game board number.</summary>
+        /// <value>The game board number.</value>
         public int GameBoardNumber { get; set; }
+
+        /// <summary>Gets or sets the time taken.</summary>
+        /// <value>The time taken.</value>
         public TimeSpan TimeTaken { get; set; }
+
+        /// <summary>Gets or sets a value indicating whether this instance is paused.</summary>
+        /// <value>
+        /// <c>true</c> if this instance is paused; otherwise, <c>false</c>.</value>
         public bool IsPaused { get; set; }
+
+        /// <summary>Gets or sets a value indicating whether this instance is finished.</summary>
+        /// <value>
+        ///   <c>true</c> if this instance is finished; otherwise, <c>false</c>.</value>
         public bool IsFinished { get; set; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>Initializes a new instance of the <see cref="NumbrixGameBoard" /> class.</summary>
+        /// <param name="boardWidth">Width of the board.</param>
+        /// <param name="boardHeight">Height of the board.</param>
         public NumbrixGameBoard(int boardWidth, int boardHeight)
         {
             this.BoardWidth = boardWidth;
@@ -31,6 +58,8 @@ namespace NumbrixGame.Model
             this.CreateBlankGameBoard();
         }
 
+
+        /// <summary>Initializes a new instance of the <see cref="NumbrixGameBoard" /> class.</summary>
         public NumbrixGameBoard()
         {
             this.NumbrixGameBoardCells = new List<NumbrixGameBoardCell>();
@@ -40,6 +69,11 @@ namespace NumbrixGame.Model
 
         #region Methods
 
+
+        /// <summary>Builds puzzle in CSV format.</summary>
+        /// <returns>
+        ///   puzzle in CSV format
+        /// </returns>
         public string AsCSV()
         {
             var stringBuilder = new StringBuilder();
@@ -54,6 +88,7 @@ namespace NumbrixGame.Model
             return stringBuilder.ToString();
         }
 
+        /// <summary>Creates the blank game board.</summary>
         public void CreateBlankGameBoard()
         {
             this.NumbrixGameBoardCells = new List<NumbrixGameBoardCell>();
@@ -66,39 +101,37 @@ namespace NumbrixGame.Model
             }
         }
 
-        public IList<NumbrixGameBoardCell> FindNeighbors(NumbrixGameBoardCell gameboardCell)
-        {
-            return new NumbrixGameBoardCellNeighbors(this, gameboardCell).GetListOfNeighbors();
-        }
-
-        public void AddCells(IList<NumbrixGameBoardCell> cellsToAdd)
-        {
-            foreach (var currentCell in cellsToAdd)
-            {
-                this.NumbrixGameBoardCells.Add(currentCell);
-            }
-        }
-
-        public void AddCell(NumbrixGameBoardCell cellToAdd)
-        {
-            this.NumbrixGameBoardCells.Add(cellToAdd);
-        }
-
-        public NumbrixGameBoardCell FindCell(NumbrixGameBoardCell gameBoardCell)
-        {
-            return this.NumbrixGameBoardCells.Single(cell => cell.Equals(gameBoardCell));
-        }
-
+        /// <summary>Finds the cell with the matching numbrix value.</summary>
+        /// <param name="numbrixValue">The numbrix value.</param>
+        /// <returns>
+        ///   NumbrixGameBoardCell matching that value
+        /// </returns>
         public NumbrixGameBoardCell FindCell(int? numbrixValue)
         {
             return this.NumbrixGameBoardCells.Single(cell => cell.NumbrixValue == numbrixValue);
         }
 
+
+        /// <summary>Finds the cell of the given coordinates.</summary>
+        /// <param name="x">The x.</param>
+        /// <param name="y">The y.</param>
+        /// <returns>
+        ///   NumbrixGameBoardCell matching that location
+        /// </returns>
         public NumbrixGameBoardCell FindCell(int x, int y)
         {
             return this.NumbrixGameBoardCells.Single(cell => cell.X == x && cell.Y == y);
         }
 
+
+        /// <summary>Creates the cell.</summary>
+        /// <param name="x">The x coordinate.</param>
+        /// <param name="y">The y coordinate.</param>
+        /// <param name="numbrixValue">The numbrix value.</param>
+        /// <param name="isDefault">if set to <c>true</c> [is default].</param>
+        /// <returns>
+        ///   Newly created Numbrix Game Board Cell
+        /// </returns>
         public NumbrixGameBoardCell CreateCell(int x, int y, int? numbrixValue = null, bool isDefault = false)
         {
             var newCell = new NumbrixGameBoardCell(x, y) {
@@ -107,20 +140,18 @@ namespace NumbrixGame.Model
             return newCell;
         }
 
+
+        /// <summary>Converts the xy to linear.</summary>
+        /// <param name="x">The x coordinate.</param>
+        /// <param name="y">The y coordinate.</param>
+        /// <returns>
+        ///   linear location based off of the x and y location (ex: (1,1) = 1, (1,2) = 2)
+        /// </returns>
         public int ConvertXYToLinear(int x, int y)
         {
             var value = x + this.BoardWidth * (y - 1);
             return value;
         }
-
-        public (int x, int y) ConvertLinearToXY(int linearCoordinate)
-        {
-            var x = linearCoordinate % this.BoardWidth == 0 ? this.BoardWidth : linearCoordinate % this.BoardWidth;
-            var y = linearCoordinate / this.BoardHeight + 1;
-
-            return (x, y);
-        }
-
         #endregion
     }
 }
