@@ -51,8 +51,8 @@
         <TextBlock x:Name="incorrectTextBox" Visibility="Collapsed" HorizontalAlignment="Center" Margin="0,188,0,0"
                    Text="Puzzle is Incorrect!" TextWrapping="Wrap" VerticalAlignment="Top"
                    FocusVisualPrimaryBrush="#FFEC0E0E" Foreground="#FFD61414" />
-        <Button Content="Save Puzzle" Margin="218,388,0,0" VerticalAlignment="Top" Height="45" Width="100"
-                Click="saveBoard" />
+        <Button Content="Check Puzzle" Margin="218,388,0,0" VerticalAlignment="Top" Height="45" Width="100"
+                Click="checkPuzzle" />
 
 
     </Grid>

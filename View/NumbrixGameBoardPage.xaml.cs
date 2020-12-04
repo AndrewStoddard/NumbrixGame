@@ -421,9 +421,9 @@ namespace NumbrixGame.View
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
-        private void saveBoard(object sender, RoutedEventArgs e)
+        private void checkPuzzle(object sender, RoutedEventArgs e)
         {
-            this.numbrixGameBoardViewModel.SaveGameState();
+            this.checkSolution();
         }
 
         #endregion
