@@ -42,6 +42,11 @@ namespace NumbrixGame.View
             }
         }
 
+        private void ClearScoreBoard(object sender, RoutedEventArgs e)
+        {
+            this.numbrixScoreBoardViewModel.ResetScores();
+        }
+
         #endregion
     }
 }

@@ -9,7 +9,7 @@ namespace NumbrixGame.Datatier
     {
         #region Methods
 
-        public static async Task<NumbrixScoreBoard> LoadPuzzle(StorageFile scoreboardFile)
+        public static async Task<NumbrixScoreBoard> LoadScoreBoard(StorageFile scoreboardFile)
         {
             var dataFileContents = await FileIO.ReadTextAsync(scoreboardFile);
             return loadCsvStringScoreBoard(dataFileContents.Replace("\r", "").Split("\n"));

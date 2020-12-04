@@ -38,6 +38,7 @@ namespace NumbrixGame.ViewModel
 
         public NumbrixScoreBoardViewModel()
         {
+            this.Model = new NumbrixScoreBoard();
             this.PlayerScores = new List<NumbrixPlayerScoreViewModel>();
             this.LoadScores();
         }
@@ -52,9 +53,18 @@ namespace NumbrixGame.ViewModel
         {
             this.playerScores.Add(playerScore);
             this.Model.AddScore(playerScore.Model);
+            this.saveScores();
         }
 
-        public void SaveScores()
+        public async void ResetScores()
+        {
+            await ApplicationData.Current.LocalFolder.CreateFileAsync(ScoreboardSave,
+                CreationCollisionOption.ReplaceExisting);
+            this.PlayerScores = new List<NumbrixPlayerScoreViewModel>();
+            this.Model.PlayerScores = new List<NumbrixPlayerScore>();
+        }
+
+        private void saveScores()
         {
             NumbrixScoreBoardWriter.WriteGameboard(this.Model, ScoreboardSave);
         }
@@ -65,7 +75,8 @@ namespace NumbrixGame.ViewModel
             {
                 var file = await ApplicationData.Current.LocalFolder.GetFileAsync(ScoreboardSave);
                 var scores =
-                    await NumbrixScoreBoardReader.LoadPuzzle(file);
+                    await NumbrixScoreBoardReader.LoadScoreBoard(file);
+                this.Model = scores;
                 this.addAllScores(scores);
             }
             catch (FileNotFoundException)

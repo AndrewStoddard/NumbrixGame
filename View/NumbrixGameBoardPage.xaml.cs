@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Windows.Storage.Pickers;
 using Windows.System;
 using Windows.UI;
 using Windows.UI.Core.Preview;
@@ -149,24 +148,6 @@ namespace NumbrixGame.View
         private void updatePuzzleNumber()
         {
             this.textBlockPuzzleNumber.Text = "Puzzle Number: " + this.numbrixGameBoardViewModel.GameBoardNumber;
-        }
-
-        private static async Task<StorageFile> pickFile()
-        {
-            var filePicker = new FileOpenPicker {
-                ViewMode = PickerViewMode.Thumbnail,
-                SuggestedStartLocation = PickerLocationId.DocumentsLibrary
-            };
-
-            filePicker.FileTypeFilter.Add(".csv");
-
-            var file = await filePicker.PickSingleFileAsync();
-            return file;
-        }
-
-        private void checkSolution(object sender, RoutedEventArgs e)
-        {
-            this.checkSolution();
         }
 
         private async void checkSolution()
