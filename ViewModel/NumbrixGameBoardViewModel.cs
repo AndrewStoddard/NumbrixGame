@@ -205,6 +205,7 @@ namespace NumbrixGame.ViewModel
         public async Task LoadGameBoard(StorageFile gameBoardFile)
         {
             this.Model = await NumbrixGameBoardReader.LoadPuzzle(gameBoardFile);
+            await this.puzzleManager.initializeStartingPuzzles();
             this.puzzleManager.CurrentPuzzle =
                 this.puzzleManager.Puzzles.SingleOrDefault(puzzle => puzzle.Equals(this.Model));
             this.NumbrixGameBoardCells = this.createNumbrixGameBoardCells();

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using NumbrixGame.Datatier;
 
 namespace NumbrixGame.Model
@@ -26,10 +27,11 @@ namespace NumbrixGame.Model
                     ? 0
                     : this.Puzzles.IndexOf(this.CurrentPuzzle) + 1];
 
-        public NumbrixGameBoard PreviousPuzzle => this.CurrentPuzzle = this.Puzzles[
-            this.Puzzles.IndexOf(this.CurrentPuzzle) == 0
-                ? this.Puzzles.Count - 1
-                : this.Puzzles.IndexOf(this.CurrentPuzzle) - 1];
+        public NumbrixGameBoard PreviousPuzzle => this.CurrentPuzzle =
+            this.Puzzles[
+                this.Puzzles.IndexOf(this.CurrentPuzzle) == 0
+                    ? this.Puzzles.Count - 1
+                    : this.Puzzles.IndexOf(this.CurrentPuzzle) - 1];
 
         #endregion
 
@@ -39,14 +41,13 @@ namespace NumbrixGame.Model
         public PuzzleManager()
         {
             this.Puzzles = new List<NumbrixGameBoard>();
-            this.initializeStartingPuzzles();
         }
 
         #endregion
 
         #region Methods
 
-        private async void initializeStartingPuzzles()
+        public async Task initializeStartingPuzzles()
         {
             var prebuiltPuzzles = await NumbrixGameBoardReader.GetPrebuiltGames();
             foreach (var puzzle in prebuiltPuzzles)
