@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using NumbrixGame.Datatier;
-using NumbrixGame.PrebuiltGames;
 
 namespace NumbrixGame.Model
 {
-
     /// <summary>
-    ///   PuzzleManager class that manages puzzles
+    ///     PuzzleManager class that manages puzzles
     /// </summary>
     public class PuzzleManager
     {
@@ -23,10 +20,16 @@ namespace NumbrixGame.Model
 
         /// <summary>Gets the next puzzle.</summary>
         /// <value>The next puzzle.</value>
-        public NumbrixGameBoard NextPuzzle => this.CurrentPuzzle = this
-                                                                   .Puzzles.SkipWhile(x => x != this.CurrentPuzzle)
-                                                                   .Skip(1).DefaultIfEmpty(this.Puzzles[0])
-                                                                   .FirstOrDefault();
+        public NumbrixGameBoard NextPuzzle => this.CurrentPuzzle =
+            this.Puzzles[
+                this.Puzzles.IndexOf(this.CurrentPuzzle) == this.Puzzles.Count - 1
+                    ? 0
+                    : this.Puzzles.IndexOf(this.CurrentPuzzle) + 1];
+
+        public NumbrixGameBoard PreviousPuzzle => this.CurrentPuzzle = this.Puzzles[
+            this.Puzzles.IndexOf(this.CurrentPuzzle) == 0
+                ? this.Puzzles.Count - 1
+                : this.Puzzles.IndexOf(this.CurrentPuzzle) - 1];
 
         #endregion
 
@@ -43,25 +46,13 @@ namespace NumbrixGame.Model
 
         #region Methods
 
-        private void initializeStartingPuzzles()
+        private async void initializeStartingPuzzles()
         {
-            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleA));
-            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleB));
-            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleC));
-            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.PuzzleD));
-            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleE));
-            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleF));
-            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleG));
-            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleH));
-            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleI));
-            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleJ));
-            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleK));
-            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleL));
-            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleM));
-            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleN));
-            this.Puzzles.Add(NumbrixGameBoardReader.LoadPuzzle(StartingPuzzles.puzzleO));
-
-            this.CurrentPuzzle = this.Puzzles[0];
+            var prebuiltPuzzles = await NumbrixGameBoardReader.GetPrebuiltGames();
+            foreach (var puzzle in prebuiltPuzzles)
+            {
+                this.Puzzles.Add(await NumbrixGameBoardReader.LoadPuzzle(puzzle));
+            }
         }
 
         #endregion
