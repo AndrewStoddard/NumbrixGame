@@ -10,12 +10,6 @@ namespace NumbrixGame.Datatier
 {
     public static class NumbrixGameBoardReader
     {
-        #region Data members
-
-        private const char DefaultDelimiter = ',';
-
-        #endregion
-
         #region Methods
 
         public static async Task<NumbrixGameBoard> LoadPuzzle(StorageFile puzzleFile)
@@ -38,7 +32,7 @@ namespace NumbrixGame.Datatier
                 var line = stringGameBoard[i];
                 if (i == 0)
                 {
-                    var settings = line.Split(DefaultDelimiter);
+                    var settings = line.Split(DatatierConstants.DefaultDelimiter);
                     gameBoard.GameBoardNumber =
                         string.IsNullOrEmpty(settings[DatatierConstants.GameBoardNumberSettingLocation])
                             ? -1
@@ -56,7 +50,7 @@ namespace NumbrixGame.Datatier
                 }
                 else
                 {
-                    var cellInfo = line.Split(',');
+                    var cellInfo = line.Split(DatatierConstants.DefaultDelimiter);
                     var currentGameBoardCell = gameBoard.FindCell(int.Parse(cellInfo[DatatierConstants.XLocation]),
                         int.Parse(cellInfo[DatatierConstants.YLocation]));
                     currentGameBoardCell.IsDefaultValue =

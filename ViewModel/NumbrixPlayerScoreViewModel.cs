@@ -49,6 +49,11 @@ namespace NumbrixGame.ViewModel
             this.Model = new NumbrixPlayerScore(username, timeTaken, puzzleNumber);
         }
 
+        public NumbrixPlayerScoreViewModel(NumbrixPlayerScore score)
+        {
+            this.Model = score;
+        }
+
         #endregion
 
         #region Methods

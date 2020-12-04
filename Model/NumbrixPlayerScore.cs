@@ -2,9 +2,8 @@
 
 namespace NumbrixGame.Model
 {
-
     /// <summary>
-    ///   Class for the Numbrix Player Score
+    ///     Class for the Numbrix Player Score
     /// </summary>
     public class NumbrixPlayerScore
     {

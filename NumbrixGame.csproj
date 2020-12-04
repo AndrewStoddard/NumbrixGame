@@ -127,6 +127,8 @@
     <Compile Include="Converters\TimeSpanToTextConverter.cs" />
     <Compile Include="Datatier\DatatierConstants.cs" />
     <Compile Include="Datatier\NumbrixGameBoardWriter.cs" />
+    <Compile Include="Datatier\NumbrixScoreBoardReader.cs" />
+    <Compile Include="Datatier\NumbrixScoreBoardWriter.cs" />
     <Compile Include="Model\NumbrixScoreBoard.cs" />
     <Compile Include="Model\NumbrixSolver.cs" />
     <Compile Include="Model\NumbrixSolverAgent.cs" />
