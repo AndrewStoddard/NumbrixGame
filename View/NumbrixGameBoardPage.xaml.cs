@@ -248,6 +248,7 @@ namespace NumbrixGame.View
         private async void loadPuzzle(StorageFile gameFile)
         {
             await this.numbrixGameBoardViewModel.LoadGameBoard(gameFile);
+            this.numbrixGameBoardViewModel.IsPaused = true;
             this.createGameBoard();
         }
 
@@ -292,9 +293,6 @@ namespace NumbrixGame.View
             throw new NotImplementedException();
         }
 
-        #endregion
-
-
         private async void OnCloseRequest(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
         {
             e.Handled = true;
@@ -304,8 +302,7 @@ namespace NumbrixGame.View
 
         private async Task<ContentDialogResult> showSaveDialog()
         {
-            ContentDialog saveDialog = new ContentDialog()
-            {
+            var saveDialog = new ContentDialog {
                 Title = "Saving Progress",
                 Content = "Saving your current progress...",
                 PrimaryButtonText = "Ok"
@@ -313,5 +310,7 @@ namespace NumbrixGame.View
             var result = await saveDialog.ShowAsync();
             return result;
         }
+
+        #endregion
     }
 }
