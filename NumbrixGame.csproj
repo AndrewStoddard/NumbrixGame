@@ -222,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Music\" />
+    <Folder Include="Assets\Screenshots\" />
     <Folder Include="View\Dialogs\" />
   </ItemGroup>
   <ItemGroup>
