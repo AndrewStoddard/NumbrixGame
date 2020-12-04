@@ -74,7 +74,7 @@ namespace NumbrixGame.Datatier
         public static async Task<List<StorageFile>> GetPrebuiltGames()
         {
             var prebuiltSuffix = "puzzle_";
-            for (var i = 1; i <= 8; i++)
+            for (var i = 1; i <= MainPuzzles.PuzzleList.Count; i++)
             {
                 var filename = prebuiltSuffix + i + ".csv";
                 if (!NumbrixGameBoardWriter.FileExists(filename))

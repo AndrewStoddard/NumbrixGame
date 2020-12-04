@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using NumbrixGame.Annotations;
 
 namespace NumbrixGame.PrebuiltGames
 {
@@ -368,7 +367,7 @@ namespace NumbrixGame.PrebuiltGames
                                        "5,4,13,true\n" +
                                        "5,5,10,true\n";
 
-        [CanBeNull] public static IList<string> PuzzleList = new List<string> {
+        public static IList<string> PuzzleList = new List<string> {
             puzzleA,
             puzzleB,
             puzzleC,
