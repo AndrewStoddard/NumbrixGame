@@ -178,6 +178,7 @@ namespace NumbrixGame.View
             switch (showDialog)
             {
                 case ContentDialogResult.Primary:
+                    this.soundManager.Pause();
                     Frame.Navigate(typeof(NumbrixScoreboardPage), this.numbrixScoreBoardViewModel);
                     break;
                 case ContentDialogResult.Secondary:
@@ -223,6 +224,7 @@ namespace NumbrixGame.View
 
         private void OnScoreboard(object sender, RoutedEventArgs e)
         {
+            this.soundManager.Pause();
             Frame.Navigate(typeof(NumbrixScoreboardPage), this.numbrixScoreBoardViewModel);
         }
 
@@ -260,18 +262,10 @@ namespace NumbrixGame.View
             }
         }
 
-        private void createSaveReminderDialog()
-        {
-        }
-
         private void OnMainMenu(object sender, RoutedEventArgs e)
         {
+            this.soundManager.Pause();
             Frame.Navigate(typeof(NumbrixMainMenuPage));
-        }
-
-        private void OnSavedPuzzles(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         private async void OnCloseRequest(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)

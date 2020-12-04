@@ -76,7 +76,6 @@ namespace NumbrixGame.ViewModel
                 var file = await ApplicationData.Current.LocalFolder.GetFileAsync(ScoreboardSave);
                 var scores =
                     await NumbrixScoreBoardReader.LoadScoreBoard(file);
-                this.Model = scores;
                 this.addAllScores(scores);
             }
             catch (FileNotFoundException)

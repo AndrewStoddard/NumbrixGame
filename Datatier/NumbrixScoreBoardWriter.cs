@@ -12,7 +12,7 @@ namespace NumbrixGame.Datatier
         {
             await FileIO.WriteTextAsync(
                 await ApplicationData.Current.LocalFolder.CreateFileAsync(fileName,
-                    CreationCollisionOption.ReplaceExisting), numbrixScoreBoard.AsCSV());
+                    CreationCollisionOption.GenerateUniqueName), numbrixScoreBoard.AsCSV());
         }
 
         #endregion

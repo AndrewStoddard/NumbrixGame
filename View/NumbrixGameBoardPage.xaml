@@ -18,7 +18,7 @@
         <Button x:Name="ToggleMusicButton" Content="Music On" Margin="218,188,0,0" VerticalAlignment="Top" Click="OnToggleMusic" Width="100" Height="45"/>
         <Button x:Name="MainMenu" Content="Main Menu" Margin="218,238,0,0" VerticalAlignment="Top" Click="OnMainMenu" Width="100" Height="45"/>
         <Button Content="Scoreboard" Margin="218,288,0,0" VerticalAlignment="Top" Height="45" Width="100" Click="OnScoreboard"/>
-        <Button Content="Saved Puzzles" Margin="218,338,0,0" VerticalAlignment="Top" Height="45" Width="100" Click="OnSavedPuzzles"/>
+        <Button Content="Clear Puzzle" Margin="218,338,0,0" VerticalAlignment="Top" Height="45" Width="100" Click="clearBoard"/>
         <Button Content="Next Puzzle" Margin="946,468,0,0" VerticalAlignment="Top" Click="OnNextPuzzle"/>
         <Button Content="Previous Puzzle" Margin="210,479,0,0" VerticalAlignment="Top" Click="OnPreviousPuzzle"/>
 
