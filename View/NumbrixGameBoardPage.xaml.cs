@@ -232,7 +232,8 @@ namespace NumbrixGame.View
         private async void loadPuzzle(StorageFile gameFile)
         {
             await this.numbrixGameBoardViewModel.LoadGameBoard(gameFile);
-            this.numbrixGameBoardViewModel.IsPaused = true;
+            this.numbrixGameBoardViewModel.IsPaused = false;
+            this.numbrixGameBoardViewModel.StartTime();
             this.createGameBoard();
         }
 
@@ -271,11 +272,6 @@ namespace NumbrixGame.View
 
         private async void OnCloseRequest(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
         {
-            if (sender == null)
-            {
-                Application.Current.Exit();
-            }
-
             e.Handled = true;
             var result = await this.showSaveDialog();
             Application.Current.Exit();

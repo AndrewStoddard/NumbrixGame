@@ -1,6 +1,7 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.Toolkit.Uwp.UI.Controls;
 using NumbrixGame.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
@@ -45,6 +46,11 @@ namespace NumbrixGame.View
         private void ClearScoreBoard(object sender, RoutedEventArgs e)
         {
             this.numbrixScoreBoardViewModel.ResetScores();
+        }
+
+        private void OnSort(object sender, DataGridColumnEventArgs e)
+        {
+            this.numbrixScoreBoardViewModel.OnSortByColumn(this.scoreBoard.Columns, e);
         }
 
         #endregion

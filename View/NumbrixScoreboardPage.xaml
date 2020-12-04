@@ -12,12 +12,13 @@
     <Grid>
 
         <Custom:DataGrid
+            x:Name="scoreBoard"
             HorizontalAlignment="Center"
             Margin="0,158,0,0"
             VerticalAlignment="Top"
             Height="auto"
             Width="auto"
-            ItemsSource="{x:Bind numbrixScoreBoardViewModel.PlayerScores, Mode=TwoWay}"
+            ItemsSource="{x:Bind numbrixScoreBoardViewModel.PlayerScores, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             CanUserReorderColumns="False"
             CanUserResizeColumns="True"
             CanUserSortColumns="True"
@@ -25,21 +26,23 @@
             SelectionMode="Single"
             GridLinesVisibility="All"
             AutoGenerateColumns="False"
+            DataFetchSize="10"
             AreRowDetailsFrozen="True"
-            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+            Sorting="OnSort">
             <Custom:DataGrid.Columns>
                 <Custom:DataGridTextColumn Header="Username"
                                              Binding="{Binding Username}"
                                              IsReadOnly="True"
                                              Tag="Username"/>
-                <Custom:DataGridTextColumn Header="PuzzleNumber"
+                <Custom:DataGridTextColumn Header="Puzzle Number"
                                              Binding="{Binding PuzzleNumber}"
                                              IsReadOnly="True"
                                              Tag="PuzzleNumber"/>
                 <Custom:DataGridTextColumn Header="Time Taken"
                                              Binding="{Binding TimeTaken}"
                                              IsReadOnly="True"
-                                             Tag="Time Taken"/>
+                                             Tag="TimeTaken"/>
 
 
             </Custom:DataGrid.Columns>

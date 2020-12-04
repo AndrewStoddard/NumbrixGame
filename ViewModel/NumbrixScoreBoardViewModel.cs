@@ -1,8 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using Windows.Storage;
+using Microsoft.Toolkit.Uwp.UI.Controls;
+using NumbrixGame.Annotations;
 using NumbrixGame.Datatier;
 using NumbrixGame.Model;
 
@@ -13,6 +18,9 @@ namespace NumbrixGame.ViewModel
         #region Data members
 
         private const string ScoreboardSave = "scoreboard_save.csv";
+        private const string UsernameColumnTag = "Username";
+        private const string PuzzleNumberColumnTag = "PuzzleNumber";
+        private const string TimeTakenColumnTag = "TimeTaken";
 
         private IList<NumbrixPlayerScoreViewModel> playerScores;
 
@@ -26,7 +34,7 @@ namespace NumbrixGame.ViewModel
             set
             {
                 this.playerScores = value;
-                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.playerScores)));
+                this.OnPropertyChanged(nameof(this.PlayerScores));
             }
         }
 
@@ -53,6 +61,7 @@ namespace NumbrixGame.ViewModel
         {
             this.playerScores.Add(playerScore);
             this.Model.AddScore(playerScore.Model);
+            this.SortDescending(TimeTakenColumnTag);
         }
 
         public void ResetScores()
@@ -87,6 +96,81 @@ namespace NumbrixGame.ViewModel
             foreach (var score in scoreboard.PlayerScores)
             {
                 this.AddPlayerScore(new NumbrixPlayerScoreViewModel(score));
+            }
+        }
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void OnSortByColumn(ObservableCollection<DataGridColumn> columns, DataGridColumnEventArgs e)
+        {
+            if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Ascending)
+            {
+                this.SortDescending(e.Column.Tag.ToString());
+                e.Column.SortDirection = DataGridSortDirection.Descending;
+            }
+            else
+            {
+                this.SortAscending(e.Column.Tag.ToString());
+                e.Column.SortDirection = DataGridSortDirection.Ascending;
+            }
+
+            foreach (var column in columns)
+            {
+                if (!e.Column.Tag.ToString().Equals(column.Tag.ToString()))
+                {
+                    column.SortDirection = null;
+                }
+            }
+        }
+
+        private void SortAscending(string sort)
+        {
+            switch (sort)
+            {
+                case UsernameColumnTag:
+                    this.PlayerScores = this.PlayerScores.OrderBy(score => score.Username)
+                                            .ThenBy(score => score.TimeTaken).ThenBy(score => score.PuzzleNumber)
+                                            .ToList();
+                    break;
+                case PuzzleNumberColumnTag:
+                    this.PlayerScores = this.PlayerScores.OrderBy(score => score.PuzzleNumber)
+                                            .ThenBy(score => score.TimeTaken).ThenBy(score => score.Username)
+                                            .ToList();
+                    break;
+                case TimeTakenColumnTag:
+                    this.PlayerScores = this.PlayerScores.OrderBy(score => score.TimeTaken)
+                                            .ThenBy(score => score.PuzzleNumber).ThenBy(score => score.Username)
+                                            .ToList();
+                    break;
+            }
+        }
+
+        private void SortDescending(string sort)
+        {
+            switch (sort)
+            {
+                case UsernameColumnTag:
+                    this.PlayerScores = this.PlayerScores.OrderByDescending(score => score.Username)
+                                            .ThenByDescending(score => score.TimeTaken)
+                                            .ThenByDescending(score => score.PuzzleNumber)
+                                            .ToList();
+                    break;
+                case PuzzleNumberColumnTag:
+                    this.PlayerScores = this.PlayerScores.OrderByDescending(score => score.PuzzleNumber)
+                                            .ThenByDescending(score => score.TimeTaken)
+                                            .ThenByDescending(score => score.Username)
+                                            .ToList();
+                    break;
+                case TimeTakenColumnTag:
+                    this.PlayerScores = this.PlayerScores.OrderByDescending(score => score.TimeTaken)
+                                            .ThenByDescending(score => score.PuzzleNumber)
+                                            .ThenByDescending(score => score.Username)
+                                            .ToList();
+                    break;
             }
         }
 
