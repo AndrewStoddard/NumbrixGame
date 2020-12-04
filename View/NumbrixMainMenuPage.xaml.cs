@@ -67,12 +67,22 @@ namespace NumbrixGame.View
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        private void OnPuzzlePlay(object sender, RoutedEventArgs e)
         {
             if (this.numbrixMainPageViewModel.SelectedGameFile != null)
             {
                 Frame.Navigate(typeof(NumbrixGameBoardPage), this.numbrixMainPageViewModel.SelectedGameFile);
             }
+        }
+
+        /// <summary>
+        ///     Handles the <see cref="E:Scoreboard" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        private void OnScoreboard(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(NumbrixScoreboardPage), new NumbrixScoreBoardViewModel());
         }
 
         #endregion

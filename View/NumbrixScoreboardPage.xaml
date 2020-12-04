@@ -3,14 +3,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:Custom="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:custom="using:Microsoft.Toolkit.Uwp.UI.Controls"
     x:Class="NumbrixGame.View.NumbrixScoreboardPage"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
 
-        <Custom:DataGrid
+        <custom:DataGrid
             x:Name="scoreBoard"
             HorizontalAlignment="Center"
             Margin="0,158,0,0"
@@ -29,25 +29,26 @@
             AreRowDetailsFrozen="True"
             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
             Sorting="OnSort">
-            <Custom:DataGrid.Columns>
-                <Custom:DataGridTextColumn Header="Username"
-                                             Binding="{Binding Username}"
-                                             IsReadOnly="True"
-                                             Tag="Username"/>
-                <Custom:DataGridTextColumn Header="Puzzle Number"
-                                             Binding="{Binding PuzzleNumber}"
-                                             IsReadOnly="True"
-                                             Tag="PuzzleNumber"/>
-                <Custom:DataGridTextColumn Header="Time Taken"
-                                             Binding="{Binding TimeTaken}"
-                                             IsReadOnly="True"
-                                             Tag="TimeTaken"/>
+            <custom:DataGrid.Columns>
+                <custom:DataGridTextColumn Header="Username"
+                                           Binding="{Binding Username}"
+                                           IsReadOnly="True"
+                                           Tag="Username" />
+                <custom:DataGridTextColumn Header="Puzzle Number"
+                                           Binding="{Binding PuzzleNumber}"
+                                           IsReadOnly="True"
+                                           Tag="PuzzleNumber" />
+                <custom:DataGridTextColumn Header="Time Taken"
+                                           Binding="{Binding TimeTaken}"
+                                           IsReadOnly="True"
+                                           Tag="TimeTaken" />
 
 
-            </Custom:DataGrid.Columns>
-        </Custom:DataGrid>
-        <Button Content="Main Menu" Margin="769,100,0,0" VerticalAlignment="Top" Click="OnMainMenu" Width="145"/>
-        <Button Content="Clear Score Board" Margin="587,100,0,0" VerticalAlignment="Top" Click="ClearScoreBoard" Width="145"/>
+            </custom:DataGrid.Columns>
+        </custom:DataGrid>
+        <Button Content="Main Menu" Margin="769,100,0,0" VerticalAlignment="Top" Click="OnMainMenu" Width="145" />
+        <Button Content="Clear Score Board" Margin="587,100,0,0" VerticalAlignment="Top" Click="clearScoreBoard"
+                Width="145" />
 
     </Grid>
 </Page>

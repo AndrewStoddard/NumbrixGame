@@ -62,43 +62,5 @@
         }
 
         #endregion
-
-        #region Methods
-
-        /// <summary>
-        ///     Determines whether the specified <see cref="System.Object" /> is equal to this instance.
-        /// </summary>
-        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
-        /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
-        public override bool Equals(object obj)
-        {
-            if (obj is NumbrixGameBoardCell cell)
-            {
-                return cell.X == this.X && cell.Y == this.Y;
-            }
-
-            return false;
-        }
-
-        protected bool Equals(NumbrixGameBoardCell other)
-        {
-            return this.X == other.X && this.Y == other.Y && this.LinearCoordinate == other.LinearCoordinate &&
-                   this.NumbrixValue == other.NumbrixValue && this.IsDefaultValue == other.IsDefaultValue;
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = this.X;
-                hashCode = (hashCode * 397) ^ this.Y;
-                hashCode = (hashCode * 397) ^ this.LinearCoordinate;
-                hashCode = (hashCode * 397) ^ this.NumbrixValue.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.IsDefaultValue.GetHashCode();
-                return hashCode;
-            }
-        }
-
-        #endregion
     }
 }

@@ -11,7 +11,7 @@
     MaxWidth="50"
     MaxHeight="50">
     <UserControl.Resources>
-        <converters:NumbrixValueToTextBox x:Key="conv"></converters:NumbrixValueToTextBox>
+        <converters:NumbrixValueToTextBox x:Key="Conv" />
     </UserControl.Resources>
     <Grid>
         <TextBox x:Name="textBox"
@@ -21,12 +21,12 @@
                  IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
                  BorderThickness="0"
                  HorizontalAlignment="Left"
-                 Text="{Binding NumbrixValue, Mode=TwoWay, Converter={StaticResource conv}}"
+                 Text="{Binding NumbrixValue, Mode=TwoWay, Converter={StaticResource Conv}}"
                  TextWrapping="Wrap"
                  VerticalAlignment="Top"
                  Width="50"
                  Height="50"
                  GotFocus="OnFocused"
-                 BeforeTextChanging="OnBeforeTextChanges"/>
+                 BeforeTextChanging="OnBeforeTextChanges" />
     </Grid>
 </UserControl>

@@ -62,7 +62,7 @@ namespace NumbrixGame.Model
         /// <summary>
         ///     Initializes the starting puzzles.
         /// </summary>
-        public async Task initializeStartingPuzzles()
+        public async Task InitializeStartingPuzzles()
         {
             var prebuiltPuzzles = await NumbrixGameBoardReader.GetPrebuiltGames();
             foreach (var puzzle in prebuiltPuzzles)

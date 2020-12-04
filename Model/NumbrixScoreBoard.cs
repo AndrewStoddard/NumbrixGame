@@ -36,7 +36,7 @@ namespace NumbrixGame.Model
         ///     Ases the CSV.
         /// </summary>
         /// <returns>System.String.</returns>
-        public string AsCSV()
+        public string AsCsv()
         {
             var stringBuilder = new StringBuilder();
             foreach (var score in this.PlayerScores)

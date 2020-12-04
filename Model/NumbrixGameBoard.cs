@@ -89,7 +89,7 @@ namespace NumbrixGame.Model
         ///     Builds puzzle in CSV format.
         /// </summary>
         /// <returns>puzzle in CSV format</returns>
-        public string AsCSV()
+        public string AsCsv()
         {
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine(
@@ -150,7 +150,7 @@ namespace NumbrixGame.Model
         public NumbrixGameBoardCell CreateCell(int x, int y, int? numbrixValue = null, bool isDefault = false)
         {
             var newCell = new NumbrixGameBoardCell(x, y) {
-                NumbrixValue = numbrixValue, IsDefaultValue = isDefault, LinearCoordinate = this.ConvertXYToLinear(x, y)
+                NumbrixValue = numbrixValue, IsDefaultValue = isDefault, LinearCoordinate = this.ConvertXyToLinear(x, y)
             };
             return newCell;
         }
@@ -161,7 +161,7 @@ namespace NumbrixGame.Model
         /// <param name="x">The x coordinate.</param>
         /// <param name="y">The y coordinate.</param>
         /// <returns>linear location based off of the x and y location (ex: (1,1) = 1, (1,2) = 2)</returns>
-        public int ConvertXYToLinear(int x, int y)
+        public int ConvertXyToLinear(int x, int y)
         {
             var value = x + this.BoardWidth * (y - 1);
             return value;
@@ -172,32 +172,9 @@ namespace NumbrixGame.Model
         /// </summary>
         /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
         /// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
-        public override bool Equals(object obj)
+        public new bool Equals(object obj)
         {
             return obj is NumbrixGameBoard gameboard && gameboard.GameBoardNumber == this.GameBoardNumber;
-        }
-
-        protected bool Equals(NumbrixGameBoard other)
-        {
-            return Equals(this.NumbrixGameBoardCells, other.NumbrixGameBoardCells) &&
-                   this.BoardWidth == other.BoardWidth && this.BoardHeight == other.BoardHeight &&
-                   this.GameBoardNumber == other.GameBoardNumber && this.TimeTaken.Equals(other.TimeTaken) &&
-                   this.IsPaused == other.IsPaused && this.IsFinished == other.IsFinished;
-        }
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashCode = this.NumbrixGameBoardCells != null ? this.NumbrixGameBoardCells.GetHashCode() : 0;
-                hashCode = (hashCode * 397) ^ this.BoardWidth;
-                hashCode = (hashCode * 397) ^ this.BoardHeight;
-                hashCode = (hashCode * 397) ^ this.GameBoardNumber;
-                hashCode = (hashCode * 397) ^ this.TimeTaken.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.IsPaused.GetHashCode();
-                hashCode = (hashCode * 397) ^ this.IsFinished.GetHashCode();
-                return hashCode;
-            }
         }
 
         #endregion

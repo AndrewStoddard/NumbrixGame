@@ -123,7 +123,6 @@
     <Compile Include="Converters\DateTimeConverter.cs" />
     <Compile Include="Converters\NegatedBooleanToVisibility.cs" />
     <Compile Include="Converters\NumbrixValueToTextBox.cs" />
-    <Compile Include="Converters\StorageFileToListViewConverter.cs" />
     <Compile Include="Converters\TimeSpanToTextConverter.cs" />
     <Compile Include="Datatier\DatatierConstants.cs" />
     <Compile Include="Datatier\NumbrixGameBoardWriter.cs" />
@@ -136,7 +135,6 @@
     <Compile Include="Model\PuzzleManager.cs" />
     <Compile Include="Model\SoundManager.cs" />
     <Compile Include="PrebuiltGames\MainPuzzles.cs" />
-    <Compile Include="PrebuiltGames\StartingPuzzles.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ViewModel\NumbrixGameBoardCellViewModel.cs" />
     <Compile Include="ViewModel\NumbrixGameBoardViewModel.cs" />
@@ -223,10 +221,6 @@
   <ItemGroup>
     <Folder Include="Assets\Music\" />
     <Folder Include="Assets\Screenshots\" />
-    <Folder Include="View\Dialogs\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="PrebuiltGames\Puzzle1.csv" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

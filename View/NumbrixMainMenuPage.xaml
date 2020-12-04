@@ -4,22 +4,22 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:converters="using:NumbrixGame.Converters"
-    xmlns:Custom="using:Microsoft.Toolkit.Uwp.UI.Controls"
+    xmlns:custom="using:Microsoft.Toolkit.Uwp.UI.Controls"
     x:Class="NumbrixGame.View.NumbrixMainMenuPage"
-    mc:Ignorable="d"
-    >
+    mc:Ignorable="d">
 
     <Page.Resources>
-        <converters:DateTimeConverter x:Key="dateTimeConverter"/>
+        <converters:DateTimeConverter x:Key="DateTimeConverter" />
     </Page.Resources>
     <Page.Background>
-        <ThemeResource ResourceKey="ApplicationPageBackgroundThemeBrush"/>
+        <ThemeResource ResourceKey="ApplicationPageBackgroundThemeBrush" />
     </Page.Background>
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="361,78,0,0" Text="Welcome to the Numbrix Game!" FontSize="24" TextWrapping="Wrap" VerticalAlignment="Top" Height="123" Width="166"/>
+        <TextBlock HorizontalAlignment="Left" Margin="409,105,0,0" Text="Welcome to the Numbrix Game!" FontSize="24"
+                   TextWrapping="Wrap" VerticalAlignment="Top" Height="134" Width="423" />
 
 
-        <Custom:DataGrid
+        <custom:DataGrid
             HorizontalAlignment="Left"
             Height="auto"
             Margin="182,260,0,0"
@@ -36,26 +36,25 @@
             AutoGenerateColumns="False"
             AreRowDetailsFrozen="True"
             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <Custom:DataGrid.Columns>
-                <Custom:DataGridTextColumn Header="Name"
+            <custom:DataGrid.Columns>
+                <custom:DataGridTextColumn Header="Name"
                                            Binding="{Binding DisplayName}"
                                            IsReadOnly="True"
-                                           Tag="Username"/>
-                <Custom:DataGridTextColumn Header="Date Created"
-                                           Binding="{Binding DateCreated, Converter={StaticResource dateTimeConverter}}"
+                                           Tag="Username" />
+                <custom:DataGridTextColumn Header="Date Created"
+                                           Binding="{Binding DateCreated, Converter={StaticResource DateTimeConverter}}"
                                            IsReadOnly="True"
-                                           Tag="PuzzleNumber"/>
+                                           Tag="PuzzleNumber" />
 
 
+            </custom:DataGrid.Columns>
 
-            </Custom:DataGrid.Columns>
+        </custom:DataGrid>
 
-        </Custom:DataGrid>
-
-        <Custom:DataGrid
+        <custom:DataGrid
             HorizontalAlignment="Left"
             Height="auto"
-            Margin="534,260,0,0"
+            Margin="760,260,0,0"
             VerticalAlignment="Top"
             Width="auto"
             ItemsSource="{x:Bind numbrixMainPageViewModel.SavedGames, Mode=TwoWay}"
@@ -69,24 +68,22 @@
             AutoGenerateColumns="False"
             AreRowDetailsFrozen="True"
             Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <Custom:DataGrid.Columns>
-                <Custom:DataGridTextColumn Header="Name"
+            <custom:DataGrid.Columns>
+                <custom:DataGridTextColumn Header="Name"
                                            Binding="{Binding DisplayName}"
                                            IsReadOnly="True"
-                                           Tag="Username"/>
-                <Custom:DataGridTextColumn Header="Date Created"
-                                           Binding="{Binding DateCreated, Converter={StaticResource dateTimeConverter}}"
+                                           Tag="Username" />
+                <custom:DataGridTextColumn Header="Date Created"
+                                           Binding="{Binding DateCreated, Converter={StaticResource DateTimeConverter}}"
                                            IsReadOnly="True"
-                                           Tag="PuzzleNumber"/>
+                                           Tag="PuzzleNumber" />
 
 
+            </custom:DataGrid.Columns>
 
-            </Custom:DataGrid.Columns>
-
-        </Custom:DataGrid>
-        <Button Content="Play Puzzle" Margin="396,260,0,0" VerticalAlignment="Top" Click="ButtonBase_OnClick"/>
-
-
+        </custom:DataGrid>
+        <Button Content="Play Puzzle" Margin="445,260,0,0" VerticalAlignment="Top" Click="OnPuzzlePlay" />
+        <Button Content="ScoreBoard" Margin="580,260,0,0" VerticalAlignment="Top" Click="OnScoreboard" />
 
 
     </Grid>

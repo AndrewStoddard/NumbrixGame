@@ -103,7 +103,7 @@ namespace NumbrixGame.ViewModel
         {
             this.playerScores.Add(playerScore);
             this.Model.AddScore(playerScore.Model);
-            this.SortDescending(TimeTakenColumnTag);
+            this.sortDescending(TimeTakenColumnTag);
         }
 
         /// <summary>
@@ -173,12 +173,12 @@ namespace NumbrixGame.ViewModel
         {
             if (e.Column.SortDirection == null || e.Column.SortDirection == DataGridSortDirection.Ascending)
             {
-                this.SortDescending(e.Column.Tag.ToString());
+                this.sortDescending(e.Column.Tag.ToString());
                 e.Column.SortDirection = DataGridSortDirection.Descending;
             }
             else
             {
-                this.SortAscending(e.Column.Tag.ToString());
+                this.sortAscending(e.Column.Tag.ToString());
                 e.Column.SortDirection = DataGridSortDirection.Ascending;
             }
 
@@ -195,7 +195,7 @@ namespace NumbrixGame.ViewModel
         ///     Sorts the ascending.
         /// </summary>
         /// <param name="sort">The sort.</param>
-        private void SortAscending(string sort)
+        private void sortAscending(string sort)
         {
             switch (sort)
             {
@@ -221,7 +221,7 @@ namespace NumbrixGame.ViewModel
         ///     Sorts the descending.
         /// </summary>
         /// <param name="sort">The sort.</param>
-        private void SortDescending(string sort)
+        private void sortDescending(string sort)
         {
             switch (sort)
             {

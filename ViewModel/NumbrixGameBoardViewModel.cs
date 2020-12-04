@@ -211,8 +211,8 @@ namespace NumbrixGame.ViewModel
         {
             this.TimeTaken = new TimeSpan(0, 0, 0);
             this.ClearGameBoard();
-            this.IsPaused = true;
             this.timer.Stop();
+            this.timer.Start();
         }
 
         /// <summary>
@@ -323,10 +323,18 @@ namespace NumbrixGame.ViewModel
         public async Task LoadGameBoard(StorageFile gameBoardFile)
         {
             this.Model = await NumbrixGameBoardReader.LoadPuzzle(gameBoardFile);
-            await this.puzzleManager.initializeStartingPuzzles();
+            await this.puzzleManager.InitializeStartingPuzzles();
             this.puzzleManager.CurrentPuzzle =
                 this.puzzleManager.Puzzles.SingleOrDefault(puzzle => puzzle.Equals(this.Model));
             this.NumbrixGameBoardCells = this.createNumbrixGameBoardCells();
+        }
+
+        /// <summary>
+        ///     Saves the state of the game.
+        /// </summary>
+        public void SaveGameState()
+        {
+            NumbrixGameBoardWriter.WriteGameboard(this.Model, "save_autosave.csv");
         }
 
         #endregion

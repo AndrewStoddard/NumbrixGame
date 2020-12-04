@@ -21,7 +21,7 @@ namespace NumbrixGame.Datatier
         {
             await FileIO.WriteTextAsync(
                 await ApplicationData.Current.LocalFolder.CreateFileAsync(fileName,
-                    CreationCollisionOption.GenerateUniqueName), numbrixGameBoard.AsCSV());
+                    CreationCollisionOption.GenerateUniqueName), numbrixGameBoard.AsCsv());
         }
 
         /// <summary>

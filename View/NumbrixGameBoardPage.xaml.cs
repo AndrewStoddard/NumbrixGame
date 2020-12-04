@@ -208,6 +208,7 @@ namespace NumbrixGame.View
         /// <summary>
         ///     Creates the save score dialog.
         /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         private async Task createSaveScoreDialog()
         {
             var saveScoreDialog = new SaveScoreDialog {TimeTaken = this.numbrixGameBoardViewModel.TimeTaken};
@@ -255,6 +256,7 @@ namespace NumbrixGame.View
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void OnNextPuzzle(object sender, RoutedEventArgs e)
         {
+            this.numbrixGameBoardViewModel.SaveGameState();
             this.numbrixGameBoardViewModel.NextPuzzle();
             this.createGameBoard();
         }
@@ -266,6 +268,7 @@ namespace NumbrixGame.View
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void OnPreviousPuzzle(object sender, RoutedEventArgs e)
         {
+            this.numbrixGameBoardViewModel.SaveGameState();
             this.numbrixGameBoardViewModel.PreviousPuzzle();
             this.createGameBoard();
         }
@@ -310,6 +313,7 @@ namespace NumbrixGame.View
         private void OnScoreboard(object sender, RoutedEventArgs e)
         {
             this.soundManager.Pause();
+            this.numbrixGameBoardViewModel.SaveGameState();
             Frame.Navigate(typeof(NumbrixScoreboardPage), this.numbrixScoreBoardViewModel);
         }
 
@@ -342,6 +346,7 @@ namespace NumbrixGame.View
 
             var gameFile = (StorageFile) e.Parameter;
             this.loadPuzzle(gameFile);
+            this.soundManager.Play();
         }
 
         /// <summary>
@@ -354,12 +359,12 @@ namespace NumbrixGame.View
             this.soundManager.MusicOn = !this.soundManager.MusicOn;
             if (this.soundManager.MusicOn)
             {
-                this.ToggleMusicButton.Content = "Music Off";
+                this.toggleMusicButton.Content = "Music Off";
                 this.soundManager.Pause();
             }
             else
             {
-                this.ToggleMusicButton.Content = "Music On";
+                this.toggleMusicButton.Content = "Music On";
                 this.soundManager.Play();
             }
         }
@@ -372,6 +377,7 @@ namespace NumbrixGame.View
         private void OnMainMenu(object sender, RoutedEventArgs e)
         {
             this.soundManager.Pause();
+            this.numbrixGameBoardViewModel.SaveGameState();
             Frame.Navigate(typeof(NumbrixMainMenuPage));
         }
 
@@ -384,9 +390,10 @@ namespace NumbrixGame.View
         {
             try
             {
+                this.numbrixGameBoardViewModel.SaveGameState();
                 e.Handled = true;
                 await showSaveDialog();
-                Debug.WriteLine("...Enter Save Logic Here...");
+
                 Application.Current.Exit();
             }
             catch
@@ -399,15 +406,24 @@ namespace NumbrixGame.View
         ///     Shows the save dialog.
         /// </summary>
         /// <returns>ContentDialogResult.</returns>
-        private static async Task<ContentDialogResult> showSaveDialog()
+        private static async Task showSaveDialog()
         {
             var saveDialog = new ContentDialog {
                 Title = "Saving Progress",
                 Content = "Saving your current progress...",
                 PrimaryButtonText = "Ok"
             };
-            var result = await saveDialog.ShowAsync();
-            return result;
+            await saveDialog.ShowAsync();
+        }
+
+        /// <summary>
+        ///     Saves the board.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
+        private void saveBoard(object sender, RoutedEventArgs e)
+        {
+            this.numbrixGameBoardViewModel.SaveGameState();
         }
 
         #endregion

@@ -65,7 +65,7 @@ namespace NumbrixGame.View
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
-        private void ClearScoreBoard(object sender, RoutedEventArgs e)
+        private void clearScoreBoard(object sender, RoutedEventArgs e)
         {
             this.numbrixScoreBoardViewModel.ResetScores();
         }
