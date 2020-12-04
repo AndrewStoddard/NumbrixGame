@@ -53,20 +53,18 @@ namespace NumbrixGame.ViewModel
         {
             this.playerScores.Add(playerScore);
             this.Model.AddScore(playerScore.Model);
-            this.saveScores();
         }
 
-        public async void ResetScores()
+        public void ResetScores()
         {
-            await ApplicationData.Current.LocalFolder.CreateFileAsync(ScoreboardSave,
-                CreationCollisionOption.ReplaceExisting);
             this.PlayerScores = new List<NumbrixPlayerScoreViewModel>();
             this.Model.PlayerScores = new List<NumbrixPlayerScore>();
+            NumbrixScoreBoardWriter.ResetScoreboard(ScoreboardSave);
         }
 
-        private void saveScores()
+        public void SaveScores()
         {
-            NumbrixScoreBoardWriter.WriteGameboard(this.Model, ScoreboardSave);
+            NumbrixScoreBoardWriter.WriteScoreBoard(this.Model, ScoreboardSave);
         }
 
         public async void LoadScores()

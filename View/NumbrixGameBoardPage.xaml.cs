@@ -172,6 +172,7 @@ namespace NumbrixGame.View
             {
                 this.numbrixScoreBoardViewModel.AddPlayerScore(new NumbrixPlayerScoreViewModel(saveScoreDialog.Username,
                     this.numbrixGameBoardViewModel.TimeTaken, this.numbrixGameBoardViewModel.GameBoardNumber));
+                this.numbrixScoreBoardViewModel.SaveScores();
                 Debug.WriteLine(saveScoreDialog.Username);
             }
 
@@ -270,6 +271,11 @@ namespace NumbrixGame.View
 
         private async void OnCloseRequest(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
         {
+            if (sender == null)
+            {
+                Application.Current.Exit();
+            }
+
             e.Handled = true;
             var result = await this.showSaveDialog();
             Application.Current.Exit();

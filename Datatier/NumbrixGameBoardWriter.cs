@@ -13,7 +13,7 @@ namespace NumbrixGame.Datatier
         {
             await FileIO.WriteTextAsync(
                 await ApplicationData.Current.LocalFolder.CreateFileAsync(fileName,
-                    CreationCollisionOption.ReplaceExisting), numbrixGameBoard.AsCSV());
+                    CreationCollisionOption.GenerateUniqueName), numbrixGameBoard.AsCSV());
         }
 
         public static bool FileExists(string fileName)

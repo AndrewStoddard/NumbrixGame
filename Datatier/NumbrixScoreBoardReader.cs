@@ -25,7 +25,7 @@ namespace NumbrixGame.Datatier
 
                 var scoreInfo = line.Split(',');
                 var playerScore = new NumbrixPlayerScore(scoreInfo[DatatierConstants.PlayerNameLocation],
-                    TimeSpan.Parse(scoreInfo[DatatierConstants.PlayerScoreGameBoardNumberLocation]),
+                    TimeSpan.Parse(scoreInfo[DatatierConstants.PlayerScoreTimeTakenLocation]),
                     int.Parse(scoreInfo[DatatierConstants.PlayerScoreGameBoardNumberLocation]));
                 scoreBoard.AddScore(playerScore);
             }

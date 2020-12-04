@@ -8,11 +8,18 @@ namespace NumbrixGame.Datatier
     {
         #region Methods
 
-        public static async void WriteGameboard(NumbrixScoreBoard numbrixScoreBoard, string fileName)
+        public static async void WriteScoreBoard(NumbrixScoreBoard numbrixScoreBoard, string fileName)
         {
             await FileIO.WriteTextAsync(
                 await ApplicationData.Current.LocalFolder.CreateFileAsync(fileName,
-                    CreationCollisionOption.GenerateUniqueName), numbrixScoreBoard.AsCSV());
+                    CreationCollisionOption.ReplaceExisting), numbrixScoreBoard.AsCSV());
+        }
+
+        public static async void ResetScoreboard(string fileName)
+        {
+            await FileIO.WriteTextAsync(
+                await ApplicationData.Current.LocalFolder.CreateFileAsync(fileName,
+                    CreationCollisionOption.ReplaceExisting), "");
         }
 
         #endregion

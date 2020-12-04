@@ -44,7 +44,7 @@
 
             </Custom:DataGrid.Columns>
         </Custom:DataGrid>
-        <Button Content="Main Menu" Margin="769,100,0,0" VerticalAlignment="Top" Click="GoBack" Width="145"/>
+        <Button Content="Main Menu" Margin="769,100,0,0" VerticalAlignment="Top" Click="OnMainMenu" Width="145"/>
         <Button Content="Clear Score Board" Margin="587,100,0,0" VerticalAlignment="Top" Click="ClearScoreBoard" Width="145"/>
 
     </Grid>

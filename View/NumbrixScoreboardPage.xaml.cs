@@ -29,9 +29,9 @@ namespace NumbrixGame.View
 
         #region Methods
 
-        private void GoBack(object sender, RoutedEventArgs e)
+        private void OnMainMenu(object sender, RoutedEventArgs e)
         {
-            Frame.GoBack();
+            Frame.Navigate(typeof(NumbrixMainMenuPage));
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
