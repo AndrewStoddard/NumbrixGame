@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using NumbrixGame.Model;
+using NumbrixGame.View.Controls;
 using NumbrixGame.ViewModel;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -26,16 +27,33 @@ namespace NumbrixGame.View
     {
         #region Data members
 
+        /// <summary>
+        ///     The numbrix game board view model
+        /// </summary>
         private readonly NumbrixGameBoardViewModel numbrixGameBoardViewModel;
+
+        /// <summary>
+        ///     The game board cell text boxes
+        /// </summary>
         private List<GameBoardCellTextBox> gameBoardCellTextBoxes;
+
+        /// <summary>
+        ///     The numbrix score board view model
+        /// </summary>
         private readonly NumbrixScoreBoardViewModel numbrixScoreBoardViewModel;
+
+        /// <summary>
+        ///     The sound manager
+        /// </summary>
         private readonly SoundManager soundManager;
 
         #endregion
 
         #region Constructors
 
-        /// <summary>Initializes a new instance of the <see cref="NumbrixGameBoardPage" /> class.</summary>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="NumbrixGameBoardPage" /> class.
+        /// </summary>
         public NumbrixGameBoardPage()
         {
             this.soundManager = new SoundManager();
@@ -53,6 +71,9 @@ namespace NumbrixGame.View
 
         #region Methods
 
+        /// <summary>
+        ///     Clears the puzzle.
+        /// </summary>
         private void clearPuzzle()
         {
             this.gameBoardCellTextBoxes = new List<GameBoardCellTextBox>();
@@ -63,28 +84,32 @@ namespace NumbrixGame.View
             }
         }
 
+        /// <summary>
+        ///     Creates the game board.
+        /// </summary>
         private void createGameBoard()
         {
             this.clearPuzzle();
-            var parentStackPanel = new StackPanel();
-            parentStackPanel.Name = "StackPanelPuzzleBoard";
-            parentStackPanel.BorderBrush = new SolidColorBrush(Colors.Blue);
-            parentStackPanel.BorderThickness = new Thickness(2);
-            parentStackPanel.HorizontalAlignment = HorizontalAlignment.Center;
-            parentStackPanel.VerticalAlignment = VerticalAlignment.Center;
+            var parentStackPanel = new StackPanel {
+                Name = "StackPanelPuzzleBoard",
+                BorderBrush = new SolidColorBrush(Colors.Blue),
+                BorderThickness = new Thickness(2),
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center
+            };
 
             this.parentGrid.Children.Add(parentStackPanel);
 
             for (var i = 1; i <= this.numbrixGameBoardViewModel.BoardHeight; i++)
             {
-                var stackPanel = new StackPanel();
-
-                stackPanel.Orientation = Orientation.Horizontal;
-                stackPanel.Width = this.parentGrid.Width;
-                stackPanel.Spacing = 0;
-                stackPanel.BorderBrush = new SolidColorBrush(Colors.Blue);
-                stackPanel.BorderThickness = new Thickness(2);
-                stackPanel.Padding = new Thickness(0);
+                var stackPanel = new StackPanel {
+                    Orientation = Orientation.Horizontal,
+                    Width = this.parentGrid.Width,
+                    Spacing = 0,
+                    BorderBrush = new SolidColorBrush(Colors.Blue),
+                    BorderThickness = new Thickness(2),
+                    Padding = new Thickness(0)
+                };
                 parentStackPanel.Children.Add(stackPanel);
 
                 foreach (var gameBoardCell in this.numbrixGameBoardViewModel.NumbrixGameBoardCells)
@@ -101,21 +126,32 @@ namespace NumbrixGame.View
             this.updatePuzzleNumber();
         }
 
+        /// <summary>
+        ///     Creates the cell.
+        /// </summary>
+        /// <param name="x">The x.</param>
+        /// <param name="y">The y.</param>
+        /// <returns>GameBoardCellTextBox.</returns>
         private GameBoardCellTextBox createCell(int x, int y)
         {
-            var cellTextBoxControl = new GameBoardCellTextBox();
-            cellTextBoxControl.MaxValue = this.numbrixGameBoardViewModel.MaxBoardValue;
-            cellTextBoxControl.DataContext = this.numbrixGameBoardViewModel.FindCell(x, y);
-            cellTextBoxControl.X = x;
-            cellTextBoxControl.Y = y;
+            var cellTextBoxControl = new GameBoardCellTextBox {
+                MaxValue = this.numbrixGameBoardViewModel.MaxBoardValue,
+                DataContext = this.numbrixGameBoardViewModel.FindCell(x, y),
+                X = x,
+                Y = y
+            };
             cellTextBoxControl.KeyDown += this.OnArrowKeyDown;
             return cellTextBoxControl;
         }
 
+        /// <summary>
+        ///     Handles the <see cref="E:ArrowKeyDown" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="KeyRoutedEventArgs" /> instance containing the event data.</param>
         private void OnArrowKeyDown(object sender, KeyRoutedEventArgs e)
         {
-            var cellTextBox = sender as GameBoardCellTextBox;
-            if (cellTextBox == null)
+            if (!(sender is GameBoardCellTextBox cellTextBox))
             {
                 return;
             }
@@ -145,11 +181,17 @@ namespace NumbrixGame.View
             }
         }
 
+        /// <summary>
+        ///     Updates the puzzle number.
+        /// </summary>
         private void updatePuzzleNumber()
         {
             this.textBlockPuzzleNumber.Text = "Puzzle Number: " + this.numbrixGameBoardViewModel.GameBoardNumber;
         }
 
+        /// <summary>
+        ///     Checks the solution.
+        /// </summary>
         private async void checkSolution()
         {
             if (this.numbrixGameBoardViewModel.CheckSolution())
@@ -163,6 +205,9 @@ namespace NumbrixGame.View
             }
         }
 
+        /// <summary>
+        ///     Creates the save score dialog.
+        /// </summary>
         private async Task createSaveScoreDialog()
         {
             var saveScoreDialog = new SaveScoreDialog {TimeTaken = this.numbrixGameBoardViewModel.TimeTaken};
@@ -186,49 +231,92 @@ namespace NumbrixGame.View
                     this.numbrixGameBoardViewModel.NextPuzzle();
                     this.createGameBoard();
                     break;
+                case ContentDialogResult.None:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
+        /// <summary>
+        ///     Clears the board.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void clearBoard(object sender, RoutedEventArgs e)
         {
             this.numbrixGameBoardViewModel.ClearGameBoard();
         }
 
+        /// <summary>
+        ///     Handles the <see cref="E:NextPuzzle" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void OnNextPuzzle(object sender, RoutedEventArgs e)
         {
             this.numbrixGameBoardViewModel.NextPuzzle();
             this.createGameBoard();
         }
 
+        /// <summary>
+        ///     Handles the <see cref="E:PreviousPuzzle" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void OnPreviousPuzzle(object sender, RoutedEventArgs e)
         {
             this.numbrixGameBoardViewModel.PreviousPuzzle();
             this.createGameBoard();
         }
 
+        /// <summary>
+        ///     Handles the <see cref="E:StopTimer" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void OnStopTimer(object sender, RoutedEventArgs e)
         {
             this.numbrixGameBoardViewModel.PauseTime();
             this.soundManager.Pause();
         }
 
+        /// <summary>
+        ///     Handles the <see cref="E:StartTimer" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void OnStartTimer(object sender, RoutedEventArgs e)
         {
             this.numbrixGameBoardViewModel.StartTime();
             this.soundManager.Play();
         }
 
+        /// <summary>
+        ///     Handles the <see cref="E:ResetTimer" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void OnResetTimer(object sender, RoutedEventArgs e)
         {
             this.numbrixGameBoardViewModel.ResetTime();
         }
 
+        /// <summary>
+        ///     Handles the <see cref="E:Scoreboard" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void OnScoreboard(object sender, RoutedEventArgs e)
         {
             this.soundManager.Pause();
             Frame.Navigate(typeof(NumbrixScoreboardPage), this.numbrixScoreBoardViewModel);
         }
 
+        /// <summary>
+        ///     Loads the puzzle.
+        /// </summary>
+        /// <param name="gameFile">The game file.</param>
         private async void loadPuzzle(StorageFile gameFile)
         {
             await this.numbrixGameBoardViewModel.LoadGameBoard(gameFile);
@@ -237,6 +325,13 @@ namespace NumbrixGame.View
             this.createGameBoard();
         }
 
+        /// <summary>
+        ///     Invoked when the Page is loaded and becomes the current source of a parent Frame.
+        /// </summary>
+        /// <param name="e">
+        ///     Event data that can be examined by overriding code. The event data is representative of the pending
+        ///     navigation that will load the current Page. Usually the most relevant property to examine is Parameter.
+        /// </param>
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -249,6 +344,11 @@ namespace NumbrixGame.View
             this.loadPuzzle(gameFile);
         }
 
+        /// <summary>
+        ///     Handles the <see cref="E:ToggleMusic" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void OnToggleMusic(object sender, RoutedEventArgs e)
         {
             this.soundManager.MusicOn = !this.soundManager.MusicOn;
@@ -264,20 +364,42 @@ namespace NumbrixGame.View
             }
         }
 
+        /// <summary>
+        ///     Handles the <see cref="E:MainMenu" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs" /> instance containing the event data.</param>
         private void OnMainMenu(object sender, RoutedEventArgs e)
         {
             this.soundManager.Pause();
             Frame.Navigate(typeof(NumbrixMainMenuPage));
         }
 
+        /// <summary>
+        ///     Handles the <see cref="E:CloseRequest" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SystemNavigationCloseRequestedPreviewEventArgs" /> instance containing the event data.</param>
         private async void OnCloseRequest(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
         {
-            e.Handled = true;
-            var result = await this.showSaveDialog();
-            Application.Current.Exit();
+            try
+            {
+                e.Handled = true;
+                await showSaveDialog();
+                Debug.WriteLine("...Enter Save Logic Here...");
+                Application.Current.Exit();
+            }
+            catch
+            {
+                // ignored
+            }
         }
 
-        private async Task<ContentDialogResult> showSaveDialog()
+        /// <summary>
+        ///     Shows the save dialog.
+        /// </summary>
+        /// <returns>ContentDialogResult.</returns>
+        private static async Task<ContentDialogResult> showSaveDialog()
         {
             var saveDialog = new ContentDialog {
                 Title = "Saving Progress",

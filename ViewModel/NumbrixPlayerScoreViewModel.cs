@@ -4,12 +4,25 @@ using NumbrixGame.Model;
 
 namespace NumbrixGame.ViewModel
 {
+    /// <summary>
+    ///     Class NumbrixPlayerScoreViewModel.
+    ///     Implements the <see cref="System.ComponentModel.INotifyPropertyChanged" />
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
     public class NumbrixPlayerScoreViewModel : INotifyPropertyChanged
     {
         #region Properties
 
+        /// <summary>
+        ///     Gets or sets the model.
+        /// </summary>
+        /// <value>The model.</value>
         public NumbrixPlayerScore Model { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the username.
+        /// </summary>
+        /// <value>The username.</value>
         public string Username
         {
             get => this.Model.Username;
@@ -20,6 +33,10 @@ namespace NumbrixGame.ViewModel
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the time taken.
+        /// </summary>
+        /// <value>The time taken.</value>
         public TimeSpan TimeTaken
         {
             get => this.Model.TimeTaken;
@@ -30,6 +47,10 @@ namespace NumbrixGame.ViewModel
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the puzzle number.
+        /// </summary>
+        /// <value>The puzzle number.</value>
         public int PuzzleNumber
         {
             get => this.Model.PuzzleNumber;
@@ -44,11 +65,21 @@ namespace NumbrixGame.ViewModel
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="NumbrixPlayerScoreViewModel" /> class.
+        /// </summary>
+        /// <param name="username">The username.</param>
+        /// <param name="timeTaken">The time taken.</param>
+        /// <param name="puzzleNumber">The puzzle number.</param>
         public NumbrixPlayerScoreViewModel(string username, TimeSpan timeTaken, int puzzleNumber)
         {
             this.Model = new NumbrixPlayerScore(username, timeTaken, puzzleNumber);
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="NumbrixPlayerScoreViewModel" /> class.
+        /// </summary>
+        /// <param name="score">The score.</param>
         public NumbrixPlayerScoreViewModel(NumbrixPlayerScore score)
         {
             this.Model = score;
@@ -58,6 +89,9 @@ namespace NumbrixGame.ViewModel
 
         #region Methods
 
+        /// <summary>
+        ///     Occurs when [property changed].
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion

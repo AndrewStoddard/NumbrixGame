@@ -32,7 +32,7 @@ using System;
 // ReSharper disable MemberCanBeProtected.Global
 // ReSharper disable InconsistentNaming
 
-namespace NumbrixGame.Annotations
+namespace NumbrixGame.Properties
 {
     /// <summary>
     ///     Indicates that the value of the marked element could be <c>null</c> sometimes,
@@ -40,11 +40,10 @@ namespace NumbrixGame.Annotations
     /// </summary>
     /// <example>
     ///     <code>
-    /// [CanBeNull] object Test() => null;
-    /// 
+    /// [CanBeNull] object Test() =&gt; null;
     /// void UseTest() {
-    ///   var p = Test();
-    ///   var s = p.ToString(); // Warning: Possible 'System.NullReferenceException'
+    /// var p = Test();
+    /// var s = p.ToString(); // Warning: Possible 'System.NullReferenceException'
     /// }
     /// </code>
     /// </example>
@@ -62,7 +61,7 @@ namespace NumbrixGame.Annotations
     /// <example>
     ///     <code>
     /// [NotNull] object Foo() {
-    ///   return null; // Warning: Possible 'null' assignment
+    /// return null; // Warning: Possible 'null' assignment
     /// }
     /// </code>
     /// </example>
@@ -83,10 +82,10 @@ namespace NumbrixGame.Annotations
     ///     <code>
     /// public void Foo([ItemNotNull]List&lt;string&gt; books)
     /// {
-    ///   foreach (var book in books) {
-    ///     if (book != null) // Warning: Expression is always true
-    ///      Console.WriteLine(book.ToUpper());
-    ///   }
+    /// foreach (var book in books) {
+    /// if (book != null) // Warning: Expression is always true
+    /// Console.WriteLine(book.ToUpper());
+    /// }
     /// }
     /// </code>
     /// </example>
@@ -106,11 +105,11 @@ namespace NumbrixGame.Annotations
     ///     <code>
     /// public void Foo([ItemCanBeNull]List&lt;string&gt; books)
     /// {
-    ///   foreach (var book in books)
-    ///   {
-    ///     // Warning: Possible 'System.NullReferenceException'
-    ///     Console.WriteLine(book.ToUpper());
-    ///   }
+    /// foreach (var book in books)
+    /// {
+    /// // Warning: Possible 'System.NullReferenceException'
+    /// Console.WriteLine(book.ToUpper());
+    /// }
     /// }
     /// </code>
     /// </example>
@@ -130,9 +129,8 @@ namespace NumbrixGame.Annotations
     ///     <code>
     /// [StringFormatMethod("message")]
     /// void ShowError(string message, params object[] args) { /* do something */ }
-    /// 
     /// void Foo() {
-    ///   ShowError("Failed: {0}"); // Warning: Non-existing argument in format string
+    /// ShowError("Failed: {0}"); // Warning: Non-existing argument in format string
     /// }
     /// </code>
     /// </example>
@@ -143,14 +141,23 @@ namespace NumbrixGame.Annotations
     {
         #region Properties
 
-        [NotNull] public string FormatParameterName { get; }
+        /// <summary>
+        ///     Gets the name of the format parameter.
+        /// </summary>
+        /// <value>The name of the format parameter.</value>
+        [NotNull]
+        public string FormatParameterName { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="StringFormatMethodAttribute" /> class.
+        /// </summary>
         /// <param name="formatParameterName">
-        ///     Specifies which parameter of an annotated method should be treated as the format string
+        ///     Specifies which parameter of an annotated method should be treated as the format
+        ///     string
         /// </param>
         public StringFormatMethodAttribute([NotNull] string formatParameterName)
         {
@@ -169,23 +176,21 @@ namespace NumbrixGame.Annotations
     ///     <code>
     /// namespace TestNamespace
     /// {
-    ///   public class Constants
-    ///   {
-    ///     public static int INT_CONST = 1;
-    ///     public const string STRING_CONST = "1";
-    ///   }
-    /// 
-    ///   public class Class1
-    ///   {
-    ///     [ValueProvider("TestNamespace.Constants")] public int myField;
-    ///     public void Foo([ValueProvider("TestNamespace.Constants")] string str) { }
-    /// 
-    ///     public void Test()
-    ///     {
-    ///       Foo(/*try completion here*/);//
-    ///       myField = /*try completion here*/
-    ///     }
-    ///   }
+    /// public class Constants
+    /// {
+    /// public static int INT_CONST = 1;
+    /// public const string STRING_CONST = "1";
+    /// }
+    /// public class Class1
+    /// {
+    /// [ValueProvider("TestNamespace.Constants")] public int myField;
+    /// public void Foo([ValueProvider("TestNamespace.Constants")] string str) { }
+    /// public void Test()
+    /// {
+    /// Foo(/*try completion here*/);//
+    /// myField = /*try completion here*/
+    /// }
+    /// }
     /// }
     /// </code>
     /// </example>
@@ -196,12 +201,21 @@ namespace NumbrixGame.Annotations
     {
         #region Properties
 
-        [NotNull] public string Name { get; }
+        /// <summary>
+        ///     Gets the name.
+        /// </summary>
+        /// <value>The name.</value>
+        [NotNull]
+        public string Name { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ValueProviderAttribute" /> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
         public ValueProviderAttribute([NotNull] string name)
         {
             this.Name = name;
@@ -218,9 +232,9 @@ namespace NumbrixGame.Annotations
     /// <example>
     ///     <code>
     /// void Foo([ValueRange(0, 100)] int value) {
-    ///   if (value == -1) { // Warning: Expression is always 'false'
-    ///     ...
-    ///   }
+    /// if (value == -1) { // Warning: Expression is always 'false'
+    /// ...
+    /// }
     /// }
     /// </code>
     /// </example>
@@ -232,30 +246,57 @@ namespace NumbrixGame.Annotations
     {
         #region Properties
 
+        /// <summary>
+        ///     Gets from.
+        /// </summary>
+        /// <value>From.</value>
         public object From { get; }
+
+        /// <summary>
+        ///     Gets to.
+        /// </summary>
+        /// <value>To.</value>
         public object To { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ValueRangeAttribute" /> class.
+        /// </summary>
+        /// <param name="from">From.</param>
+        /// <param name="to">To.</param>
         public ValueRangeAttribute(long from, long to)
         {
             this.From = from;
             this.To = to;
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ValueRangeAttribute" /> class.
+        /// </summary>
+        /// <param name="from">From.</param>
+        /// <param name="to">To.</param>
         public ValueRangeAttribute(ulong from, ulong to)
         {
             this.From = from;
             this.To = to;
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ValueRangeAttribute" /> class.
+        /// </summary>
+        /// <param name="value">The value.</param>
         public ValueRangeAttribute(long value)
         {
             this.From = this.To = value;
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ValueRangeAttribute" /> class.
+        /// </summary>
+        /// <param name="value">The value.</param>
         public ValueRangeAttribute(ulong value)
         {
             this.From = this.To = value;
@@ -270,9 +311,9 @@ namespace NumbrixGame.Annotations
     /// <example>
     ///     <code>
     /// void Foo([NonNegativeValue] int value) {
-    ///   if (value == -1) { // Warning: Expression is always 'false'
-    ///     ...
-    ///   }
+    /// if (value == -1) { // Warning: Expression is always 'false'
+    /// ...
+    /// }
     /// }
     /// </code>
     /// </example>
@@ -291,8 +332,8 @@ namespace NumbrixGame.Annotations
     /// <example>
     ///     <code>
     /// void Foo(string param) {
-    ///   if (param == null)
-    ///     throw new ArgumentNullException("par"); // Warning: Cannot resolve symbol
+    /// if (param == null)
+    /// throw new ArgumentNullException("par"); // Warning: Cannot resolve symbol
     /// }
     /// </code>
     /// </example>
@@ -306,6 +347,35 @@ namespace NumbrixGame.Annotations
     ///     <c>System.ComponentModel.INotifyPropertyChanged</c> interface and this method
     ///     is used to notify that some property value changed.
     /// </summary>
+    /// <example>
+    ///     <code>
+    /// public class Foo : INotifyPropertyChanged {
+    /// public event PropertyChangedEventHandler PropertyChanged;
+    /// [NotifyPropertyChangedInvocator]
+    /// protected virtual void NotifyChanged(string propertyName) { ... }
+    /// string _name;
+    /// public string Name {
+    /// get { return _name; }
+    /// set { _name = value; NotifyChanged("LastName"); /* Warning */ }
+    /// }
+    /// }
+    /// </code>
+    ///     Examples of generated notifications:
+    ///     <list>
+    ///         <item>
+    ///             <c>NotifyChanged("Property")</c>
+    ///         </item>
+    ///         <item>
+    ///             <c>NotifyChanged(() =&gt; Property)</c>
+    ///         </item>
+    ///         <item>
+    ///             <c>NotifyChanged((VM x) =&gt; x.Property)</c>
+    ///         </item>
+    ///         <item>
+    ///             <c>SetProperty(ref myField, value, "Property")</c>
+    ///         </item>
+    ///     </list>
+    /// </example>
     /// <remarks>
     ///     The method should be non-static and conform to one of the supported signatures:
     ///     <list>
@@ -326,53 +396,33 @@ namespace NumbrixGame.Annotations
     ///         </item>
     ///     </list>
     /// </remarks>
-    /// <example>
-    ///     <code>
-    /// public class Foo : INotifyPropertyChanged {
-    ///   public event PropertyChangedEventHandler PropertyChanged;
-    /// 
-    ///   [NotifyPropertyChangedInvocator]
-    ///   protected virtual void NotifyChanged(string propertyName) { ... }
-    /// 
-    ///   string _name;
-    /// 
-    ///   public string Name {
-    ///     get { return _name; }
-    ///     set { _name = value; NotifyChanged("LastName"); /* Warning */ }
-    ///   }
-    /// }
-    /// </code>
-    ///     Examples of generated notifications:
-    ///     <list>
-    ///         <item>
-    ///             <c>NotifyChanged("Property")</c>
-    ///         </item>
-    ///         <item>
-    ///             <c>NotifyChanged(() =&gt; Property)</c>
-    ///         </item>
-    ///         <item>
-    ///             <c>NotifyChanged((VM x) =&gt; x.Property)</c>
-    ///         </item>
-    ///         <item>
-    ///             <c>SetProperty(ref myField, value, "Property")</c>
-    ///         </item>
-    ///     </list>
-    /// </example>
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class NotifyPropertyChangedInvocatorAttribute : Attribute
     {
         #region Properties
 
-        [CanBeNull] public string ParameterName { get; }
+        /// <summary>
+        ///     Gets the name of the parameter.
+        /// </summary>
+        /// <value>The name of the parameter.</value>
+        [CanBeNull]
+        public string ParameterName { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="NotifyPropertyChangedInvocatorAttribute" /> class.
+        /// </summary>
         public NotifyPropertyChangedInvocatorAttribute()
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="NotifyPropertyChangedInvocatorAttribute" /> class.
+        /// </summary>
+        /// <param name="parameterName">Name of the parameter.</param>
         public NotifyPropertyChangedInvocatorAttribute([NotNull] string parameterName)
         {
             this.ParameterName = parameterName;
@@ -442,19 +492,37 @@ namespace NumbrixGame.Annotations
     {
         #region Properties
 
-        [NotNull] public string Contract { get; }
+        /// <summary>
+        ///     Gets the contract.
+        /// </summary>
+        /// <value>The contract.</value>
+        [NotNull]
+        public string Contract { get; }
 
+        /// <summary>
+        ///     Gets a value indicating whether [force full states].
+        /// </summary>
+        /// <value><c>true</c> if [force full states]; otherwise, <c>false</c>.</value>
         public bool ForceFullStates { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ContractAnnotationAttribute" /> class.
+        /// </summary>
+        /// <param name="contract">The contract.</param>
         public ContractAnnotationAttribute([NotNull] string contract)
             : this(contract, false)
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ContractAnnotationAttribute" /> class.
+        /// </summary>
+        /// <param name="contract">The contract.</param>
+        /// <param name="forceFullStates">if set to <c>true</c> [force full states].</param>
         public ContractAnnotationAttribute([NotNull] string contract, bool forceFullStates)
         {
             this.Contract = contract;
@@ -471,7 +539,7 @@ namespace NumbrixGame.Annotations
     ///     <code>
     /// [LocalizationRequiredAttribute(true)]
     /// class Foo {
-    ///   string str = "my string"; // Warning: Localizable string
+    /// string str = "my string"; // Warning: Localizable string
     /// }
     /// </code>
     /// </example>
@@ -480,16 +548,27 @@ namespace NumbrixGame.Annotations
     {
         #region Properties
 
+        /// <summary>
+        ///     Gets a value indicating whether this <see cref="LocalizationRequiredAttribute" /> is required.
+        /// </summary>
+        /// <value><c>true</c> if required; otherwise, <c>false</c>.</value>
         public bool Required { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="LocalizationRequiredAttribute" /> class.
+        /// </summary>
         public LocalizationRequiredAttribute() : this(true)
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="LocalizationRequiredAttribute" /> class.
+        /// </summary>
+        /// <param name="required">if set to <c>true</c> [required].</param>
         public LocalizationRequiredAttribute(bool required)
         {
             this.Required = required;
@@ -508,15 +587,14 @@ namespace NumbrixGame.Annotations
     ///     <code>
     /// [CannotApplyEqualityOperator]
     /// class NoEquality { }
-    /// 
     /// class UsesNoEquality {
-    ///   void Test() {
-    ///     var ca1 = new NoEquality();
-    ///     var ca2 = new NoEquality();
-    ///     if (ca1 != null) { // OK
-    ///       bool condition = ca1 == ca2; // Warning
-    ///     }
-    ///   }
+    /// void Test() {
+    /// var ca1 = new NoEquality();
+    /// var ca2 = new NoEquality();
+    /// if (ca1 != null) { // OK
+    /// bool condition = ca1 == ca2; // Warning
+    /// }
+    /// }
     /// }
     /// </code>
     /// </example>
@@ -533,7 +611,6 @@ namespace NumbrixGame.Annotations
     ///     <code>
     /// [BaseTypeRequired(typeof(IComponent)] // Specify requirement
     /// class ComponentAttribute : Attribute { }
-    /// 
     /// [Component] // ComponentAttribute requires implementing IComponent interface
     /// class MyComponent : IComponent { }
     /// </code>
@@ -544,12 +621,21 @@ namespace NumbrixGame.Annotations
     {
         #region Properties
 
-        [NotNull] public Type BaseType { get; }
+        /// <summary>
+        ///     Gets the type of the base.
+        /// </summary>
+        /// <value>The type of the base.</value>
+        [NotNull]
+        public Type BaseType { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="BaseTypeRequiredAttribute" /> class.
+        /// </summary>
+        /// <param name="baseType">Type of the base.</param>
         public BaseTypeRequiredAttribute([NotNull] Type baseType)
         {
             this.BaseType = baseType;
@@ -567,29 +653,53 @@ namespace NumbrixGame.Annotations
     {
         #region Properties
 
+        /// <summary>
+        ///     Gets the use kind flags.
+        /// </summary>
+        /// <value>The use kind flags.</value>
         public ImplicitUseKindFlags UseKindFlags { get; }
 
+        /// <summary>
+        ///     Gets the target flags.
+        /// </summary>
+        /// <value>The target flags.</value>
         public ImplicitUseTargetFlags TargetFlags { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="UsedImplicitlyAttribute" /> class.
+        /// </summary>
         public UsedImplicitlyAttribute()
             : this(ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.Default)
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="UsedImplicitlyAttribute" /> class.
+        /// </summary>
+        /// <param name="useKindFlags">The use kind flags.</param>
         public UsedImplicitlyAttribute(ImplicitUseKindFlags useKindFlags)
             : this(useKindFlags, ImplicitUseTargetFlags.Default)
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="UsedImplicitlyAttribute" /> class.
+        /// </summary>
+        /// <param name="targetFlags">The target flags.</param>
         public UsedImplicitlyAttribute(ImplicitUseTargetFlags targetFlags)
             : this(ImplicitUseKindFlags.Default, targetFlags)
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="UsedImplicitlyAttribute" /> class.
+        /// </summary>
+        /// <param name="useKindFlags">The use kind flags.</param>
+        /// <param name="targetFlags">The target flags.</param>
         public UsedImplicitlyAttribute(ImplicitUseKindFlags useKindFlags, ImplicitUseTargetFlags targetFlags)
         {
             this.UseKindFlags = useKindFlags;
@@ -612,29 +722,55 @@ namespace NumbrixGame.Annotations
     {
         #region Properties
 
-        [UsedImplicitly] public ImplicitUseKindFlags UseKindFlags { get; }
+        /// <summary>
+        ///     Gets the use kind flags.
+        /// </summary>
+        /// <value>The use kind flags.</value>
+        [UsedImplicitly]
+        public ImplicitUseKindFlags UseKindFlags { get; }
 
-        [UsedImplicitly] public ImplicitUseTargetFlags TargetFlags { get; }
+        /// <summary>
+        ///     Gets the target flags.
+        /// </summary>
+        /// <value>The target flags.</value>
+        [UsedImplicitly]
+        public ImplicitUseTargetFlags TargetFlags { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="MeansImplicitUseAttribute" /> class.
+        /// </summary>
         public MeansImplicitUseAttribute()
             : this(ImplicitUseKindFlags.Default, ImplicitUseTargetFlags.Default)
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="MeansImplicitUseAttribute" /> class.
+        /// </summary>
+        /// <param name="useKindFlags">The use kind flags.</param>
         public MeansImplicitUseAttribute(ImplicitUseKindFlags useKindFlags)
             : this(useKindFlags, ImplicitUseTargetFlags.Default)
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="MeansImplicitUseAttribute" /> class.
+        /// </summary>
+        /// <param name="targetFlags">The target flags.</param>
         public MeansImplicitUseAttribute(ImplicitUseTargetFlags targetFlags)
             : this(ImplicitUseKindFlags.Default, targetFlags)
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="MeansImplicitUseAttribute" /> class.
+        /// </summary>
+        /// <param name="useKindFlags">The use kind flags.</param>
+        /// <param name="targetFlags">The target flags.</param>
         public MeansImplicitUseAttribute(ImplicitUseKindFlags useKindFlags, ImplicitUseTargetFlags targetFlags)
         {
             this.UseKindFlags = useKindFlags;
@@ -651,12 +787,19 @@ namespace NumbrixGame.Annotations
     [Flags]
     public enum ImplicitUseKindFlags
     {
+        /// <summary>
+        ///     The default
+        /// </summary>
         Default = Access | Assign | InstantiatedWithFixedConstructorSignature,
 
-        /// <summary>Only entity marked with attribute considered used.</summary>
+        /// <summary>
+        ///     Only entity marked with attribute considered used.
+        /// </summary>
         Access = 1,
 
-        /// <summary>Indicates implicit assignment to a member.</summary>
+        /// <summary>
+        ///     Indicates implicit assignment to a member.
+        /// </summary>
         Assign = 2,
 
         /// <summary>
@@ -665,7 +808,9 @@ namespace NumbrixGame.Annotations
         /// </summary>
         InstantiatedWithFixedConstructorSignature = 4,
 
-        /// <summary>Indicates implicit instantiation of a type.</summary>
+        /// <summary>
+        ///     Indicates implicit instantiation of a type.
+        /// </summary>
         InstantiatedNoFixedConstructorSignature = 8
     }
 
@@ -676,16 +821,29 @@ namespace NumbrixGame.Annotations
     [Flags]
     public enum ImplicitUseTargetFlags
     {
+        /// <summary>
+        ///     The default
+        /// </summary>
         Default = Itself,
+
+        /// <summary>
+        ///     The itself
+        /// </summary>
         Itself = 1,
 
-        /// <summary>Members of entity marked with attribute are considered used.</summary>
+        /// <summary>
+        ///     Members of entity marked with attribute are considered used.
+        /// </summary>
         Members = 2,
 
-        /// <summary> Inherited entities are considered used. </summary>
+        /// <summary>
+        ///     Inherited entities are considered used.
+        /// </summary>
         WithInheritors = 4,
 
-        /// <summary>Entity marked with attribute and all its members considered used.</summary>
+        /// <summary>
+        ///     Entity marked with attribute and all its members considered used.
+        /// </summary>
         WithMembers = Itself | Members
     }
 
@@ -699,16 +857,28 @@ namespace NumbrixGame.Annotations
     {
         #region Properties
 
-        [CanBeNull] public string Comment { get; }
+        /// <summary>
+        ///     Gets the comment.
+        /// </summary>
+        /// <value>The comment.</value>
+        [CanBeNull]
+        public string Comment { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="PublicAPIAttribute" /> class.
+        /// </summary>
         public PublicAPIAttribute()
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="PublicAPIAttribute" /> class.
+        /// </summary>
+        /// <param name="comment">The comment.</param>
         public PublicAPIAttribute([NotNull] string comment)
         {
             this.Comment = comment;
@@ -733,10 +903,9 @@ namespace NumbrixGame.Annotations
     /// </summary>
     /// <example>
     ///     <code>
-    /// [Pure] int Multiply(int x, int y) => x * y;
-    /// 
+    /// [Pure] int Multiply(int x, int y) =&gt; x * y;
     /// void M() {
-    ///   Multiply(123, 42); // Warning: Return value of pure method is not used
+    /// Multiply(123, 42); // Warning: Return value of pure method is not used
     /// }
     /// </code>
     /// </example>
@@ -761,16 +930,28 @@ namespace NumbrixGame.Annotations
     {
         #region Properties
 
-        [CanBeNull] public string Justification { get; }
+        /// <summary>
+        ///     Gets the justification.
+        /// </summary>
+        /// <value>The justification.</value>
+        [CanBeNull]
+        public string Justification { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="MustUseReturnValueAttribute" /> class.
+        /// </summary>
         public MustUseReturnValueAttribute()
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="MustUseReturnValueAttribute" /> class.
+        /// </summary>
+        /// <param name="justification">The justification.</param>
         public MustUseReturnValueAttribute([NotNull] string justification)
         {
             this.Justification = justification;
@@ -787,12 +968,11 @@ namespace NumbrixGame.Annotations
     /// <example>
     ///     <code>
     /// class Foo {
-    ///   [ProvidesContext] IBarService _barService = ...;
-    /// 
-    ///   void ProcessNode(INode node) {
-    ///     DoSomething(node, node.GetGlobalServices().Bar);
-    ///     //              ^ Warning: use value of '_barService' field
-    ///   }
+    /// [ProvidesContext] IBarService _barService = ...;
+    /// void ProcessNode(INode node) {
+    /// DoSomething(node, node.GetGlobalServices().Bar);
+    /// //              ^ Warning: use value of '_barService' field
+    /// }
     /// }
     /// </code>
     /// </example>
@@ -813,16 +993,28 @@ namespace NumbrixGame.Annotations
     {
         #region Properties
 
-        [CanBeNull] public string BasePath { get; }
+        /// <summary>
+        ///     Gets the base path.
+        /// </summary>
+        /// <value>The base path.</value>
+        [CanBeNull]
+        public string BasePath { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="PathReferenceAttribute" /> class.
+        /// </summary>
         public PathReferenceAttribute()
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="PathReferenceAttribute" /> class.
+        /// </summary>
+        /// <param name="basePath">The base path.</param>
         public PathReferenceAttribute([NotNull] [PathReference] string basePath)
         {
             this.BasePath = basePath;
@@ -836,24 +1028,24 @@ namespace NumbrixGame.Annotations
     ///     as a 'Source Template'. When the extension method is completed over some expression, its source code
     ///     is automatically expanded like a template at call site.
     /// </summary>
-    /// <remarks>
-    ///     Template method body can contain valid source code and/or special comments starting with '$'.
-    ///     Text inside these comments is added as source code when the template is applied. Template parameters
-    ///     can be used either as additional method parameters or as identifiers wrapped in two '$' signs.
-    ///     Use the <see cref="MacroAttribute" /> attribute to specify macros for parameters.
-    /// </remarks>
     /// <example>
     ///     In this example, the 'forEach' method is a source template available over all values
     ///     of enumerable types, producing ordinary C# 'foreach' statement and placing caret inside block:
     ///     <code>
     /// [SourceTemplate]
     /// public static void forEach&lt;T&gt;(this IEnumerable&lt;T&gt; xs) {
-    ///   foreach (var x in xs) {
-    ///      //$ $END$
-    ///   }
+    /// foreach (var x in xs) {
+    /// //$ $END$
+    /// }
     /// }
     /// </code>
     /// </example>
+    /// <remarks>
+    ///     Template method body can contain valid source code and/or special comments starting with '$'.
+    ///     Text inside these comments is added as source code when the template is applied. Template parameters
+    ///     can be used either as additional method parameters or as identifiers wrapped in two '$' signs.
+    ///     Use the <see cref="MacroAttribute" /> attribute to specify macros for parameters.
+    /// </remarks>
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class SourceTemplateAttribute : Attribute
     {
@@ -862,31 +1054,31 @@ namespace NumbrixGame.Annotations
     /// <summary>
     ///     Allows specifying a macro for a parameter of a <see cref="SourceTemplateAttribute">source template</see>.
     /// </summary>
-    /// <remarks>
-    ///     You can apply the attribute on the whole method or on any of its additional parameters. The macro expression
-    ///     is defined in the <see cref="MacroAttribute.Expression" /> property. When applied on a method, the target
-    ///     template parameter is defined in the <see cref="MacroAttribute.Target" /> property. To apply the macro silently
-    ///     for the parameter, set the <see cref="MacroAttribute.Editable" /> property value = -1.
-    /// </remarks>
     /// <example>
     ///     Applying the attribute on a source template method:
     ///     <code>
     /// [SourceTemplate, Macro(Target = "item", Expression = "suggestVariableName()")]
     /// public static void forEach&lt;T&gt;(this IEnumerable&lt;T&gt; collection) {
-    ///   foreach (var item in collection) {
-    ///     //$ $END$
-    ///   }
+    /// foreach (var item in collection) {
+    /// //$ $END$
+    /// }
     /// }
     /// </code>
     ///     Applying the attribute on a template method parameter:
     ///     <code>
     /// [SourceTemplate]
     /// public static void something(this Entity x, [Macro(Expression = "guid()", Editable = -1)] string newguid) {
-    ///   /*$ var $x$Id = "$newguid$" + x.ToString();
-    ///   x.DoSomething($x$Id); */
+    /// /*$ var $x$Id = "$newguid$" + x.ToString();
+    /// x.DoSomething($x$Id); */
     /// }
     /// </code>
     /// </example>
+    /// <remarks>
+    ///     You can apply the attribute on the whole method or on any of its additional parameters. The macro expression
+    ///     is defined in the <see cref="MacroAttribute.Expression" /> property. When applied on a method, the target
+    ///     template parameter is defined in the <see cref="MacroAttribute.Target" /> property. To apply the macro silently
+    ///     for the parameter, set the <see cref="MacroAttribute.Editable" /> property value = -1.
+    /// </remarks>
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Method, AllowMultiple = true)]
     public sealed class MacroAttribute : Attribute
     {
@@ -896,16 +1088,18 @@ namespace NumbrixGame.Annotations
         ///     Allows specifying a macro that will be executed for a <see cref="SourceTemplateAttribute">source template</see>
         ///     parameter when the template is expanded.
         /// </summary>
+        /// <value>The expression.</value>
         [CanBeNull]
         public string Expression { get; set; }
 
         /// <summary>
         ///     Allows specifying which occurrence of the target parameter becomes editable when the template is deployed.
         /// </summary>
+        /// <value>The editable.</value>
         /// <remarks>
         ///     If the target parameter is used several times in the template, only one occurrence becomes editable;
         ///     other occurrences are changed synchronously. To specify the zero-based index of the editable occurrence,
-        ///     use values >= 0. To make the parameter non-editable when the template is expanded, use -1.
+        ///     use values &gt;= 0. To make the parameter non-editable when the template is expanded, use -1.
         /// </remarks>
         public int Editable { get; set; }
 
@@ -913,24 +1107,39 @@ namespace NumbrixGame.Annotations
         ///     Identifies the target parameter of a <see cref="SourceTemplateAttribute">source template</see> if the
         ///     <see cref="MacroAttribute" /> is applied on a template method.
         /// </summary>
+        /// <value>The target.</value>
         [CanBeNull]
         public string Target { get; set; }
 
         #endregion
     }
 
+    /// <summary>
+    ///     Class AspMvcAreaMasterLocationFormatAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property,
         AllowMultiple = true)]
     public sealed class AspMvcAreaMasterLocationFormatAttribute : Attribute
     {
         #region Properties
 
-        [NotNull] public string Format { get; }
+        /// <summary>
+        ///     Gets the format.
+        /// </summary>
+        /// <value>The format.</value>
+        [NotNull]
+        public string Format { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AspMvcAreaMasterLocationFormatAttribute" /> class.
+        /// </summary>
+        /// <param name="format">The format.</param>
         public AspMvcAreaMasterLocationFormatAttribute([NotNull] string format)
         {
             this.Format = format;
@@ -939,18 +1148,32 @@ namespace NumbrixGame.Annotations
         #endregion
     }
 
+    /// <summary>
+    ///     Class AspMvcAreaPartialViewLocationFormatAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property,
         AllowMultiple = true)]
     public sealed class AspMvcAreaPartialViewLocationFormatAttribute : Attribute
     {
         #region Properties
 
-        [NotNull] public string Format { get; }
+        /// <summary>
+        ///     Gets the format.
+        /// </summary>
+        /// <value>The format.</value>
+        [NotNull]
+        public string Format { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AspMvcAreaPartialViewLocationFormatAttribute" /> class.
+        /// </summary>
+        /// <param name="format">The format.</param>
         public AspMvcAreaPartialViewLocationFormatAttribute([NotNull] string format)
         {
             this.Format = format;
@@ -959,18 +1182,32 @@ namespace NumbrixGame.Annotations
         #endregion
     }
 
+    /// <summary>
+    ///     Class AspMvcAreaViewLocationFormatAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property,
         AllowMultiple = true)]
     public sealed class AspMvcAreaViewLocationFormatAttribute : Attribute
     {
         #region Properties
 
-        [NotNull] public string Format { get; }
+        /// <summary>
+        ///     Gets the format.
+        /// </summary>
+        /// <value>The format.</value>
+        [NotNull]
+        public string Format { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AspMvcAreaViewLocationFormatAttribute" /> class.
+        /// </summary>
+        /// <param name="format">The format.</param>
         public AspMvcAreaViewLocationFormatAttribute([NotNull] string format)
         {
             this.Format = format;
@@ -979,18 +1216,32 @@ namespace NumbrixGame.Annotations
         #endregion
     }
 
+    /// <summary>
+    ///     Class AspMvcMasterLocationFormatAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property,
         AllowMultiple = true)]
     public sealed class AspMvcMasterLocationFormatAttribute : Attribute
     {
         #region Properties
 
-        [NotNull] public string Format { get; }
+        /// <summary>
+        ///     Gets the format.
+        /// </summary>
+        /// <value>The format.</value>
+        [NotNull]
+        public string Format { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AspMvcMasterLocationFormatAttribute" /> class.
+        /// </summary>
+        /// <param name="format">The format.</param>
         public AspMvcMasterLocationFormatAttribute([NotNull] string format)
         {
             this.Format = format;
@@ -999,18 +1250,32 @@ namespace NumbrixGame.Annotations
         #endregion
     }
 
+    /// <summary>
+    ///     Class AspMvcPartialViewLocationFormatAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property,
         AllowMultiple = true)]
     public sealed class AspMvcPartialViewLocationFormatAttribute : Attribute
     {
         #region Properties
 
-        [NotNull] public string Format { get; }
+        /// <summary>
+        ///     Gets the format.
+        /// </summary>
+        /// <value>The format.</value>
+        [NotNull]
+        public string Format { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AspMvcPartialViewLocationFormatAttribute" /> class.
+        /// </summary>
+        /// <param name="format">The format.</param>
         public AspMvcPartialViewLocationFormatAttribute([NotNull] string format)
         {
             this.Format = format;
@@ -1019,18 +1284,32 @@ namespace NumbrixGame.Annotations
         #endregion
     }
 
+    /// <summary>
+    ///     Class AspMvcViewLocationFormatAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Assembly | AttributeTargets.Field | AttributeTargets.Property,
         AllowMultiple = true)]
     public sealed class AspMvcViewLocationFormatAttribute : Attribute
     {
         #region Properties
 
-        [NotNull] public string Format { get; }
+        /// <summary>
+        ///     Gets the format.
+        /// </summary>
+        /// <value>The format.</value>
+        [NotNull]
+        public string Format { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AspMvcViewLocationFormatAttribute" /> class.
+        /// </summary>
+        /// <param name="format">The format.</param>
         public AspMvcViewLocationFormatAttribute([NotNull] string format)
         {
             this.Format = format;
@@ -1051,16 +1330,28 @@ namespace NumbrixGame.Annotations
     {
         #region Properties
 
-        [CanBeNull] public string AnonymousProperty { get; }
+        /// <summary>
+        ///     Gets the anonymous property.
+        /// </summary>
+        /// <value>The anonymous property.</value>
+        [CanBeNull]
+        public string AnonymousProperty { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AspMvcActionAttribute" /> class.
+        /// </summary>
         public AspMvcActionAttribute()
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AspMvcActionAttribute" /> class.
+        /// </summary>
+        /// <param name="anonymousProperty">The anonymous property.</param>
         public AspMvcActionAttribute([NotNull] string anonymousProperty)
         {
             this.AnonymousProperty = anonymousProperty;
@@ -1079,16 +1370,28 @@ namespace NumbrixGame.Annotations
     {
         #region Properties
 
-        [CanBeNull] public string AnonymousProperty { get; }
+        /// <summary>
+        ///     Gets the anonymous property.
+        /// </summary>
+        /// <value>The anonymous property.</value>
+        [CanBeNull]
+        public string AnonymousProperty { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AspMvcAreaAttribute" /> class.
+        /// </summary>
         public AspMvcAreaAttribute()
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AspMvcAreaAttribute" /> class.
+        /// </summary>
+        /// <param name="anonymousProperty">The anonymous property.</param>
         public AspMvcAreaAttribute([NotNull] string anonymousProperty)
         {
             this.AnonymousProperty = anonymousProperty;
@@ -1109,16 +1412,28 @@ namespace NumbrixGame.Annotations
     {
         #region Properties
 
-        [CanBeNull] public string AnonymousProperty { get; }
+        /// <summary>
+        ///     Gets the anonymous property.
+        /// </summary>
+        /// <value>The anonymous property.</value>
+        [CanBeNull]
+        public string AnonymousProperty { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AspMvcControllerAttribute" /> class.
+        /// </summary>
         public AspMvcControllerAttribute()
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AspMvcControllerAttribute" /> class.
+        /// </summary>
+        /// <param name="anonymousProperty">The anonymous property.</param>
         public AspMvcControllerAttribute([NotNull] string anonymousProperty)
         {
             this.AnonymousProperty = anonymousProperty;
@@ -1234,8 +1549,8 @@ namespace NumbrixGame.Annotations
     ///     <code>
     /// [ActionName("Foo")]
     /// public ActionResult Login(string returnUrl) {
-    ///   ViewBag.ReturnUrl = Url.Action("Foo"); // OK
-    ///   return RedirectToAction("Bar"); // Error: Cannot resolve action
+    /// ViewBag.ReturnUrl = Url.Action("Foo"); // OK
+    /// return RedirectToAction("Bar"); // Error: Cannot resolve action
     /// }
     /// </code>
     /// </example>
@@ -1244,21 +1559,38 @@ namespace NumbrixGame.Annotations
     {
     }
 
+    /// <summary>
+    ///     Class HtmlElementAttributesAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Property | AttributeTargets.Field)]
     public sealed class HtmlElementAttributesAttribute : Attribute
     {
         #region Properties
 
-        [CanBeNull] public string Name { get; }
+        /// <summary>
+        ///     Gets the name.
+        /// </summary>
+        /// <value>The name.</value>
+        [CanBeNull]
+        public string Name { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="HtmlElementAttributesAttribute" /> class.
+        /// </summary>
         public HtmlElementAttributesAttribute()
         {
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="HtmlElementAttributesAttribute" /> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
         public HtmlElementAttributesAttribute([NotNull] string name)
         {
             this.Name = name;
@@ -1267,17 +1599,31 @@ namespace NumbrixGame.Annotations
         #endregion
     }
 
+    /// <summary>
+    ///     Class HtmlAttributeValueAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Parameter | AttributeTargets.Field | AttributeTargets.Property)]
     public sealed class HtmlAttributeValueAttribute : Attribute
     {
         #region Properties
 
-        [NotNull] public string Name { get; }
+        /// <summary>
+        ///     Gets the name.
+        /// </summary>
+        /// <value>The name.</value>
+        [NotNull]
+        public string Name { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="HtmlAttributeValueAttribute" /> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
         public HtmlAttributeValueAttribute([NotNull] string name)
         {
             this.Name = name;
@@ -1301,41 +1647,47 @@ namespace NumbrixGame.Annotations
     ///     over collection type affects the contents of the collection.
     ///     Use <see cref="CollectionAccessType" /> to specify the access type.
     /// </summary>
-    /// <remarks>
-    ///     Using this attribute only makes sense if all collection methods are marked with this attribute.
-    /// </remarks>
     /// <example>
     ///     <code>
     /// public class MyStringCollection : List&lt;string&gt;
     /// {
-    ///   [CollectionAccess(CollectionAccessType.Read)]
-    ///   public string GetFirstString()
-    ///   {
-    ///     return this.ElementAt(0);
-    ///   }
+    /// [CollectionAccess(CollectionAccessType.Read)]
+    /// public string GetFirstString()
+    /// {
+    /// return this.ElementAt(0);
+    /// }
     /// }
     /// class Test
     /// {
-    ///   public void Foo()
-    ///   {
-    ///     // Warning: Contents of the collection is never updated
-    ///     var col = new MyStringCollection();
-    ///     string x = col.GetFirstString();
-    ///   }
+    /// public void Foo()
+    /// {
+    /// // Warning: Contents of the collection is never updated
+    /// var col = new MyStringCollection();
+    /// string x = col.GetFirstString();
+    /// }
     /// }
     /// </code>
     /// </example>
+    /// <remarks>Using this attribute only makes sense if all collection methods are marked with this attribute.</remarks>
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor | AttributeTargets.Property)]
     public sealed class CollectionAccessAttribute : Attribute
     {
         #region Properties
 
+        /// <summary>
+        ///     Gets the type of the collection access.
+        /// </summary>
+        /// <value>The type of the collection access.</value>
         public CollectionAccessType CollectionAccessType { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="CollectionAccessAttribute" /> class.
+        /// </summary>
+        /// <param name="collectionAccessType">Type of the collection access.</param>
         public CollectionAccessAttribute(CollectionAccessType collectionAccessType)
         {
             this.CollectionAccessType = collectionAccessType;
@@ -1351,16 +1703,24 @@ namespace NumbrixGame.Annotations
     [Flags]
     public enum CollectionAccessType
     {
-        /// <summary>Method does not use or modify content of the collection.</summary>
+        /// <summary>
+        ///     Method does not use or modify content of the collection.
+        /// </summary>
         None = 0,
 
-        /// <summary>Method only reads content of the collection but does not modify it.</summary>
+        /// <summary>
+        ///     Method only reads content of the collection but does not modify it.
+        /// </summary>
         Read = 1,
 
-        /// <summary>Method can change content of the collection but does not add new elements.</summary>
+        /// <summary>
+        ///     Method can change content of the collection but does not add new elements.
+        /// </summary>
         ModifyExistingContent = 2,
 
-        /// <summary>Method can add new elements to the collection.</summary>
+        /// <summary>
+        ///     Method can add new elements to the collection.
+        /// </summary>
         UpdatedContent = ModifyExistingContent | 4
     }
 
@@ -1384,12 +1744,20 @@ namespace NumbrixGame.Annotations
     {
         #region Properties
 
+        /// <summary>
+        ///     Gets the type of the condition.
+        /// </summary>
+        /// <value>The type of the condition.</value>
         public AssertionConditionType ConditionType { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AssertionConditionAttribute" /> class.
+        /// </summary>
+        /// <param name="conditionType">Type of the condition.</param>
         public AssertionConditionAttribute(AssertionConditionType conditionType)
         {
             this.ConditionType = conditionType;
@@ -1404,16 +1772,24 @@ namespace NumbrixGame.Annotations
     /// </summary>
     public enum AssertionConditionType
     {
-        /// <summary>Marked parameter should be evaluated to true.</summary>
+        /// <summary>
+        ///     Marked parameter should be evaluated to true.
+        /// </summary>
         IS_TRUE = 0,
 
-        /// <summary>Marked parameter should be evaluated to false.</summary>
+        /// <summary>
+        ///     Marked parameter should be evaluated to false.
+        /// </summary>
         IS_FALSE = 1,
 
-        /// <summary>Marked parameter should be evaluated to null value.</summary>
+        /// <summary>
+        ///     Marked parameter should be evaluated to null value.
+        /// </summary>
         IS_NULL = 2,
 
-        /// <summary>Marked parameter should be evaluated to not null value.</summary>
+        /// <summary>
+        ///     Marked parameter should be evaluated to not null value.
+        /// </summary>
         IS_NOT_NULL = 3
     }
 
@@ -1445,13 +1821,12 @@ namespace NumbrixGame.Annotations
     ///     <code>
     /// static void ThrowIfNull&lt;T&gt;([NoEnumeration] T v, string n) where T : class
     /// {
-    ///   // custom check for null but no enumeration
+    /// // custom check for null but no enumeration
     /// }
-    /// 
     /// void Foo(IEnumerable&lt;string&gt; values)
     /// {
-    ///   ThrowIfNull(values, nameof(values));
-    ///   var x = values.ToList(); // No warnings about multiple enumeration
+    /// ThrowIfNull(values, nameof(values));
+    /// var x = values.ToList(); // No warnings about multiple enumeration
     /// }
     /// </code>
     /// </example>
@@ -1471,9 +1846,7 @@ namespace NumbrixGame.Annotations
     /// <summary>
     ///     Prevents the Member Reordering feature from tossing members of the marked class.
     /// </summary>
-    /// <remarks>
-    ///     The attribute must be mentioned in your member reordering patterns.
-    /// </remarks>
+    /// <remarks>The attribute must be mentioned in your member reordering patterns.</remarks>
     [AttributeUsage(
         AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Struct | AttributeTargets.Enum)]
     public sealed class NoReorderAttribute : Attribute
@@ -1517,19 +1890,39 @@ namespace NumbrixGame.Annotations
     {
     }
 
+    /// <summary>
+    ///     Class AspChildControlTypeAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class AspChildControlTypeAttribute : Attribute
     {
         #region Properties
 
-        [NotNull] public string TagName { get; }
+        /// <summary>
+        ///     Gets the name of the tag.
+        /// </summary>
+        /// <value>The name of the tag.</value>
+        [NotNull]
+        public string TagName { get; }
 
-        [NotNull] public Type ControlType { get; }
+        /// <summary>
+        ///     Gets the type of the control.
+        /// </summary>
+        /// <value>The type of the control.</value>
+        [NotNull]
+        public Type ControlType { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AspChildControlTypeAttribute" /> class.
+        /// </summary>
+        /// <param name="tagName">Name of the tag.</param>
+        /// <param name="controlType">Type of the control.</param>
         public AspChildControlTypeAttribute([NotNull] string tagName, [NotNull] Type controlType)
         {
             this.TagName = tagName;
@@ -1539,32 +1932,61 @@ namespace NumbrixGame.Annotations
         #endregion
     }
 
+    /// <summary>
+    ///     Class AspDataFieldAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
     public sealed class AspDataFieldAttribute : Attribute
     {
     }
 
+    /// <summary>
+    ///     Class AspDataFieldsAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method)]
     public sealed class AspDataFieldsAttribute : Attribute
     {
     }
 
+    /// <summary>
+    ///     Class AspMethodPropertyAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class AspMethodPropertyAttribute : Attribute
     {
     }
 
+    /// <summary>
+    ///     Class AspRequiredAttributeAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class AspRequiredAttributeAttribute : Attribute
     {
         #region Properties
 
-        [NotNull] public string Attribute { get; }
+        /// <summary>
+        ///     Gets the attribute.
+        /// </summary>
+        /// <value>The attribute.</value>
+        [NotNull]
+        public string Attribute { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AspRequiredAttributeAttribute" /> class.
+        /// </summary>
+        /// <param name="attribute">The attribute.</param>
         public AspRequiredAttributeAttribute([NotNull] string attribute)
         {
             this.Attribute = attribute;
@@ -1573,17 +1995,30 @@ namespace NumbrixGame.Annotations
         #endregion
     }
 
+    /// <summary>
+    ///     Class AspTypePropertyAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class AspTypePropertyAttribute : Attribute
     {
         #region Properties
 
+        /// <summary>
+        ///     Gets a value indicating whether [create constructor references].
+        /// </summary>
+        /// <value><c>true</c> if [create constructor references]; otherwise, <c>false</c>.</value>
         public bool CreateConstructorReferences { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AspTypePropertyAttribute" /> class.
+        /// </summary>
+        /// <param name="createConstructorReferences">if set to <c>true</c> [create constructor references].</param>
         public AspTypePropertyAttribute(bool createConstructorReferences)
         {
             this.CreateConstructorReferences = createConstructorReferences;
@@ -1592,17 +2027,31 @@ namespace NumbrixGame.Annotations
         #endregion
     }
 
+    /// <summary>
+    ///     Class RazorImportNamespaceAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class RazorImportNamespaceAttribute : Attribute
     {
         #region Properties
 
-        [NotNull] public string Name { get; }
+        /// <summary>
+        ///     Gets the name.
+        /// </summary>
+        /// <value>The name.</value>
+        [NotNull]
+        public string Name { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="RazorImportNamespaceAttribute" /> class.
+        /// </summary>
+        /// <param name="name">The name.</param>
         public RazorImportNamespaceAttribute([NotNull] string name)
         {
             this.Name = name;
@@ -1611,19 +2060,39 @@ namespace NumbrixGame.Annotations
         #endregion
     }
 
+    /// <summary>
+    ///     Class RazorInjectionAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class RazorInjectionAttribute : Attribute
     {
         #region Properties
 
-        [NotNull] public string Type { get; }
+        /// <summary>
+        ///     Gets the type.
+        /// </summary>
+        /// <value>The type.</value>
+        [NotNull]
+        public string Type { get; }
 
-        [NotNull] public string FieldName { get; }
+        /// <summary>
+        ///     Gets the name of the field.
+        /// </summary>
+        /// <value>The name of the field.</value>
+        [NotNull]
+        public string FieldName { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="RazorInjectionAttribute" /> class.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="fieldName">Name of the field.</param>
         public RazorInjectionAttribute([NotNull] string type, [NotNull] string fieldName)
         {
             this.Type = type;
@@ -1633,17 +2102,31 @@ namespace NumbrixGame.Annotations
         #endregion
     }
 
+    /// <summary>
+    ///     Class RazorDirectiveAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class RazorDirectiveAttribute : Attribute
     {
         #region Properties
 
-        [NotNull] public string Directive { get; }
+        /// <summary>
+        ///     Gets the directive.
+        /// </summary>
+        /// <value>The directive.</value>
+        [NotNull]
+        public string Directive { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="RazorDirectiveAttribute" /> class.
+        /// </summary>
+        /// <param name="directive">The directive.</param>
         public RazorDirectiveAttribute([NotNull] string directive)
         {
             this.Directive = directive;
@@ -1652,23 +2135,48 @@ namespace NumbrixGame.Annotations
         #endregion
     }
 
+    /// <summary>
+    ///     Class RazorPageBaseTypeAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = true)]
     public sealed class RazorPageBaseTypeAttribute : Attribute
     {
         #region Properties
 
-        [NotNull] public string BaseType { get; }
-        [CanBeNull] public string PageName { get; }
+        /// <summary>
+        ///     Gets the type of the base.
+        /// </summary>
+        /// <value>The type of the base.</value>
+        [NotNull]
+        public string BaseType { get; }
+
+        /// <summary>
+        ///     Gets the name of the page.
+        /// </summary>
+        /// <value>The name of the page.</value>
+        [CanBeNull]
+        public string PageName { get; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="RazorPageBaseTypeAttribute" /> class.
+        /// </summary>
+        /// <param name="baseType">Type of the base.</param>
         public RazorPageBaseTypeAttribute([NotNull] string baseType)
         {
             this.BaseType = baseType;
         }
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="RazorPageBaseTypeAttribute" /> class.
+        /// </summary>
+        /// <param name="baseType">Type of the base.</param>
+        /// <param name="pageName">Name of the page.</param>
         public RazorPageBaseTypeAttribute([NotNull] string baseType, string pageName)
         {
             this.BaseType = baseType;
@@ -1678,26 +2186,51 @@ namespace NumbrixGame.Annotations
         #endregion
     }
 
+    /// <summary>
+    ///     Class RazorHelperCommonAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class RazorHelperCommonAttribute : Attribute
     {
     }
 
+    /// <summary>
+    ///     Class RazorLayoutAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class RazorLayoutAttribute : Attribute
     {
     }
 
+    /// <summary>
+    ///     Class RazorWriteLiteralMethodAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class RazorWriteLiteralMethodAttribute : Attribute
     {
     }
 
+    /// <summary>
+    ///     Class RazorWriteMethodAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Method)]
     public sealed class RazorWriteMethodAttribute : Attribute
     {
     }
 
+    /// <summary>
+    ///     Class RazorWriteMethodParameterAttribute. This class cannot be inherited.
+    ///     Implements the <see cref="System.Attribute" />
+    /// </summary>
+    /// <seealso cref="System.Attribute" />
     [AttributeUsage(AttributeTargets.Parameter)]
     public sealed class RazorWriteMethodParameterAttribute : Attribute
     {

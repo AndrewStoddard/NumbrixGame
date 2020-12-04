@@ -1,47 +1,68 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 
 namespace NumbrixGame.Model
 {
-
     /// <summary>
-    ///   Defines the Sound Manager
+    ///     Defines the Sound Manager
     /// </summary>
-    class SoundManager
+    internal class SoundManager
     {
-        private MediaPlayer mediaPlayer;
+        #region Data members
 
-        /// <summary>Gets or sets a value indicating whether [music on].</summary>
-        /// <value>
-        /// <c>true</c> if [music on]; otherwise, <c>false</c>.</value>
+        /// <summary>
+        ///     The media player
+        /// </summary>
+        private readonly MediaPlayer mediaPlayer;
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        ///     Gets or sets a value indicating whether [music on].
+        /// </summary>
+        /// <value><c>true</c> if [music on]; otherwise, <c>false</c>.</value>
         public bool MusicOn { get; set; }
 
+        #endregion
 
-        /// <summary>Initializes a new instance of the <see cref="SoundManager" /> class.</summary>
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="SoundManager" /> class.
+        /// </summary>
         public SoundManager()
         {
-            mediaPlayer = new MediaPlayer();
-            mediaPlayer.Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Tetris.mp3"));
-            mediaPlayer.IsLoopingEnabled = true;
-            mediaPlayer.Volume = 0.1;
-            mediaPlayer.Play();
+            this.mediaPlayer = new MediaPlayer {
+                Source = MediaSource.CreateFromUri(new Uri("ms-appx:///Assets/Tetris.mp3")),
+                IsLoopingEnabled = true,
+                Volume = 0.1
+            };
+            this.mediaPlayer.Play();
         }
 
-        /// <summary>Plays the music</summary>
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     Plays the music
+        /// </summary>
         public void Play()
         {
             this.mediaPlayer.Play();
         }
 
-        /// <summary>Pauses the music</summary>
+        /// <summary>
+        ///     Pauses the music
+        /// </summary>
         public void Pause()
         {
             this.mediaPlayer.Pause();
         }
+
+        #endregion
     }
 }

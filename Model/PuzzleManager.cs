@@ -11,15 +11,21 @@ namespace NumbrixGame.Model
     {
         #region Properties
 
-        /// <summary>Gets or sets all of the puzzles.</summary>
+        /// <summary>
+        ///     Gets or sets all of the puzzles.
+        /// </summary>
         /// <value>The puzzles.</value>
         public IList<NumbrixGameBoard> Puzzles { get; set; }
 
-        /// <summary>Gets or sets the current puzzle.</summary>
+        /// <summary>
+        ///     Gets or sets the current puzzle.
+        /// </summary>
         /// <value>The current puzzle.</value>
         public NumbrixGameBoard CurrentPuzzle { get; set; }
 
-        /// <summary>Gets the next puzzle.</summary>
+        /// <summary>
+        ///     Gets the next puzzle.
+        /// </summary>
         /// <value>The next puzzle.</value>
         public NumbrixGameBoard NextPuzzle => this.CurrentPuzzle =
             this.Puzzles[
@@ -27,6 +33,10 @@ namespace NumbrixGame.Model
                     ? 0
                     : this.Puzzles.IndexOf(this.CurrentPuzzle) + 1];
 
+        /// <summary>
+        ///     Gets the previous puzzle.
+        /// </summary>
+        /// <value>The previous puzzle.</value>
         public NumbrixGameBoard PreviousPuzzle => this.CurrentPuzzle =
             this.Puzzles[
                 this.Puzzles.IndexOf(this.CurrentPuzzle) == 0
@@ -37,7 +47,9 @@ namespace NumbrixGame.Model
 
         #region Constructors
 
-        /// <summary>Initializes a new instance of the <see cref="PuzzleManager" /> class.</summary>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="PuzzleManager" /> class.
+        /// </summary>
         public PuzzleManager()
         {
             this.Puzzles = new List<NumbrixGameBoard>();
@@ -47,6 +59,9 @@ namespace NumbrixGame.Model
 
         #region Methods
 
+        /// <summary>
+        ///     Initializes the starting puzzles.
+        /// </summary>
         public async Task initializeStartingPuzzles()
         {
             var prebuiltPuzzles = await NumbrixGameBoardReader.GetPrebuiltGames();

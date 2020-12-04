@@ -1,9 +1,15 @@
 ﻿namespace NumbrixGame.PrebuiltGames
 {
+    /// <summary>
+    ///     Class StartingPuzzles.
+    /// </summary>
     internal class StartingPuzzles
     {
-
         #region Data members
+
+        /// <summary>
+        ///     The puzzle a
+        /// </summary>
         public static string puzzleA = "1,8,8,\n" +
                                        "1,1,57,true\n" +
                                        "1,5,53,true\n" +
@@ -21,6 +27,9 @@
                                        "8,5,16,true\n" +
                                        "8,8,11,true\n";
 
+        /// <summary>
+        ///     The puzzle b
+        /// </summary>
         public static string puzzleB = "2,8,8,\n" +
                                        "1,1,22,true\n" +
                                        "1,2,23,true\n" +
@@ -39,6 +48,9 @@
                                        "8,7,9,true\n" +
                                        "8,8,8,true\n";
 
+        /// <summary>
+        ///     The puzzle c
+        /// </summary>
         public static string puzzleC = "3,8,8,\n" +
                                        "1,1,13,true\n" +
                                        "1,2,12,true\n" +
@@ -73,6 +85,9 @@
                                        "8,7,40,true\n" +
                                        "8,8,39,true\n";
 
+        /// <summary>
+        ///     The puzzle d
+        /// </summary>
         public static string PuzzleD = "4,8,8,\n" +
                                        "1,1,34,true\n" +
                                        "1,5,38,true\n" +
@@ -92,6 +107,9 @@
                                        "8,4,4,true\n" +
                                        "8,8,8,true\n";
 
+        /// <summary>
+        ///     The puzzle e
+        /// </summary>
         public static string puzzleE = "5,8,8,\n" +
                                        "1,3,12,true\n" +
                                        "1,6,15,true\n" +
@@ -130,6 +148,9 @@
                                        "8,3,47,true\n" +
                                        "8,6,62,true\n";
 
+        /// <summary>
+        ///     The puzzle f
+        /// </summary>
         public static string puzzleF = "6,8,8,\n" +
                                        "1,2,29,true\n" +
                                        "1,7,18,true\n" +
@@ -164,6 +185,9 @@
                                        "8,2,60,true\n" +
                                        "8,7,47,true\n";
 
+        /// <summary>
+        ///     The puzzle g
+        /// </summary>
         public static string puzzleG = "7,8,8,\n" +
                                        "1,1,61,true\n" +
                                        "1,2,60,true\n" +
@@ -202,6 +226,9 @@
                                        "8,7,34,true\n" +
                                        "8,8,33,true\n";
 
+        /// <summary>
+        ///     The puzzle h
+        /// </summary>
         public static string puzzleH = "8,8,8,\n" +
                                        "1,3,4,true\n" +
                                        "1,4,1,true\n" +
@@ -232,6 +259,9 @@
                                        "8,5,37,true\n" +
                                        "8,6,38,true\n";
 
+        /// <summary>
+        ///     The puzzle i
+        /// </summary>
         public static string puzzleI = "9,8,8,\n" +
                                        "1,1,13,true\n" +
                                        "1,2,12,true\n" +
@@ -258,6 +288,9 @@
                                        "8,7,52,true\n" +
                                        "8,8,53,true\n";
 
+        /// <summary>
+        ///     The puzzle j
+        /// </summary>
         public static string puzzleJ = "10,8,8,\n" +
                                        "1,1,34,true\n" +
                                        "1,8,17,true\n" +
@@ -288,7 +321,9 @@
                                        "8,1,45,true\n" +
                                        "8,8,10,true\n";
 
-
+        /// <summary>
+        ///     The puzzle k
+        /// </summary>
         public static string puzzleK = "11,8,8,\n" +
                                        "1,1,1,true\n" +
                                        "1,3,3,true\n" +
@@ -306,6 +341,9 @@
                                        "8,1,22,true\n" +
                                        "8,8,29,true";
 
+        /// <summary>
+        ///     The puzzle l
+        /// </summary>
         public static string puzzleL = "12,8,8,\n" +
                                        "1,2,15,true\n" +
                                        "1,6,19,true\n" +
@@ -322,10 +360,16 @@
                                        "8,5,45,true\n" +
                                        "8,8,48,true";
 
+        /// <summary>
+        ///     The puzzle m
+        /// </summary>
         public static string puzzleM = "13,2,2,\n" +
                                        "1,2,3,true\n" +
                                        "2,2,4,true\n";
 
+        /// <summary>
+        ///     The puzzle n
+        /// </summary>
         public static string puzzleN = "14,6,6,\n" +
                                        "1,2,17,true\n" +
                                        "1,3,18,true\n" +
@@ -348,6 +392,9 @@
                                        "6,4,30,true\n" +
                                        "6,5,31,true\n";
 
+        /// <summary>
+        ///     The puzzle o
+        /// </summary>
         public static string puzzleO = "15,6,6,\n" +
                                        "2,2,28,true\n" +
                                        "2,3,27,true\n" +

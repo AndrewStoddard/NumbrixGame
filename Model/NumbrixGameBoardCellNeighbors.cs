@@ -3,22 +3,58 @@ using System.Linq;
 
 namespace NumbrixGame.Model
 {
+    /// <summary>
+    ///     Class NumbrixGameBoardCellNeighbors.
+    /// </summary>
     public class NumbrixGameBoardCellNeighbors
     {
         #region Properties
 
+        /// <summary>
+        ///     Gets or sets the northern game board cell neighbor.
+        /// </summary>
+        /// <value>The northern game board cell neighbor.</value>
         public NumbrixGameBoardCell NorthernGameBoardCellNeighbor { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the southern game board cell neighbor.
+        /// </summary>
+        /// <value>The southern game board cell neighbor.</value>
         public NumbrixGameBoardCell SouthernGameBoardCellNeighbor { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the western game board cell neighbor.
+        /// </summary>
+        /// <value>The western game board cell neighbor.</value>
         public NumbrixGameBoardCell WesternGameBoardCellNeighbor { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the easternn game board cell neighbor.
+        /// </summary>
+        /// <value>The easternn game board cell neighbor.</value>
         public NumbrixGameBoardCell EasternnGameBoardCellNeighbor { get; set; }
 
+        /// <summary>
+        ///     Gets or sets the game board cell.
+        /// </summary>
+        /// <value>The game board cell.</value>
         public NumbrixGameBoardCell GameBoardCell { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the game board.
+        /// </summary>
+        /// <value>The game board.</value>
         public NumbrixGameBoard GameBoard { get; set; }
 
         #endregion
 
         #region Constructors
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="NumbrixGameBoardCellNeighbors" /> class.
+        /// </summary>
+        /// <param name="gameBoard">The game board.</param>
+        /// <param name="gameBoardCell">The game board cell.</param>
         public NumbrixGameBoardCellNeighbors(NumbrixGameBoard gameBoard,
             NumbrixGameBoardCell gameBoardCell)
         {
@@ -31,6 +67,10 @@ namespace NumbrixGame.Model
 
         #region Methods
 
+        /// <summary>
+        ///     Gets the list of neighbors.
+        /// </summary>
+        /// <returns>IList&lt;NumbrixGameBoardCell&gt;.</returns>
         public IList<NumbrixGameBoardCell> GetListOfNeighbors()
         {
             return new List<NumbrixGameBoardCell> {
@@ -41,7 +81,11 @@ namespace NumbrixGame.Model
             };
         }
 
-        private void setNeighbors(List<NumbrixGameBoardCell> gameBoardCells)
+        /// <summary>
+        ///     Sets the neighbors.
+        /// </summary>
+        /// <param name="gameBoardCells">The game board cells.</param>
+        private void setNeighbors(IReadOnlyCollection<NumbrixGameBoardCell> gameBoardCells)
         {
             if (this.GameBoardCell.X == 1)
             {

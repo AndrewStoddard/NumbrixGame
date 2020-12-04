@@ -2,10 +2,18 @@
 
 namespace NumbrixGame.Model
 {
+    /// <summary>
+    ///     Class NumbrixSolver.
+    /// </summary>
     public static class NumbrixSolver
     {
         #region Methods
 
+        /// <summary>
+        ///     Checks for solved.
+        /// </summary>
+        /// <param name="numbrixGameBoard">The numbrix game board.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public static bool CheckForSolved(NumbrixGameBoard numbrixGameBoard)
         {
             try
@@ -24,6 +32,12 @@ namespace NumbrixGame.Model
             }
         }
 
+        /// <summary>
+        ///     Solves the game board.
+        /// </summary>
+        /// <param name="numbrixGameBoard">The numbrix game board.</param>
+        /// <returns>NumbrixGameBoard.</returns>
+        /// <exception cref="NotImplementedException"></exception>
         public static NumbrixGameBoard SolveGameBoard(NumbrixGameBoard numbrixGameBoard)
         {
             //TODO Implement

@@ -8,26 +8,44 @@ using NumbrixGame.PrebuiltGames;
 
 namespace NumbrixGame.Datatier
 {
+    /// <summary>
+    ///     Class NumbrixGameBoardReader.
+    /// </summary>
     public static class NumbrixGameBoardReader
     {
         #region Methods
 
+        /// <summary>
+        ///     Loads the puzzle.
+        /// </summary>
+        /// <param name="puzzleFile">The puzzle file.</param>
+        /// <returns>NumbrixGameBoard.</returns>
         public static async Task<NumbrixGameBoard> LoadPuzzle(StorageFile puzzleFile)
         {
             var dataFileContents = await FileIO.ReadTextAsync(puzzleFile);
             return loadCsvStringGameBoard(dataFileContents.Replace("\r", "").Split("\n"));
         }
 
+        /// <summary>
+        ///     Loads the puzzle.
+        /// </summary>
+        /// <param name="gameBoardString">The game board string.</param>
+        /// <returns>NumbrixGameBoard.</returns>
         public static NumbrixGameBoard LoadPuzzle(string gameBoardString)
         {
             return loadCsvStringGameBoard(gameBoardString.Replace("\r", "").Split("\n"));
         }
 
-        private static NumbrixGameBoard loadCsvStringGameBoard(string[] stringGameBoard)
+        /// <summary>
+        ///     Loads the CSV string game board.
+        /// </summary>
+        /// <param name="stringGameBoard">The string game board.</param>
+        /// <returns>NumbrixGameBoard.</returns>
+        private static NumbrixGameBoard loadCsvStringGameBoard(IReadOnlyList<string> stringGameBoard)
         {
             var gameBoard = new NumbrixGameBoard();
 
-            for (var i = 0; i < stringGameBoard.Length - 1; i++)
+            for (var i = 0; i < stringGameBoard.Count - 1; i++)
             {
                 var line = stringGameBoard[i];
                 if (i == 0)
@@ -65,15 +83,23 @@ namespace NumbrixGame.Datatier
             return gameBoard;
         }
 
+        /// <summary>
+        ///     Gets the saved games.
+        /// </summary>
+        /// <returns>List&lt;StorageFile&gt;.</returns>
         public static async Task<List<StorageFile>> GetSavedGames()
         {
             var files = await ApplicationData.Current.LocalFolder.GetFilesAsync();
             return files.Where(file => file.Name.StartsWith("save_")).ToList();
         }
 
+        /// <summary>
+        ///     Gets the prebuilt games.
+        /// </summary>
+        /// <returns>List&lt;StorageFile&gt;.</returns>
         public static async Task<List<StorageFile>> GetPrebuiltGames()
         {
-            var prebuiltSuffix = "puzzle_";
+            const string prebuiltSuffix = "puzzle_";
             for (var i = 1; i <= MainPuzzles.PuzzleList.Count; i++)
             {
                 var filename = prebuiltSuffix + i + ".csv";

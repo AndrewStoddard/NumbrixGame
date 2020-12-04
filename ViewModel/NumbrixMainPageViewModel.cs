@@ -4,24 +4,43 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Storage;
-using NumbrixGame.Annotations;
 using NumbrixGame.Datatier;
+using NumbrixGame.Properties;
 
 namespace NumbrixGame.ViewModel
 {
+    /// <summary>
+    ///     Class NumbrixMainPageViewModel.
+    ///     Implements the <see cref="System.ComponentModel.INotifyPropertyChanged" />
+    /// </summary>
+    /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
     public class NumbrixMainPageViewModel : INotifyPropertyChanged
     {
         #region Data members
 
+        /// <summary>
+        ///     The saved games
+        /// </summary>
         private List<StorageFile> savedGames;
+
+        /// <summary>
+        ///     The prebuilt games
+        /// </summary>
         private List<StorageFile> prebuiltGames;
 
+        /// <summary>
+        ///     The selected game file
+        /// </summary>
         private StorageFile selectedGameFile;
 
         #endregion
 
         #region Properties
 
+        /// <summary>
+        ///     Gets or sets the selected game file.
+        /// </summary>
+        /// <value>The selected game file.</value>
         public StorageFile SelectedGameFile
         {
             get => this.selectedGameFile;
@@ -38,6 +57,10 @@ namespace NumbrixGame.ViewModel
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the saved games.
+        /// </summary>
+        /// <value>The saved games.</value>
         public List<StorageFile> SavedGames
         {
             get => this.savedGames;
@@ -48,6 +71,10 @@ namespace NumbrixGame.ViewModel
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the prebuilt games.
+        /// </summary>
+        /// <value>The prebuilt games.</value>
         public List<StorageFile> PrebuiltGames
         {
             get => this.prebuiltGames;
@@ -62,8 +89,16 @@ namespace NumbrixGame.ViewModel
 
         #region Methods
 
+        /// <summary>
+        ///     Occurs when a property value changes.
+        /// </summary>
+        /// <returns></returns>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        ///     build view model as an asynchronous operation.
+        /// </summary>
+        /// <returns>NumbrixMainPageViewModel.</returns>
         public static async Task<NumbrixMainPageViewModel> BuildViewModelAsync()
         {
             var savedGames = await NumbrixGameBoardReader.GetSavedGames();
@@ -71,6 +106,10 @@ namespace NumbrixGame.ViewModel
             return new NumbrixMainPageViewModel {PrebuiltGames = prebuiltGames, SavedGames = savedGames};
         }
 
+        /// <summary>
+        ///     Called when [property changed].
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
